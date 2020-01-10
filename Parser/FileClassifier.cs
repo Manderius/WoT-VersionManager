@@ -2,31 +2,45 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 using System.Xml;
 
-namespace AnyReplay_Player
+namespace VersionSwitcher_Server
 {
     class FileClassifier
     {
-        SortedSet<string> ignoredFiles = new SortedSet<string>();
+        SortedSet<string> _ignoredFiles = new SortedSet<string>();
+        string _containerDir;
+        HashSet<string> _existingDirs = new HashSet<string>();
 
-        public FileClassifier() {
+        public FileClassifier(string container) {
+            _containerDir = container;
             LoadIgnoredFiles();
+            LoadExistingDirs(_containerDir);
         }
 
         private void LoadIgnoredFiles() {
             foreach (string s in File.ReadAllLines("ignored.txt")) {
-                ignoredFiles.Add(s);
+                _ignoredFiles.Add(s);
+            }
+        }
 
+        private void LoadExistingDirs(string root, int depth = 0)
+        {
+            foreach (DirectoryInfo dir in new DirectoryInfo(root).EnumerateDirectories())
+            {
+                _existingDirs.Add(dir.FullName);
+                if (depth == 0)
+                {
+                    LoadExistingDirs(dir.FullName, depth + 1);
+                }
             }
         }
 
         private string GetSHAFromFile(string path)
         {
-            Stream st = File.Open(path, FileMode.Open);
+            //Stream st = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024);
+            Stream st = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             string result = GetSHAFromStream(st);
             st.Close();
             return result;
@@ -36,22 +50,19 @@ namespace AnyReplay_Player
         private string GetSHAFromStream(Stream stream)
         {
             string strResult = "";
-            string strHashData = "";
-
             byte[] arrbytHashValue;
 
-            System.Security.Cryptography.SHA1CryptoServiceProvider oSHA1Hasher =
-                       new System.Security.Cryptography.SHA1CryptoServiceProvider();
+            SHA1CryptoServiceProvider oSHA1Hasher = new SHA1CryptoServiceProvider();
 
             try
             {
                 arrbytHashValue = oSHA1Hasher.ComputeHash(stream);
 
-                strHashData = System.BitConverter.ToString(arrbytHashValue);
+                string strHashData = BitConverter.ToString(arrbytHashValue);
                 strHashData = strHashData.Replace("-", "");
                 strResult = strHashData;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message, "Error!",
                          System.Windows.Forms.MessageBoxButtons.OK,
@@ -64,14 +75,14 @@ namespace AnyReplay_Player
 
         private void WriteFileNode(XmlWriter writer, string path, string name, string hash)
         {
-            writer.WriteStartElement("File");
-            writer.WriteAttributeString("Path", path);
-            writer.WriteAttributeString("Name", name);
-            writer.WriteElementString("Hash", hash);
-            writer.WriteEndElement();
+            //writer.WriteStartElement("File");
+            //writer.WriteAttributeString("Path", path);
+            //writer.WriteAttributeString("Name", name);
+            //writer.WriteElementString("Hash", hash);
+            //writer.WriteEndElement();
         }
 
-        public void Classify(string sourceDir, string containerDir, string outFile, string version)
+        public void Classify(string sourceDir, string outFile, string version)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -90,13 +101,13 @@ namespace AnyReplay_Player
 
                 // Filter out unnecessary files
                 bool ignored = false;
-                if (ignoredFiles.Contains(relativePath))
+                if (_ignoredFiles.Contains(relativePath))
                 {
                     ignored = true;
                 }
                 else
                 {
-                    foreach (string ignoredFile in ignoredFiles)
+                    foreach (string ignoredFile in _ignoredFiles)
                     {
                         if (relativePath.StartsWith(ignoredFile))
                         {
@@ -133,36 +144,14 @@ namespace AnyReplay_Player
                                     continue;
 
                                 sha = GetSHAFromStream(entry.Open()) + entry.FullName.GetHashCode();
-                                string path = Path.Combine(containerDir, sha);
+                                string path = GetFileDirectory(sha);
 
                                 WriteFileNode(writer, entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length), entry.Name, sha);
 
-                                if (!Directory.Exists(path))
+                                if (!_existingDirs.Contains(path))
                                 {
                                     Directory.CreateDirectory(path);
                                     entry.ExtractToFile(Path.Combine(path, entry.Name));
-
-                                    /*string fullPath = Path.Combine(path, entry.FullName);
-                                    string basedir = fullPath.Substring(0, fullPath.Length - entry.Name.Length);
-                                    Directory.CreateDirectory(basedir);
-
-                                    entry.ExtractToFile(fullPath);
-
-                                    string tempName = Path.Combine(destination, details.Name);
-
-                                    ZipFile.CreateFromDirectory(path, tempName, CompressionLevel.NoCompression, false);
-
-                                    foreach (string dirName in Directory.GetDirectories(path))
-                                    {
-                                        Directory.Delete(dirName, true);
-                                    }
-                                    foreach (string fileName in Directory.GetFiles(path))
-                                    {
-                                        File.Delete(fileName);
-                                    }
-
-                                    File.Move(tempName, Path.Combine(path, details.Name));*/
-
                                 }
                             }
                         }
@@ -176,12 +165,13 @@ namespace AnyReplay_Player
                         //string relativePath = filepath.Substring(sourceDir.Length);
                         sha = GetSHAFromFile(filepath) + relativePath.GetHashCode();
                         relativePath = relativePath.Substring(0, relativePath.Length - details.Name.Length);
-                        
-                        string path = Path.Combine(containerDir, sha);
-                        if (!Directory.Exists(path))
+
+                        string path = GetFileDirectory(sha);
+                        if (!_existingDirs.Contains(path))
                         {
                             Directory.CreateDirectory(path);
                             File.Copy(filepath, Path.Combine(path, details.Name));
+                            _existingDirs.Add(path);
                         }
 
                         
@@ -195,6 +185,14 @@ namespace AnyReplay_Player
             writer.WriteEndElement();
             writer.Flush();
             writer.Close();
+        }
+
+        private string GetFileDirectory(string hash)
+        {
+            string topDir = hash.Substring(0, 3);
+            string dir = hash.Substring(3);
+            string fullPath = Path.Combine(_containerDir, topDir, dir);
+            return fullPath;
         }
     }
 }
