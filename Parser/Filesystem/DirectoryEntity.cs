@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 namespace VersionSwitcher_Server.Filesystem
 {
+    [XmlInclude(typeof(PackageEntity))]
     public class DirectoryEntity : BaseEntity
     {
         [XmlArrayItem(ElementName = "File", Type = typeof(FileEntity))]
@@ -40,6 +41,13 @@ namespace VersionSwitcher_Server.Filesystem
                     de.Deserialize();
                 }
             }
+        }
+
+        public virtual List<BaseEntity> GetAllEntities()
+        {
+            List<BaseEntity> entities = new List<BaseEntity>(Contents.OfType<FileEntity>());
+            entities.AddRange(Contents.OfType<DirectoryEntity>().Select(dir => dir.GetAllEntities()).Aggregate(new List<BaseEntity>(), (a, b) => a.Concat(b).ToList()));
+            return entities;
         }
 
         public BaseEntity GetEntityFromRelativePath(string path, bool create)

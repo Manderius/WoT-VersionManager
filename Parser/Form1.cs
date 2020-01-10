@@ -7,6 +7,7 @@ using System.Linq;
 using VersionSwitcher_Server.Filesystem;
 using VersionSwitcher_Server.Hashing;
 using VersionSwitcher_Server.Persistence;
+using VersionSwitcher_Server.Extraction;
 
 namespace VersionSwitcher_Server
 {
@@ -26,14 +27,21 @@ namespace VersionSwitcher_Server
             //Dictionary<string, string> replayDetails = ReplayParser.Parse(@"D:\20180925_M5053-two-pen.wotreplay");
             //FolderCompare.Compare(@"E:\WoT\Versions\World_of_Tanks - 0.9.5\", @"E:\WoT\Versions\World_of_Tanks - 0.9.2\");
             //FolderCompare.Compare(@"E:\WoT\Versions\World_of_Tanks - 0.9.4", @"E:\WoT\Versions\World_of_Tanks - 0.9.5");
-            DirectoryInfo wot = new DirectoryInfo(@"E:\WoT\Versions\World_of_Tanks - 0.9.4\");
-            RootDirectoryEntity root = new RootDirectoryEntity();
-            HashProvider sha1 = new SHA1HashProvider();
-            new FileClassifier("", sha1, new SortedSet<string>()).Parse(wot, root, wot.FullName.Length, false);
-            Console.WriteLine("Total files: {0}", TotalFiles(root));
-            // Hashing.Hashing.ComputeHashes(root, sha1);
-            // RootDirectoryEntity deser = new XMLStructureLoader().Deserialize(@"E:\WoT\serial.xml");
-            new XMLStructureLoader().Serialize(root, @"E:\WoT\serial.xml");
+
+            ExtractionManager ex = new ExtractionManager(new List<Extractor>() { new PackageExtractor(), new FileExtractor() });
+
+            //DirectoryInfo wot = new DirectoryInfo(@"E:\WoT\Versions\World_of_Tanks - 0.9.4\");
+            //RootDirectoryEntity root = new RootDirectoryEntity();
+            //HashProvider sha1 = new SHA1HashProvider();
+            //new FileClassifier("", sha1, new SortedSet<string>()).Parse(wot, root, wot.FullName.Length, true);
+            ////Console.WriteLine("Total files: {0}", TotalFiles(root));
+            //Hashing.Hashing.ComputeHashes(root, sha1);
+            //new XMLStructureLoader().Serialize(root, @"E:\WoT\serial.xml");
+
+            RootDirectoryEntity deser = new XMLStructureLoader().Deserialize(@"E:\WoT\serial-hash.xml");
+            ExtractionCache cache = ExtractionCache.FromDirectory(@"E:\WoT\Container3");
+            Func<BaseEntity, string> entityToPath = (entity) => FileClassifier.GetFileDirectory(@"E:\WoT\Container3", (entity as FileEntity).Hash);
+            ex.Extract(deser, @"E:\WoT\Versions\World_of_Tanks - 0.9.4\", entityToPath, cache);
             sw.Stop();
             MessageBox.Show(string.Format("Elapsed time: {0:hh\\:mm\\:ss}", sw.Elapsed));
             Environment.Exit(0);
@@ -43,30 +51,6 @@ namespace VersionSwitcher_Server
         {
             int total = dir.Contents.OfType<FileEntity>().Count();
             return total + dir.Contents.OfType<DirectoryEntity>().Select(d => TotalFiles(d)).Sum();
-        }
-
-
-        private void PopulateDirectory(DirectoryEntity dir, int depth = 3)
-        {
-            Random ran = new Random();
-            for (int i = 0; i < 3; i++)
-            {
-                if (ran.Next(10) % 2 == 0)
-                {
-                    DirectoryEntity de = new DirectoryEntity("Dir" + i);
-                    dir.Add(de);
-                    if (depth > 0 && ran.Next(10) % 2 == 0)
-                    {
-                        PopulateDirectory(de, depth - 1);
-                    }
-                }
-                else
-                {
-                    FileEntity file = new FileEntity("File" + i);
-                    file.Hash = "abcd";
-                    dir.Add(file);
-                }
-            }
         }
     }
 }

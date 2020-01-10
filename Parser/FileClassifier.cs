@@ -65,52 +65,7 @@ namespace VersionSwitcher_Server
         }
 
 
-        public void Parse(DirectoryInfo directory, DirectoryEntity parent, int prefixLength, bool computeHash)
-        {
-            foreach (FileInfo file in directory.EnumerateFiles())
-            {
-                string relativePath = file.FullName.Substring(prefixLength);
-
-                // TODO skip if ignored
-
-                if (file.Extension == ".pkg")
-                {
-                    ParsePackage(file, parent, computeHash);
-                }
-                else
-                {
-                    FileEntity fileEnt = (computeHash) ? new FileEntity(file.Name, _hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open))) : new FileEntity(file.Name);
-                    parent.Add(fileEnt);
-                }
-            }
-
-            foreach (DirectoryInfo dir in directory.EnumerateDirectories())
-            {
-                DirectoryEntity child = new DirectoryEntity(dir.Name);
-                parent.Add(child);
-                Parse(dir, child, prefixLength, computeHash);
-            }
-        }
-
-        private void ParsePackage(FileInfo package, DirectoryEntity parent, bool computeHash)
-        {
-            DirectoryEntity root = new DirectoryEntity(package.Name);
-            parent.Add(root);
-
-            using (ZipArchive archive = ZipFile.OpenRead(package.FullName))
-            {
-                foreach (ZipArchiveEntry entry in archive.Entries)
-                {
-                    // Directory
-                    if (entry.Length == 0)
-                        continue;
-
-                    string relativePath = entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length);
-                    FileEntity file = (computeHash) ? new FileEntity(entry.Name, _hashProvider.FromStream(entry.Open())) : new FileEntity(entry.Name);
-                    (root.GetEntityFromRelativePath(relativePath, true) as DirectoryEntity).Add(file);
-                }
-            }
-        }
+        
 
         public void Classify(string sourceDir, string outFile, string version)
         {
@@ -172,7 +127,7 @@ namespace VersionSwitcher_Server
                                     continue;
 
                                 sha = _hashProvider.FromStream(entry.Open()) + entry.FullName.GetHashCode();
-                                string path = GetFileDirectory(sha);
+                                string path = GetFileDirectory(_containerDir, sha);
 
                                 WriteFileNode(writer, entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length), entry.Name, sha);
 
@@ -194,7 +149,7 @@ namespace VersionSwitcher_Server
                         sha = GetSHAFromFile(filepath) + relativePath.GetHashCode();
                         relativePath = relativePath.Substring(0, relativePath.Length - details.Name.Length);
 
-                        string path = GetFileDirectory(sha);
+                        string path = GetFileDirectory(_containerDir, sha);
                         if (!_existingDirs.Contains(path))
                         {
                             Directory.CreateDirectory(path);
@@ -215,11 +170,11 @@ namespace VersionSwitcher_Server
             writer.Close();
         }
 
-        private string GetFileDirectory(string hash)
+        public static string GetFileDirectory(string container, string hash)
         {
             string topDir = hash.Substring(0, 3);
             string dir = hash.Substring(3);
-            string fullPath = Path.Combine(_containerDir, topDir, dir);
+            string fullPath = Path.Combine(container, topDir, dir);
             return fullPath;
         }
     }

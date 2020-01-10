@@ -49,10 +49,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompressedFile.cs" />
+    <Compile Include="Extraction\ExtractionCache.cs" />
+    <Compile Include="Extraction\ExtractionManager.cs" />
+    <Compile Include="Extraction\Extractor.cs" />
+    <Compile Include="Extraction\FileExtractor.cs" />
+    <Compile Include="Extraction\PackageExtractor.cs" />
     <Compile Include="FileClassifier.cs" />
     <Compile Include="Filesystem\BaseEntity.cs" />
     <Compile Include="Filesystem\DirectoryEntity.cs" />
     <Compile Include="Filesystem\FileEntity.cs" />
+    <Compile Include="Filesystem\PackageEntity.cs" />
     <Compile Include="Filesystem\RootDirectoryEntity.cs" />
     <Compile Include="FolderCompare.cs" />
     <Compile Include="GameFolderGenerator.cs" />
