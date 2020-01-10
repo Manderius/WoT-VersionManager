@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VersionSwitcher_Server.Filesystem
+﻿namespace VersionSwitcher_Server.Filesystem
 {
     public class RootDirectoryEntity : DirectoryEntity
     {
@@ -13,6 +7,12 @@ namespace VersionSwitcher_Server.Filesystem
         public RootDirectoryEntity() : base("")
         {
             RelativePath = "";
+        }
+
+        public RootDirectoryEntity(string version) : base("")
+        {
+            RelativePath = "";
+            Version = version;
         }
     }
 }

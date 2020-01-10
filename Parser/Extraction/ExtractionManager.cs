@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using VersionSwitcher_Server.Filesystem;
+using VersionSwitcher_Server.Utils;
 
 namespace VersionSwitcher_Server.Extraction
 {
@@ -12,7 +13,7 @@ namespace VersionSwitcher_Server.Extraction
             _extractors = extractors;
         }
 
-        public void Extract(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, ExtractionCache cache)
+        public void Extract(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache)
         {
             foreach (BaseEntity ent in entity.GetAllEntities())
             {

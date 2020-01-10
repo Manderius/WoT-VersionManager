@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VersionSwitcher_Server.Filesystem;
 using VersionSwitcher_Server.Hashing;
 
 namespace VersionSwitcher_Server.Parsing
 {
-    class WoTDirectoryParser
+    class GameDirectoryParser
     {
         public static void Parse(DirectoryInfo directory, DirectoryEntity parent, int prefixLength, bool computeHash, HashProvider hashProvider, IgnoreList ignoreList)
         {
@@ -29,7 +24,7 @@ namespace VersionSwitcher_Server.Parsing
                 }
                 else
                 {
-                    FileEntity fileEnt = computeHash ? new FileEntity(file.Name, hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open))) : new FileEntity(file.Name);
+                    FileEntity fileEnt = computeHash ? new FileEntity(file.Name, hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open)) + relativePath.GetHashCode()) : new FileEntity(file.Name);
                     parent.Add(fileEnt);
                 }
             }
@@ -56,7 +51,7 @@ namespace VersionSwitcher_Server.Parsing
                         continue;
 
                     string relativePath = entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length);
-                    FileEntity file = (computeHash) ? new FileEntity(entry.Name, hashProvider.FromStream(entry.Open())) : new FileEntity(entry.Name);
+                    FileEntity file = (computeHash) ? new FileEntity(entry.Name, hashProvider.FromStream(entry.Open()) + entry.FullName.GetHashCode()) : new FileEntity(entry.Name);
                     (root.GetEntityFromRelativePath(relativePath, true) as DirectoryEntity).Add(file);
                 }
             }

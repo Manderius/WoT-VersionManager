@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VersionSwitcher_Server.Filesystem;
+using VersionSwitcher_Server.Utils;
 
 namespace VersionSwitcher_Server.Extraction
 {
@@ -16,7 +13,7 @@ namespace VersionSwitcher_Server.Extraction
             return entity is PackageEntity;
         }
 
-        public override void Extract(string root, BaseEntity entity, Func<BaseEntity, string> entityToDir, ExtractionCache cache)
+        public override void Extract(string root, BaseEntity entity, Func<BaseEntity, string> entityToDir, DirectoryCache cache)
         {
             PackageEntity package = entity as PackageEntity;
             using (ZipArchive arch = ZipFile.OpenRead(Path.Combine(root, entity.RelativePath)))

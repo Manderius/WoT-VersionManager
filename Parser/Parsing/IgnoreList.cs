@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace VersionSwitcher_Server.Parsing
 {
     class IgnoreList
     {
-        SortedSet<string> _ignored;
-        public IgnoreList FromEnumerable(IEnumerable<string> ignored)
+        SortedSet<string> _ignored = new SortedSet<string>();
+
+        public static IgnoreList FromEnumerable(IEnumerable<string> ignored)
         {
             return new IgnoreList().SetIgnored(new SortedSet<string>(ignored));
         }

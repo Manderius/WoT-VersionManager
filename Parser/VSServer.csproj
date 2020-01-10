@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompressedFile.cs" />
-    <Compile Include="Extraction\ExtractionCache.cs" />
+    <Compile Include="Utils\DirectoryCache.cs" />
     <Compile Include="Extraction\ExtractionManager.cs" />
     <Compile Include="Extraction\Extractor.cs" />
     <Compile Include="Extraction\FileExtractor.cs" />
@@ -68,9 +68,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hashing\Hashing.cs" />
+    <Compile Include="GameGenerator\GameDirGenerator.cs" />
     <Compile Include="Hashing\HashProvider.cs" />
     <Compile Include="Hashing\SHA1HashProvider.cs" />
+    <Compile Include="Parsing\IgnoreList.cs" />
+    <Compile Include="Parsing\GameDirectoryParser.cs" />
     <Compile Include="PathsBuilder.cs" />
     <Compile Include="Persistence\DataDeserializer.cs" />
     <Compile Include="Persistence\DataSerializer.cs" />

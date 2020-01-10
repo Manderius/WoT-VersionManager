@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Security.Cryptography;
 using System.Xml;
-using VersionSwitcher_Server.Filesystem;
 using VersionSwitcher_Server.Hashing;
 
 namespace VersionSwitcher_Server

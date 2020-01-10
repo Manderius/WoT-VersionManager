@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace VersionSwitcher_Server.Extraction
+namespace VersionSwitcher_Server.Utils
 {
-    class ExtractionCache
+    class DirectoryCache
     {
         HashSet<string> _existingPaths = new HashSet<string>();
 
-        public static ExtractionCache FromDirectory(string path)
+        public static DirectoryCache FromDirectory(string path)
         {
-            ExtractionCache cache = new ExtractionCache();
+            DirectoryCache cache = new DirectoryCache();
             cache.LoadExistingDirs(path);
             return cache;
         }
