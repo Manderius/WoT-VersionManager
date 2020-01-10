@@ -62,7 +62,13 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hashing\Hashing.cs" />
+    <Compile Include="Hashing\HashProvider.cs" />
+    <Compile Include="Hashing\SHA1HashProvider.cs" />
     <Compile Include="PathsBuilder.cs" />
+    <Compile Include="Persistence\DataDeserializer.cs" />
+    <Compile Include="Persistence\DataSerializer.cs" />
+    <Compile Include="Persistence\XMLStructureLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />

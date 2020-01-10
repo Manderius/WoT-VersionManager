@@ -12,6 +12,7 @@ namespace VersionSwitcher_Server.Filesystem
 
         public RootDirectoryEntity() : base("")
         {
+            RelativePath = "";
         }
     }
 }

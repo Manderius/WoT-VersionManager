@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml.Serialization;
+using System.Linq;
 using VersionSwitcher_Server.Filesystem;
+using VersionSwitcher_Server.Hashing;
+using VersionSwitcher_Server.Persistence;
 
 namespace VersionSwitcher_Server
 {
@@ -23,44 +26,25 @@ namespace VersionSwitcher_Server
             //Dictionary<string, string> replayDetails = ReplayParser.Parse(@"D:\20180925_M5053-two-pen.wotreplay");
             //FolderCompare.Compare(@"E:\WoT\Versions\World_of_Tanks - 0.9.5\", @"E:\WoT\Versions\World_of_Tanks - 0.9.2\");
             //FolderCompare.Compare(@"E:\WoT\Versions\World_of_Tanks - 0.9.4", @"E:\WoT\Versions\World_of_Tanks - 0.9.5");
-            Serialize();
-            Deserialize();
+            DirectoryInfo wot = new DirectoryInfo(@"E:\WoT\Versions\World_of_Tanks - 0.9.4\");
+            RootDirectoryEntity root = new RootDirectoryEntity();
+            HashProvider sha1 = new SHA1HashProvider();
+            new FileClassifier("", sha1, new SortedSet<string>()).Parse(wot, root, wot.FullName.Length, false);
+            Console.WriteLine("Total files: {0}", TotalFiles(root));
+            // Hashing.Hashing.ComputeHashes(root, sha1);
+            // RootDirectoryEntity deser = new XMLStructureLoader().Deserialize(@"E:\WoT\serial.xml");
+            new XMLStructureLoader().Serialize(root, @"E:\WoT\serial.xml");
             sw.Stop();
             MessageBox.Show(string.Format("Elapsed time: {0:hh\\:mm\\:ss}", sw.Elapsed));
             Environment.Exit(0);
         }
 
-        public void Serialize()
+        public int TotalFiles(DirectoryEntity dir)
         {
-            RootDirectoryEntity root = new RootDirectoryEntity();
-            root.RelativePath = "";
-            root.Version = "1.2.3";
-            PopulateDirectory(root);
-
-            XmlSerializer serializer = new XmlSerializer(root.GetType());
-            using (StreamWriter writer = new StreamWriter(@"E:\WoT\serial.xml"))
-            {
-                serializer.Serialize(writer, root);
-            }
-
-            
+            int total = dir.Contents.OfType<FileEntity>().Count();
+            return total + dir.Contents.OfType<DirectoryEntity>().Select(d => TotalFiles(d)).Sum();
         }
 
-        public void Deserialize()
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(RootDirectoryEntity));
-
-            // Declare an object variable of the type to be deserialized.
-            RootDirectoryEntity root;
-
-            using (Stream reader = new FileStream(@"E:\WoT\serial.xml", FileMode.Open))
-            {
-                // Call the Deserialize method to restore the object's state.
-                root = (RootDirectoryEntity)serializer.Deserialize(reader);
-            }
-            root.RelativePath = "";
-            root.Deserialize();
-        }
 
         private void PopulateDirectory(DirectoryEntity dir, int depth = 3)
         {
