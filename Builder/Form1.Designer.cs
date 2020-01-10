@@ -1,4 +1,4 @@
-﻿namespace AnyReplay_Player
+﻿namespace VersionSwitcher_Server
 {
     partial class Form1
     {

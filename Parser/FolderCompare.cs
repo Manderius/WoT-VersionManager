@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.IO.Compression;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AnyReplay_Player
+namespace VersionSwitcher_Server
 {
     class FolderCompare
     {

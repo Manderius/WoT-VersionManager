@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Xml;
 
-namespace AnyReplay_Player
+namespace VersionSwitcher_Server
 {
     class GameFolderGenerator
     {
@@ -38,7 +34,7 @@ namespace AnyReplay_Player
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(versionContents);
-            string versionInfo = Path.Combine(destination, "AnyReplay.txt");
+            string versionInfo = Path.Combine(destination, "VersionSwitcher.txt");
 
             if (Directory.Exists(destination))
             {
@@ -71,7 +67,7 @@ namespace AnyReplay_Player
                 }
             }
 
-            File.WriteAllLines(versionInfo, new String[]{ doc.FirstChild.Attributes["Version"].Value });
+            File.WriteAllLines(versionInfo, new string[]{ doc.FirstChild.Attributes["Version"].Value });
 
         }
     }
