@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VersionSwitcher_Server
+namespace VersionSwitcher_Server.Utils
 {
     class CompressedFile
     {
