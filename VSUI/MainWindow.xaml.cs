@@ -24,7 +24,32 @@ namespace VSUI
         public MainWindow()
         {
             InitializeComponent();
-            new Form1();
+            ChangePage("Overview");
+        }
+
+        private void MenuSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage("Settings");
+        }
+
+        private void MenuOverview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage("Overview");
+        }
+
+        private void MenuDownload_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage("Download");
+        }
+
+        private void MenuImportGame_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage("Import");
+        }
+
+        private void ChangePage(string name)
+        {
+            frmMainContent.Source = new Uri("Pages/" + name + ".xaml", UriKind.Relative);
         }
     }
 }
