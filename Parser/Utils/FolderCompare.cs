@@ -5,7 +5,7 @@ using System.Linq;
 using System.IO.Compression;
 using System.Windows.Forms;
 
-namespace VersionSwitcher_Server
+namespace VersionSwitcher_Server.Utils
 {
     class FolderCompare
     {
