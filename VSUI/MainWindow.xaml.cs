@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using VersionSwitcher_Server;
+using VSUI.Pages;
+using VSUI.Services;
+using VSUI.Utils;
 
 namespace VSUI
 {
@@ -21,10 +14,13 @@ namespace VSUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Hashtable _services = new Hashtable();
+        private Hashtable _pages = new Hashtable();
+
         public MainWindow()
         {
             InitializeComponent();
-            ChangePage("Overview");
+            ChangePage(_pages.GetOrInsert(typeof(Overview), new Overview(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
         }
 
         private void MenuSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -34,7 +30,7 @@ namespace VSUI
 
         private void MenuOverview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage("Overview");
+            ChangePage(_pages.GetOrInsert(typeof(Overview), new Overview(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
         }
 
         private void MenuDownload_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -44,12 +40,24 @@ namespace VSUI
 
         private void MenuImportGame_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage("Import");
+            ChangePage(_pages.GetOrInsert(typeof(Import), new Import(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
+        }
+
+        private void MenuReplays_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage(_pages.GetOrInsert(typeof(Replays), new Replays()));
         }
 
         private void ChangePage(string name)
         {
             frmMainContent.Source = new Uri("Pages/" + name + ".xaml", UriKind.Relative);
         }
+
+        private void ChangePage(Page page)
+        {
+            frmMainContent.Navigate(page);
+        }
+
+
     }
 }

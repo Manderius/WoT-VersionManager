@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using VersionSwitcher_Server.Filesystem;
+using VersionManager.Filesystem;
 
-namespace VersionSwitcher_Server.GameGenerator
+namespace VersionManager.GameGenerator
 {
     class GameDirGenerator
     {

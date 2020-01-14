@@ -15,9 +15,30 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <DockPanel>
+            <DockPanel Grid.Column="0">
                 <TextBlock DockPanel.Dock="Top">Available versions:</TextBlock>
+                <Grid Margin="0">
+                    <ListBox Name="lbGameVersions" Background="White" SelectionChanged="lbGameVersions_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Version, StringFormat='World of Tanks {0}'}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </DockPanel>
+            <Frame Name="frmOverviewDetails" Grid.Column="1" Margin="15,15,15,0" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </DockPanel>
+
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="Page">
+            <Setter Property="Background" Value="White"></Setter>
+        </Style>
+    </d:DesignerProperties.DesignStyle>
 </Page>

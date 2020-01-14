@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VersionSwitcher_Server.Parsing
+namespace VersionManager.Parsing
 {
     class IgnoreList
     {

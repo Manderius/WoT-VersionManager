@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace VersionSwitcher_Server.Filesystem
+namespace VersionManager.Filesystem
 {
     public class FileEntity : BaseEntity
     {

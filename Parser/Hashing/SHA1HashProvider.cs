@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace VersionSwitcher_Server.Hashing
+namespace VersionManager.Hashing
 {
     class SHA1HashProvider : HashProvider
     {

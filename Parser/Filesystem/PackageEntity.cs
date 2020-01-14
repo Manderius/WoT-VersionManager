@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VersionSwitcher_Server.Filesystem
+namespace VersionManager.Filesystem
 {
     public class PackageEntity: DirectoryEntity
     {

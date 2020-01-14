@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VSUI"
         mc:Ignorable="d"
-        Title="WoT Version Switcher" Height="450" Width="900" Background="#FFD6D6D6" MinWidth="700" MinHeight="450">
+        Title="WoT Version Manager" Height="450" Width="900" Background="#FFEEEEEE" MinWidth="700" MinHeight="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -47,7 +47,7 @@
             </Border>
 
             <Border Grid.Row="3" BorderBrush="#FF415B70" BorderThickness="0,0,0,2">
-                <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuReplays">
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuReplays" MouseLeftButtonUp="MenuReplays_MouseLeftButtonUp">
                     <TextBlock Margin="10,0,0,0"></TextBlock>
                     <TextBlock Grid.Row="2" FontSize="18" Foreground="#FFECECEC" FontFamily="Segoe UI Light" VerticalAlignment="Center">Replays</TextBlock>
                 </StackPanel>
@@ -62,6 +62,6 @@
 
         </Grid>
 
-        <Frame Name="frmMainContent" Grid.Column="1" Source="{Binding}" Margin="15,0,15,15" NavigationUIVisibility="Hidden"></Frame>
+        <Frame Name="frmMainContent" Grid.Column="1" Margin="15,0,15,15" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>

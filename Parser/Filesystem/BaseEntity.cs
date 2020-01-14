@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Xml.Serialization;
 
-namespace VersionSwitcher_Server.Filesystem
+namespace VersionManager.Filesystem
 {
     [DebuggerDisplay("{Name}")]
     public class BaseEntity

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using VSUI.Services;
+using static VSUI.Services.LocalVersionsService;
 
 namespace VSUI.Pages
 {
@@ -20,9 +14,81 @@ namespace VSUI.Pages
     /// </summary>
     public partial class Import : Page
     {
-        public Import()
+        private LocalVersionsService _versionService;
+        public PBar ProgressBarData = new PBar();
+
+        public Import(LocalVersionsService versionService)
         {
             InitializeComponent();
+            _versionService = versionService;
+            ProgressBar.DataContext = ProgressBarData;
+        }
+
+        private void btnImport_Click(object sender, RoutedEventArgs e)
+        {
+            ProgressBarData.progress += 10;
+        }
+
+        private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string path = (sender as System.Windows.Controls.TextBox).Text;
+            ImportResult result = _versionService.CanImport(path);
+            if (result == ImportResult.ALREADY_EXISTS)
+            {
+                DisplayMessage("This game version is already imported.", true);
+            }
+            else if (result == ImportResult.INVALID_PATH)
+            {
+                DisplayMessage("This path is not a valid World of Tanks directory.", true);
+            }
+            else if (result == ImportResult.CAN_IMPORT)
+            {
+                DisplayMessage("This game version can be imported.");
+            }
+        }
+
+        private void DisplayMessage(string message, bool error = false)
+        {
+            tbMessage.Text = message;
+            tbMessage.Foreground = error ? Brushes.Red : Brushes.Green;
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Browse clicked");
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    tbGameDir.Text = fbd.SelectedPath;
+                }
+            }
+        }
+    }
+
+    public class PBar : INotifyPropertyChanged
+    {
+        private int _progress;
+        public int progress
+        {
+            get { return _progress; }
+            set
+            {
+                if (value != _progress)
+                {
+                    _progress = value;
+                    OnPropertyChanged("progress");
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string info)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
     }
 }

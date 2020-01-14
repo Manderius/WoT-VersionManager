@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace VersionSwitcher_Server.Utils
+namespace VersionManager.Utils
 {
     class Helpers
     {

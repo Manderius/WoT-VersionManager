@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace VersionSwitcher_Server
+namespace VersionManager
 {
     class ReplayParser
     {

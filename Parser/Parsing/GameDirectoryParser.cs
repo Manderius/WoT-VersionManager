@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.IO.Compression;
-using VersionSwitcher_Server.Filesystem;
-using VersionSwitcher_Server.Hashing;
+using VersionManager.Filesystem;
+using VersionManager.Hashing;
 
-namespace VersionSwitcher_Server.Parsing
+namespace VersionManager.Parsing
 {
     class GameDirectoryParser
     {

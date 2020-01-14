@@ -1,4 +1,4 @@
-﻿namespace VersionSwitcher_Server
+﻿namespace VersionManager
 {
     partial class Form1
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using VersionSwitcher_Server.Filesystem;
-using VersionSwitcher_Server.Utils;
+using VersionManager.Filesystem;
+using VersionManager.Utils;
 
-namespace VersionSwitcher_Server.Extraction
+namespace VersionManager.Extraction
 {
     class ExtractionManager
     {

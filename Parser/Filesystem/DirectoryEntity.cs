@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace VersionSwitcher_Server.Filesystem
+namespace VersionManager.Filesystem
 {
     [XmlInclude(typeof(PackageEntity))]
     public class DirectoryEntity : BaseEntity

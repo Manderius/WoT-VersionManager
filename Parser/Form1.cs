@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Linq;
-using VersionSwitcher_Server.Filesystem;
-using VersionSwitcher_Server.Persistence;
-using VersionSwitcher_Server.Extraction;
-using VersionSwitcher_Server.Utils;
-using VersionSwitcher_Server.GameGenerator;
+using VersionManager.Filesystem;
+using VersionManager.Persistence;
+using VersionManager.Extraction;
+using VersionManager.Utils;
+using VersionManager.GameGenerator;
 using System.IO;
-using VersionSwitcher_Server.Hashing;
-using VersionSwitcher_Server.Parsing;
+using VersionManager.Hashing;
+using VersionManager.Parsing;
 
-namespace VersionSwitcher_Server
+namespace VersionManager
 {
     public partial class Form1 : Form
     {
@@ -42,7 +42,7 @@ namespace VersionSwitcher_Server
             ExtractionManager ex = new ExtractionManager(new List<Extractor>() { new PackageExtractor(), new FileExtractor() });
             RootDirectoryEntity deser = new XMLStructureLoader().Deserialize(@"E:\WoT\serial-094.xml");
             //DirectoryCache cache = DirectoryCache.FromDirectory(@"E:\WoT\Container3");
-            string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(@"E:\WoT\Container3", (entity as FileEntity).Hash);
+            //string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(@"E:\WoT\Container3", (entity as FileEntity).Hash);
             //ex.Extract(deser, @"E:\WoT\Versions\World_of_Tanks - 0.9.4\", entityToPath, cache);
             //GameDirGenerator.Generate(deser, @"E:\WoT\Versions\Assembled\WoT 0.9.4", @"E:\WoT\Container3", entityToPath);
             sw.Stop();

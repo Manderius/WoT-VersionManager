@@ -7,8 +7,8 @@
     <ProjectGuid>{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VersionSwitcher_Server</RootNamespace>
-    <AssemblyName>VersionSwitcher_Server</AssemblyName>
+    <RootNamespace>VersionManager</RootNamespace>
+    <AssemblyName>VersionManager</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +56,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\OverviewDetails.xaml.cs">
+      <DependentUpon>OverviewDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Replays.xaml.cs">
+      <DependentUpon>Replays.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReplayDetails.xaml.cs">
+      <DependentUpon>ReplayDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\LocalVersionsService.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,6 +88,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Import.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OverviewDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Replays.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReplayDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,9 +147,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Parser\VSServer.csproj">
+    <ProjectReference Include="..\Parser\VersionManager.csproj">
       <Project>{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}</Project>
-      <Name>VSServer</Name>
+      <Name>VersionManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
