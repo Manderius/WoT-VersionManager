@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using VSUI.Data;
+using VSUI.Parsers;
 
 namespace VSUI.Services
 {
@@ -7,9 +9,9 @@ namespace VSUI.Services
     {
         private List<LocalGameVersion> _items = new List<LocalGameVersion>()
             {
-                new LocalGameVersion() { Version = "0.9.8", Location = @"C:\Program Files (x86)\World_of_Tanks" },
-                new LocalGameVersion() { Version = "1.1.0" },
-                new LocalGameVersion() { Version = "1.1.2" },
+                new LocalGameVersion( "0.9.8",  @"C:\Program Files (x86)\World_of_Tanks"),
+                new LocalGameVersion( "1.1.0",  @"C:\Program Files (x86)\World_of_Tanks"),
+                new LocalGameVersion( "1.2.0",  @"C:\Program Files (x86)\World_of_Tanks"),
             };
 
         public List<LocalGameVersion> GetLocalVersions()
@@ -19,7 +21,8 @@ namespace VSUI.Services
 
         public ImportResult CanImport(string path) {
             // TODO check if it already exists
-            if (Directory.Exists(path) && File.Exists(Path.Combine(path, "WorldOfTanks.exe")))
+            LocalGameVersion ver = LocalVersionParser.FromDirectory(path);
+            if (ver != null)
             {
                 return ImportResult.CAN_IMPORT;
             }
@@ -30,11 +33,5 @@ namespace VSUI.Services
         public enum ImportResult { 
             CAN_IMPORT, INVALID_PATH, ALREADY_EXISTS, IMPORT_FAILED, IMPORT_SUCCESS
         }
-    }
-
-    public class LocalGameVersion
-    {
-        public string Version { get; set; }
-        public string Location { get; set; }
     }
 }

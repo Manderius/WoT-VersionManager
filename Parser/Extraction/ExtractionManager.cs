@@ -15,7 +15,7 @@ namespace VersionManager.Extraction
 
         public void Extract(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache)
         {
-            foreach (BaseEntity ent in entity.GetAllEntities())
+            foreach (BaseEntity ent in entity.GetAllFileEntities())
             {
                 foreach (Extractor ex in _extractors)
                 {

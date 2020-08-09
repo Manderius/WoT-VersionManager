@@ -55,7 +55,6 @@ namespace VSUI.Pages
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Browse clicked");
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();

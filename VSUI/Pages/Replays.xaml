@@ -17,14 +17,14 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnBrowse" Grid.Row="0" Grid.Column="0" FontFamily="Segoe UI Light" FontSize="16" Margin="0,0,10,0" BorderBrush="{x:Null}" Cursor="Hand">
+                <Button x:Name="btnBrowse" Grid.Row="0" Grid.Column="0" FontFamily="Segoe UI Light" FontSize="16" Margin="0,0,10,0" BorderBrush="{x:Null}" Cursor="Hand" Click="btnBrowse_Click">
                     <TextBlock Margin="5">Select a Replay</TextBlock>
                 </Button>
                 <Button x:Name="btnPlay" Grid.Column="1" Grid.Row="0" FontFamily="Segoe UI Light" FontSize="16" Margin="10,0,10,0" BorderBrush="{x:Null}" Cursor="Hand" Click="btnPlay_Click" IsEnabled="False">
                     <TextBlock Margin="5">Play Replay</TextBlock>
                 </Button>
             </Grid>
-            <Frame></Frame>
+            <Frame Name="frmReplayDetails" NavigationUIVisibility="Hidden" Margin="0,10,0,0"></Frame>
         </DockPanel>
     </DockPanel>
 

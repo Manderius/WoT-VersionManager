@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using VSUI.Data;
 using VSUI.Services;
 
 namespace VSUI.Pages

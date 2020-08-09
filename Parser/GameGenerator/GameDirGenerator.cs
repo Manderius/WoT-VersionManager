@@ -23,6 +23,10 @@ namespace VersionManager.GameGenerator
             {
                 throw new FileNotFoundException("Required file not found in container: " + source);
             }
+            if (File.Exists(path))
+            {
+                return true;
+            }
             return CreateHardLink(path, source, IntPtr.Zero);
         }
 

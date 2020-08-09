@@ -56,6 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\GameVersion.cs" />
+    <Compile Include="Data\LocalGameVersion.cs" />
     <Compile Include="Pages\OverviewDetails.xaml.cs">
       <DependentUpon>OverviewDetails.xaml</DependentUpon>
     </Compile>
@@ -65,7 +67,9 @@
     <Compile Include="Pages\ReplayDetails.xaml.cs">
       <DependentUpon>ReplayDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Parsers\LocalVersionParser.cs" />
     <Compile Include="Services\LocalVersionsService.cs" />
+    <Compile Include="SettingsManager\SettingsManager.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

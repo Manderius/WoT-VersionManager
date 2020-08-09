@@ -2,21 +2,28 @@
 
 namespace VersionManager.Filesystem
 {
-    public class PackageEntity: DirectoryEntity
+    public class PackageEntity : DirectoryEntity
     {
-        public PackageEntity(): base()
+        public PackageEntity() : base()
         {
 
         }
 
-        public PackageEntity(string name): base(name)
+        public PackageEntity(string name) : base(name)
         {
 
         }
 
-        public override List<BaseEntity> GetAllEntities()
+        public override List<BaseEntity> GetAllFileEntities(bool packageIsDirectory)
         {
-            return new List<BaseEntity>() { this };
+            if (packageIsDirectory)
+            {
+                return base.GetAllFileEntities(packageIsDirectory);
+            }
+            else
+            {
+                return new List<BaseEntity>() { this };
+            }
         }
 
     }

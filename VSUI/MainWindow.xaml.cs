@@ -3,9 +3,11 @@ using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using VersionManager;
 using VSUI.Pages;
 using VSUI.Services;
 using VSUI.Utils;
+using System.IO;
 
 namespace VSUI
 {
@@ -21,6 +23,7 @@ namespace VSUI
         {
             InitializeComponent();
             ChangePage(_pages.GetOrInsert(typeof(Overview), new Overview(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
+            //Main.Run();
         }
 
         private void MenuSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -45,7 +48,7 @@ namespace VSUI
 
         private void MenuReplays_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage(_pages.GetOrInsert(typeof(Replays), new Replays()));
+            ChangePage(_pages.GetOrInsert(typeof(Replays), new Replays(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
         }
 
         private void ChangePage(string name)

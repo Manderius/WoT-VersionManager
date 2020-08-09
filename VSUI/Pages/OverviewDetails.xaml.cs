@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using VSUI.Services;
+using VSUI.Data;
 
 namespace VSUI.Pages
 {
@@ -21,7 +21,7 @@ namespace VSUI.Pages
 
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("explorer.exe", GameDetails.Location);
+            Process.Start("explorer.exe", GameDetails.Path);
         }
     }
 }

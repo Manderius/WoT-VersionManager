@@ -54,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="Replay\Replay.cs" />
     <Compile Include="Utils\CompressedFile.cs" />
     <Compile Include="Replay\ReplayParser.cs" />
     <Compile Include="Utils\DirectoryCache.cs" />
@@ -67,12 +69,6 @@
     <Compile Include="Filesystem\PackageEntity.cs" />
     <Compile Include="Filesystem\RootDirectoryEntity.cs" />
     <Compile Include="Utils\FolderCompare.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="GameGenerator\GameDirGenerator.cs" />
     <Compile Include="Hashing\HashProvider.cs" />
     <Compile Include="Hashing\SHA1HashProvider.cs" />

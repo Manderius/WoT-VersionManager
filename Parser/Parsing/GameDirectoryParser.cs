@@ -24,7 +24,7 @@ namespace VersionManager.Parsing
                 }
                 else
                 {
-                    FileEntity fileEnt = computeHash ? new FileEntity(file.Name, hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open)) + relativePath.GetHashCode()) : new FileEntity(file.Name);
+                    FileEntity fileEnt = computeHash ? new FileEntity(file.Name, hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open)) + relativePath.GetHashCode(), file.Length) : new FileEntity(file.Name, file.Length);
                     parent.Add(fileEnt);
                 }
             }
@@ -51,7 +51,7 @@ namespace VersionManager.Parsing
                         continue;
 
                     string relativePath = entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length);
-                    FileEntity file = (computeHash) ? new FileEntity(entry.Name, hashProvider.FromStream(entry.Open()) + entry.FullName.GetHashCode()) : new FileEntity(entry.Name);
+                    FileEntity file = computeHash ? new FileEntity(entry.Name, hashProvider.FromStream(entry.Open()) + entry.FullName.GetHashCode(), entry.Length) : new FileEntity(entry.Name, entry.Length);
                     (root.GetEntityFromRelativePath(relativePath, true) as DirectoryEntity).Add(file);
                 }
             }

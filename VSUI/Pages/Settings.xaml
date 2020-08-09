@@ -15,24 +15,58 @@
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1">
-                <StackPanel>
+            <DockPanel Grid.Column="1" LastChildFill="False">
+                <StackPanel DockPanel.Dock="Top">
                     <Label>Path to Version Switcher data directory:</Label>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="8*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0"/>
-                        <Button Grid.Column="1">Browse</Button>
+                        <TextBox x:Name="tbDataDir" Grid.Column="0" Text="{Binding DataDir}" TextChanged="tbDataDir_TextChanged" />
+                        <Button x:Name="btnBrowseDataDir" Grid.Column="1" Click="btnBrowseDataDir_Click">Browse</Button>
                     </Grid>
-                    <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">WoT Version Switcher will store all data in this directory.
+                    <TextBlock Name="tbMessage" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock TextWrapping="Wrap">WoT Version Switcher will store all data in this directory.
                 This folder can get quite big if you have multiple WoT versions installed.
                 Make sure there's at least 30 GB of free space on your disk.</TextBlock>
+                    <TextBlock TextWrapping="Wrap">If you decide to change this directory later, Version Manager will NOT move all files to their new location.
+                    You can simply move the data directory manually and set the new path here.</TextBlock>
                 </StackPanel>
-            </StackPanel>
+                <Button DockPanel.Dock="Bottom" x:Name="btnSave" FontFamily="Segoe UI Light" FontSize="16" Margin="0,0,10,0" BorderBrush="{x:Null}" Cursor="Hand" Click="btnSave_Click" IsEnabled="False">
+                    <TextBlock Margin="5">Save</TextBlock>
+                </Button>
+            </DockPanel>
         </Grid>
     </DockPanel>
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="#FF006BC3" />
+            <Setter Property="Foreground" Value="White" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="MyContentPresenter" 
+                                      Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#FFDEDEDE"/>
+                    <Setter Property="Foreground" Value="#FFA4A4A4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
 
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="Page">

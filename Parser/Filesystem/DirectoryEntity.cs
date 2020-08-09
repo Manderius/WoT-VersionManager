@@ -40,10 +40,10 @@ namespace VersionManager.Filesystem
             }
         }
 
-        public virtual List<BaseEntity> GetAllEntities()
+        public virtual List<BaseEntity> GetAllFileEntities(bool packageIsDirectory = false)
         {
             List<BaseEntity> entities = new List<BaseEntity>(Contents.OfType<FileEntity>());
-            entities.AddRange(Contents.OfType<DirectoryEntity>().Select(dir => dir.GetAllEntities()).Aggregate(new List<BaseEntity>(), (a, b) => a.Concat(b).ToList()));
+            entities.AddRange(Contents.OfType<DirectoryEntity>().Select(dir => dir.GetAllFileEntities(packageIsDirectory)).Aggregate(new List<BaseEntity>(), (a, b) => a.Concat(b).ToList()));
             return entities;
         }
 

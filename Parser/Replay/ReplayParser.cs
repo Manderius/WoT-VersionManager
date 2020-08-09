@@ -1,20 +1,17 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace VersionManager
+namespace VersionManager.Replay
 {
-    class ReplayParser
+    public class ReplayParser
     {
-        public static Dictionary<string, string> Parse(string path)
+        public static Replay Parse(string path)
         {
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException();
             }
-
-            Dictionary<string, string> result = new Dictionary<string, string>();
 
             using (BinaryReader b = new BinaryReader(File.Open(path, FileMode.Open)))
             {
@@ -27,15 +24,16 @@ namespace VersionManager
 
                 dynamic json = JsonConvert.DeserializeObject(str);
 
-                string map = json.mapName;
-                string version = json.clientVersionFromExe;
+                string map = string.Format("{0} ({1})", json.mapDisplayName, json.mapName);
+                string version = json.clientVersionFromExe ?? "Unknown";
                 version = version.Replace(',', '.').Replace(" ", "");
 
-                result.Add("version", version);
-                result.Add("map", map);
-            }
+                string tank = json.playerVehicle;
+                string player = json.playerName;
+                string date = json.dateTime;
 
-            return result;
+                return new Replay(version, tank, map, player, date);
+            }
         }
     }
 }
