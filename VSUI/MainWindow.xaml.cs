@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using VersionManager;
+using System.Windows.Media;
 using VSUI.Pages;
-using VSUI.Services;
 using VSUI.Utils;
-using System.IO;
 
 namespace VSUI
 {
@@ -16,51 +13,59 @@ namespace VSUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Hashtable _services = new Hashtable();
-        private Hashtable _pages = new Hashtable();
+        private PageCache _cache = new PageCache();
+        private List<StackPanel> _menuItems;
+        private Brush _itemSelected = new SolidColorBrush(Color.FromRgb(0, 85, 155));
+        private Brush _itemDeselected = new SolidColorBrush(Color.FromRgb(0, 55, 100));
 
         public MainWindow()
         {
             InitializeComponent();
-            ChangePage(_pages.GetOrInsert(typeof(Overview), new Overview(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
-            //Main.Run();
+            _menuItems = new List<StackPanel> { MenuOverview, MenuDownload, MenuImportGame, MenuReplays, MenuHelp};
+            ChangePage<Overview>();
+            SelectMenuItem(MenuOverview);
         }
 
-        private void MenuSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void MenuHelp_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage("Settings");
+            ChangePage<Help>();
+            SelectMenuItem(sender as StackPanel);
         }
 
         private void MenuOverview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage(_pages.GetOrInsert(typeof(Overview), new Overview(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
+            ChangePage<Overview>();
+            SelectMenuItem(sender as StackPanel);
         }
 
         private void MenuDownload_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage("Download");
+            ChangePage<Download>();
+            SelectMenuItem(sender as StackPanel);
         }
 
         private void MenuImportGame_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage(_pages.GetOrInsert(typeof(Import), new Import(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
+            ChangePage<Import>();
+            SelectMenuItem(sender as StackPanel);
         }
 
         private void MenuReplays_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage(_pages.GetOrInsert(typeof(Replays), new Replays(_services.GetOrInsert("LocalVersionService", new LocalVersionsService()))));
+            ChangePage<Replays>();
+            SelectMenuItem(sender as StackPanel);
         }
 
-        private void ChangePage(string name)
+        private void ChangePage<T>()
         {
-            frmMainContent.Source = new Uri("Pages/" + name + ".xaml", UriKind.Relative);
+            frmMainContent.Navigate(_cache.Get<T>());
         }
 
-        private void ChangePage(Page page)
+        private void SelectMenuItem(StackPanel selected)
         {
-            frmMainContent.Navigate(page);
+            _menuItems.ForEach(panel => panel.Background = _itemDeselected);
+            selected.Background = _itemSelected;
         }
-
 
     }
 }

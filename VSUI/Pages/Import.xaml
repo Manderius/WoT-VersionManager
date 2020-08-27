@@ -12,31 +12,45 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="0">
                 <StackPanel>
-                    <Label>Path to an existing WoT client directory:</Label>
+                    <TextBlock>Path to an existing WoT client directory:</TextBlock>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="7*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="tbGameDir" Grid.Column="0" TextChanged="tbGameDir_TextChanged"/>
-                        <Button x:Name="btnBrowse" Grid.Column="1" Click="btnBrowse_Click">Browse</Button>
+                        <TextBox x:Name="tbGameDir" Grid.Column="0" TextChanged="tbGameDir_TextChanged" VerticalContentAlignment="Center"/>
+                        <Button x:Name="btnBrowse" Grid.Column="1" Click="btnBrowse_Click" FontSize="13"><TextBlock Margin="2">Browse</TextBlock></Button>
                     </Grid>
-                    <TextBlock x:Name="tbMessage" TextWrapping="Wrap" Foreground="#FF00B911"></TextBlock>
-                    <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
+                    <Grid Margin="0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="bannerCanImport" TextWrapping="Wrap" Foreground="White" Background="#FF099116" TextAlignment="Center" Grid.Column="0">
+                            <TextBlock Margin="5" FontSize="13">This version can be imported.</TextBlock>
+                        </TextBlock>
+                        <TextBlock x:Name="bannerInvalidDirectory" TextWrapping="Wrap" Foreground="White" Background="#FF970B18" TextAlignment="Center" Grid.Column="1">
+                            <TextBlock Margin="5" FontSize="13">Not a valid WoT directory.</TextBlock>
+                        </TextBlock>
+                        <TextBlock x:Name="bannerAlreadyImported" TextWrapping="Wrap" Foreground="White" Background="#FFC76D00" TextAlignment="Center" Grid.Column="2">
+                            <TextBlock Margin="5" FontSize="13">This version is already imported.</TextBlock>
+                        </TextBlock>
+                    </Grid>
+                    
+                    <TextBlock TextWrapping="Wrap">
                         Import an existing game client of <Bold>any</Bold> version. After the import is done, you can delete
                     the old version from your computer as it will be stored in Version Manager's data directory.
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap">
-                        It's also recommended to <Bold>import your default game client</Bold> to speed up the process. You can repeat it with every new version
-                        to avoid having to download files later.
+                    <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
+                        It's also recommended to <Bold>import your default game client</Bold>. You can repeat it with every new update. This way you will always have
+                        all the WoT versions saved.
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap">
-                        Please note that importing a client might take up to 20 minutes. Make sure you have enough space on your drive where Version Manager's data folder
+                    <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
+                        Please note that importing a client might take up to 20 minutes. Make sure you have enough space on your drive where Version Manager
                         is located.
                     </TextBlock>
                     <Grid Margin="0,100,0,0">
@@ -48,7 +62,7 @@
                             <ProgressBar x:Name="ProgressBar" Maximum="100" Minimum="0" Value="{Binding progress, UpdateSourceTrigger=PropertyChanged}" Background="White"/>
                             <TextBlock Text="{Binding ElementName=ProgressBar, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Grid>
-                        <Button x:Name="btnImport" Grid.Column="1" Background="#FF006BC3" Foreground="White" FontFamily="Segoe UI Light" FontSize="16" Margin="0" BorderBrush="{x:Null}" Cursor="Hand" Click="btnImport_Click">
+                        <Button x:Name="btnImport" Grid.Column="1" Click="btnImport_Click" IsEnabled="False">
                             <TextBlock Margin="5">Import</TextBlock>
                         </Button>
                     </Grid>

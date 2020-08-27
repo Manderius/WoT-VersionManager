@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using VersionManager.Replay;
 using VSUI.Data;
 using VSUI.Parsers;
 
@@ -11,7 +12,7 @@ namespace VSUI.Services
             {
                 new LocalGameVersion( "0.9.8",  @"C:\Program Files (x86)\World_of_Tanks"),
                 new LocalGameVersion( "1.1.0",  @"C:\Program Files (x86)\World_of_Tanks"),
-                new LocalGameVersion( "1.2.0",  @"C:\Program Files (x86)\World_of_Tanks"),
+                new LocalGameVersion( "1.10.0.1",  @"C:\Program Files (x86)\World_of_Tanks_EU"),
             };
 
         public List<LocalGameVersion> GetLocalVersions()
@@ -19,19 +20,29 @@ namespace VSUI.Services
             return _items;
         }
 
-        public ImportResult CanImport(string path) {
-            // TODO check if it already exists
-            LocalGameVersion ver = LocalVersionParser.FromDirectory(path);
-            if (ver != null)
-            {
-                return ImportResult.CAN_IMPORT;
-            }
-
-            return ImportResult.INVALID_PATH;
+        public bool Contains(GameVersion version)
+        {
+            return _items.FirstOrDefault(x => x.Version == version.Version) != null;
         }
 
-        public enum ImportResult { 
-            CAN_IMPORT, INVALID_PATH, ALREADY_EXISTS, IMPORT_FAILED, IMPORT_SUCCESS
+        public bool Contains(LocalGameVersion version)
+        {
+            return _items.Contains(version);
+        }
+
+        public ImportStatus CanImport(string path)
+        {
+            // TODO check if it already exists
+            LocalGameVersion ver = LocalVersionParser.FromDirectory(path);
+            if (ver == null)
+                return ImportStatus.INVALID_PATH;
+
+            return Contains(new GameVersion(ver.Version)) ? ImportStatus.ALREADY_EXISTS : ImportStatus.CAN_IMPORT;
+        }
+
+        public enum ImportStatus
+        {
+            CAN_IMPORT, INVALID_PATH, ALREADY_EXISTS
         }
     }
 }

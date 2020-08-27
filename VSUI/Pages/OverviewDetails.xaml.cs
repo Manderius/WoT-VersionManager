@@ -6,7 +6,7 @@ using VSUI.Data;
 namespace VSUI.Pages
 {
     /// <summary>
-    /// Interakční logika pro OverviewDetails.xaml
+    /// Interaction logic for OverviewDetails.xaml
     /// </summary>
     public partial class OverviewDetails : Page
     {

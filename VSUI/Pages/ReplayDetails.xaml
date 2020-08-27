@@ -23,36 +23,26 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0">Path:</TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path}"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0">Replay name:</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FileName}"></TextBlock>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0">Path:</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ReplayData.Path}"></TextBlock>
 
-        <TextBlock Grid.Row="1" Grid.Column="0">Version:</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ReplayData.Version}"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0">Version:</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ReplayData.Version}"></TextBlock>
 
-        <TextBlock Grid.Row="2" Grid.Column="0">Tank:</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ReplayData.Tank}"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0">Tank:</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ReplayData.Tank}"></TextBlock>
 
-        <TextBlock Grid.Row="3" Grid.Column="0">Map:</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ReplayData.Map}"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0">Map:</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReplayData.Map}"></TextBlock>
 
-        <TextBlock Grid.Row="4" Grid.Column="0">Player:</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReplayData.Player}"></TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0">Player:</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding ReplayData.Player}"></TextBlock>
 
-        <TextBlock Grid.Row="5" Grid.Column="0">Date played:</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding ReplayData.Date}"></TextBlock>
-
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Margin="0,20,0,0" Name="versionPick">
-            <TextBlock>Game Version cannot be determined. This is often caused by old replays. Please select the version below:</TextBlock>
-            <ComboBox Name="cmbVersions">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Version, StringFormat='World of Tanks {0}'}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </StackPanel>
+        <TextBlock Grid.Row="6" Grid.Column="0">Date played:</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding ReplayData.Date}"></TextBlock>
     </Grid>
 
     <d:DesignerProperties.DesignStyle>

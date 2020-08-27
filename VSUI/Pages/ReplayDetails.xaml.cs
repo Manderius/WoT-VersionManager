@@ -1,32 +1,23 @@
-﻿using System.Windows.Controls;
+﻿using System.IO;
+using System.Windows.Controls;
 using VersionManager.Replay;
-using VSUI.Services;
 
 namespace VSUI.Pages
 {
     /// <summary>
-    /// Interakční logika pro ReplayDetails.xaml
+    /// Interaction logic for ReplayDetails.xaml
     /// </summary>
     public partial class ReplayDetails : Page
     {
-        public Replay ReplayData { get; set; }
-        public string Path { get; set; }
-        private LocalVersionsService _localVersionService;
+        public Replay ReplayData { get; private set; }
+        public string FileName { get; private set; }
 
-        public ReplayDetails(Replay replay, string path, LocalVersionsService localVersionsService)
+        public ReplayDetails(Replay replay)
         {
             ReplayData = replay;
-            Path = path;
             DataContext = this;
-            _localVersionService = localVersionsService;
+            FileName = Path.GetFileNameWithoutExtension(ReplayData.Path);
             InitializeComponent();
-
-            if (ReplayData.Version != "Unknown")
-            {
-                versionPick.Visibility = System.Windows.Visibility.Hidden;  
-            }
-
-
         }
     }
 }

@@ -6,7 +6,7 @@ namespace VSUI.Pages
 {
 
     /// <summary>
-    /// Interakční logika pro Overview.xaml
+    /// Interaction logic for Overview.xaml
     /// </summary>
     public partial class Overview : Page
     {

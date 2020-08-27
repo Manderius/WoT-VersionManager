@@ -1,16 +1,14 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media;
 using VSUI.Services;
 using static VSUI.Services.LocalVersionsService;
 
 namespace VSUI.Pages
 {
     /// <summary>
-    /// Interakční logika pro Import.xaml
+    /// Interaction logic for Import.xaml
     /// </summary>
     public partial class Import : Page
     {
@@ -22,6 +20,8 @@ namespace VSUI.Pages
             InitializeComponent();
             _versionService = versionService;
             ProgressBar.DataContext = ProgressBarData;
+            bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
+
         }
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
@@ -32,25 +32,28 @@ namespace VSUI.Pages
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
         {
             string path = (sender as System.Windows.Controls.TextBox).Text;
-            ImportResult result = _versionService.CanImport(path);
-            if (result == ImportResult.ALREADY_EXISTS)
-            {
-                DisplayMessage("This game version is already imported.", true);
-            }
-            else if (result == ImportResult.INVALID_PATH)
-            {
-                DisplayMessage("This path is not a valid World of Tanks directory.", true);
-            }
-            else if (result == ImportResult.CAN_IMPORT)
-            {
-                DisplayMessage("This game version can be imported.");
-            }
+            ImportStatus result = _versionService.CanImport(path);
+            ShowBannerWithResult(result);
+            btnImport.IsEnabled = result == ImportStatus.CAN_IMPORT;
         }
 
-        private void DisplayMessage(string message, bool error = false)
+        private void ShowBannerWithResult(ImportStatus result)
         {
-            tbMessage.Text = message;
-            tbMessage.Foreground = error ? Brushes.Red : Brushes.Green;
+            bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
+            switch (result)
+            {
+                case ImportStatus.ALREADY_EXISTS:
+                    bannerAlreadyImported.Visibility = Visibility.Visible;
+                    break;
+                case ImportStatus.INVALID_PATH:
+                    bannerInvalidDirectory.Visibility = Visibility.Visible;
+                    break;
+                case ImportStatus.CAN_IMPORT:
+                    bannerCanImport.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -56,7 +59,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\GameVersion.cs" />
     <Compile Include="Data\LocalGameVersion.cs" />
     <Compile Include="Pages\OverviewDetails.xaml.cs">
       <DependentUpon>OverviewDetails.xaml</DependentUpon>
@@ -69,8 +71,9 @@
     </Compile>
     <Compile Include="Parsers\LocalVersionParser.cs" />
     <Compile Include="Services\LocalVersionsService.cs" />
-    <Compile Include="SettingsManager\SettingsManager.cs" />
+    <Compile Include="Services\ReplayService.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\PageCache.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,7 +110,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Settings.xaml">
+    <Page Include="Pages\Help.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,8 +125,8 @@
     <Compile Include="Pages\Import.xaml.cs">
       <DependentUpon>Import.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
+    <Compile Include="Pages\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -155,6 +158,9 @@
       <Project>{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}</Project>
       <Name>VersionManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

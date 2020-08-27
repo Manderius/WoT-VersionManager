@@ -28,6 +28,11 @@ namespace VersionManager.Utils
             CompressedFile file = (CompressedFile)obj;
             return (Name == file.Name) && (FullName == file.FullName);
         }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() + FullName.GetHashCode();
+        }
     }
 
     class CompressedFileEqualityComparer : IEqualityComparer<CompressedFile>
