@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace VersionSwitcher_Server.Hashing
+namespace VersionManager.Hashing
 {
     abstract class HashProvider
     {

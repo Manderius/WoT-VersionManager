@@ -1,8 +1,8 @@
 ﻿using System;
-using VersionSwitcher_Server.Filesystem;
-using VersionSwitcher_Server.Utils;
+using VersionManager.Filesystem;
+using VersionManager.Utils;
 
-namespace VersionSwitcher_Server.Extraction
+namespace VersionManager.Extraction
 {
     abstract class Extractor
     {

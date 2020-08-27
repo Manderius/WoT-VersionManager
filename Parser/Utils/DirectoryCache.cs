@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace VersionSwitcher_Server.Utils
+namespace VersionManager.Utils
 {
     class DirectoryCache
     {

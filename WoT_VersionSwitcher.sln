@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Blend for Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSServer", "Parser\VSServer.csproj", "{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VersionManager", "Parser\VersionManager.csproj", "{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSUI", "VSUI\VSUI.csproj", "{669AF88D-5664-493B-8DAF-91D32A34D320}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMUI", "VSUI\VMUI.csproj", "{669AF88D-5664-493B-8DAF-91D32A34D320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

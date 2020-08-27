@@ -1,20 +1,33 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace VersionSwitcher_Server
+namespace VersionManager.Replay
 {
-    class ReplayParser
+    public class ReplayParser
     {
-        public static Dictionary<string, string> Parse(string path)
+
+        private static GameVersion GetReplayVersion(dynamic json)
+        {
+            if (json.clientVersionFromXml != null)
+            {
+                return new GameVersion(((string)json.clientVersionFromXml).Split(' ')[1].Substring(2));
+            }
+            string version = ((string) json.clientVersionFromExe)?.Replace(',', '.').Replace(" ", "");
+            if (version == null)
+            {
+                return GameVersion.UNKNOWN;
+            }
+
+            return new GameVersion(version);
+        }
+
+        public static Replay Parse(string path)
         {
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException();
             }
-
-            Dictionary<string, string> result = new Dictionary<string, string>();
 
             using (BinaryReader b = new BinaryReader(File.Open(path, FileMode.Open)))
             {
@@ -27,15 +40,15 @@ namespace VersionSwitcher_Server
 
                 dynamic json = JsonConvert.DeserializeObject(str);
 
-                string map = json.mapName;
-                string version = json.clientVersionFromExe;
-                version = version.Replace(',', '.').Replace(" ", "");
+                string map = string.Format("{0} ({1})", json.mapDisplayName, json.mapName);
+                GameVersion version = GetReplayVersion(json);
 
-                result.Add("version", version);
-                result.Add("map", map);
+                string tank = json.playerVehicle;
+                string player = json.playerName;
+                string date = json.dateTime;
+
+                return new Replay(version, tank, map, player, date, path);
             }
-
-            return result;
         }
     }
 }

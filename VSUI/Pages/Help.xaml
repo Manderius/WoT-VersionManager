@@ -1,0 +1,122 @@
+﻿<Page x:Class="VSUI.Pages.Help"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VSUI.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Help">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Help</TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock TextWrapping="Wrap">
+                    WoT Version Manager is a free tool designed to save space on your computer when you're using multiple
+                    different World of Tanks client versions. It can reduce WoT space usage by up to 50 %.
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontWeight="Bold" FontSize="14">
+                    How to use:
+                </TextBlock>
+                <Grid Margin="20,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="0" Grid.Column="0">1.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="0" Grid.Column="1">
+                        Make sure you have enough space on your disk. This application will copy WoT client files to a new location,
+                        so you need to have at least 40 GB of free space.
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Grid.Row="1" Grid.Column="0">2.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="1" Grid.Column="1">
+                        Go to "Import game client" and select one of the WoT client directories. You can also select your main client.
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Grid.Row="2" Grid.Column="0">3.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="2" Grid.Column="1">
+                        Start the import process and wait until it's completed. This process might take up to 20 minutes.
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Grid.Row="3" Grid.Column="0">4.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="3" Grid.Column="1">
+                        Once the import finishes, go to "Overview" and verify that the imported version works (for example play a replay through the "Replays" tab.)
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Grid.Row="4" Grid.Column="0">5.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="4" Grid.Column="1">
+                        If everything works, you can now delete the old client directory. It is now saved inside WoT Version Manager. (Do not delete your main WoT client.)
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Grid.Row="5" Grid.Column="0">6.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Grid.Row="5" Grid.Column="1">
+                        Repeat steps 2 - 5 for every WoT version you have.
+                    </TextBlock>
+                </Grid>
+
+                <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontWeight="Bold" FontSize="14">
+                    Replay features:
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="20,0,0,0">
+                    Using the "Replays" tab, you can select any replay to display its details. If you have a matching game version imported, you can also
+                    play the replay using the correct client.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontWeight="Bold" FontSize="14">
+                    Deleting imported clients:
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="20,0,0,0">
+                    If you want to delete an imported client, <Bold>do not delete the directory directly</Bold>. This can cause instability and might cause your other
+                    clients to stop working. <Bold>Always use the Delete button</Bold> in the "Overview" tab.
+                </TextBlock>
+
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="#FF006BC3" />
+            <Setter Property="Foreground" Value="White" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="MyContentPresenter" 
+                                      Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#FFDEDEDE"/>
+                    <Setter Property="Foreground" Value="#FFA4A4A4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="Page">
+            <Setter Property="Background" Value="White"></Setter>
+        </Style>
+    </d:DesignerProperties.DesignStyle>
+</Page>

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace VersionSwitcher_Server.Filesystem
+namespace VersionManager.Filesystem
 {
     [XmlInclude(typeof(PackageEntity))]
     public class DirectoryEntity : BaseEntity
@@ -40,10 +40,10 @@ namespace VersionSwitcher_Server.Filesystem
             }
         }
 
-        public virtual List<BaseEntity> GetAllEntities()
+        public virtual List<BaseEntity> GetAllFileEntities(bool packageIsDirectory = false)
         {
             List<BaseEntity> entities = new List<BaseEntity>(Contents.OfType<FileEntity>());
-            entities.AddRange(Contents.OfType<DirectoryEntity>().Select(dir => dir.GetAllEntities()).Aggregate(new List<BaseEntity>(), (a, b) => a.Concat(b).ToList()));
+            entities.AddRange(Contents.OfType<DirectoryEntity>().Select(dir => dir.GetAllFileEntities(packageIsDirectory)).Aggregate(new List<BaseEntity>(), (a, b) => a.Concat(b).ToList()));
             return entities;
         }
 

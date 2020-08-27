@@ -1,6 +1,6 @@
-﻿using VersionSwitcher_Server.Filesystem;
+﻿using VersionManager.Filesystem;
 
-namespace VersionSwitcher_Server.Persistence
+namespace VersionManager.Persistence
 {
     interface DataSerializer
     {

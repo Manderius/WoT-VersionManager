@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VSUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="WoT Version Manager" Height="450" Width="900" Background="#FFEEEEEE" MinWidth="700" MinHeight="450">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="#FF003764">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderBrush="#FF415B70" BorderThickness="0,0,0,2">
+                <StackPanel  Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuOverview" MouseLeftButtonUp="MenuOverview_MouseLeftButtonUp">
+                    <TextBlock Margin="10,0,0,0"></TextBlock>
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="#FFECECEC" FontFamily="Segoe UI Light" VerticalAlignment="Center">Overview</TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" BorderBrush="#FF415B70" BorderThickness="0,0,0,2">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuDownload" MouseLeftButtonUp="MenuDownload_MouseLeftButtonUp">
+                    <TextBlock Margin="10,0,0,0"></TextBlock>
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="#FFECECEC" FontFamily="Segoe UI Light" VerticalAlignment="Center">Download</TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="2" BorderBrush="#FF415B70" BorderThickness="0,0,0,2">
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuImportGame" MouseLeftButtonUp="MenuImportGame_MouseLeftButtonUp">
+                    <TextBlock Margin="10,0,0,0"></TextBlock>
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="#FFECECEC" FontFamily="Segoe UI Light" VerticalAlignment="Center">Import game client</TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="3" BorderBrush="#FF415B70" BorderThickness="0,0,0,2">
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuReplays" MouseLeftButtonUp="MenuReplays_MouseLeftButtonUp">
+                    <TextBlock Margin="10,0,0,0"></TextBlock>
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="#FFECECEC" FontFamily="Segoe UI Light" VerticalAlignment="Center">Replays</TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="4" BorderBrush="#FF415B70" BorderThickness="0,0,0,2">
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Background="#FF003764" Cursor="Hand" Name="MenuHelp" MouseLeftButtonUp="MenuHelp_MouseLeftButtonUp">
+                    <TextBlock Margin="10,0,0,0"/>
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="#FFECECEC" FontFamily="Segoe UI Light" VerticalAlignment="Center">Help</TextBlock>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+
+        <Frame Name="frmMainContent" Grid.Column="1" Margin="15,0,15,15" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
+
 </Window>

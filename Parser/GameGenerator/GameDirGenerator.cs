@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using VersionSwitcher_Server.Filesystem;
+using VersionManager.Filesystem;
 
-namespace VersionSwitcher_Server.GameGenerator
+namespace VersionManager.GameGenerator
 {
     class GameDirGenerator
     {
@@ -22,6 +22,10 @@ namespace VersionSwitcher_Server.GameGenerator
             if (!File.Exists(source))
             {
                 throw new FileNotFoundException("Required file not found in container: " + source);
+            }
+            if (File.Exists(path))
+            {
+                return true;
             }
             return CreateHardLink(path, source, IntPtr.Zero);
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VersionSwitcher_Server.Utils
+namespace VersionManager.Utils
 {
     class CompressedFile
     {
@@ -27,6 +27,11 @@ namespace VersionSwitcher_Server.Utils
             }
             CompressedFile file = (CompressedFile)obj;
             return (Name == file.Name) && (FullName == file.FullName);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() + FullName.GetHashCode();
         }
     }
 
