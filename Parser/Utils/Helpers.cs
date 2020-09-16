@@ -6,7 +6,7 @@ using VersionManager.Filesystem;
 
 namespace VersionManager.Utils
 {
-    class Helpers
+    public class Helpers
     {
         public static string GetFileDirectory(string container, string hash)
         {

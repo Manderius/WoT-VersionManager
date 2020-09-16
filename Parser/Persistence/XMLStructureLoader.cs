@@ -4,7 +4,7 @@ using VersionManager.Filesystem;
 
 namespace VersionManager.Persistence
 {
-    class XMLStructureLoader : DataDeserializer, DataSerializer
+    public class XMLStructureLoader : DataDeserializer, DataSerializer
     {
         public RootDirectoryEntity Deserialize(string path)
         {

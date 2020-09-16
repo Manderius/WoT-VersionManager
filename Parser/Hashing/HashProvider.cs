@@ -2,7 +2,7 @@
 
 namespace VersionManager.Hashing
 {
-    abstract class HashProvider
+    abstract public class HashProvider
     {
         public abstract string FromStream(Stream str);
     }
