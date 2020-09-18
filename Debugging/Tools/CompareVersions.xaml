@@ -24,16 +24,16 @@
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.Column="0">Select first version:</Label>
-            <TextBox Grid.Row="1" Grid.Column="0"></TextBox>
-            <Button Grid.Row="1" Grid.Column="1" Name="btnBrowseFirst">Browse</Button>
+            <TextBox Grid.Row="1" Grid.Column="0" Name="txtFirstVersion"></TextBox>
+            <Button Grid.Row="1" Grid.Column="1" Name="btnBrowseFirst" Click="btnBrowseFirst_Click">Browse</Button>
 
             <Label Grid.Row="2" Grid.Column="0">Select second version:</Label>
-            <TextBox Grid.Row="3" Grid.Column="0"></TextBox>
-            <Button Grid.Row="3" Grid.Column="1" Name="btnBrowseSecond">Browse</Button>
+            <TextBox Grid.Row="3" Grid.Column="0" Name="txtSecondVersion"></TextBox>
+            <Button Grid.Row="3" Grid.Column="1" Name="btnBrowseSecond" Click="btnBrowseSecond_Click">Browse</Button>
 
             <TextBlock Grid.Row="4"></TextBlock>
 
-            <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2">Compare</Button>
+            <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Name="btnCompare" Click="btnCompare_Click">Compare</Button>
         </Grid>
     </StackPanel>
 

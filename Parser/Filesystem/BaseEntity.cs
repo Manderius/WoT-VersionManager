@@ -19,5 +19,20 @@ namespace VersionManager.Filesystem
         {
             Name = name;
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as BaseEntity);
+        }
+
+        public bool Equals(BaseEntity other)
+        {
+            return other != null && Name == other.Name && RelativePath == other.RelativePath;
+        }
+
+        public override int GetHashCode()
+        {
+            return new { Name, RelativePath }.GetHashCode();
+        }
     }
 }
