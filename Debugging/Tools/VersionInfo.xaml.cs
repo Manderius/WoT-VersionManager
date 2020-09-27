@@ -37,9 +37,9 @@ namespace Debugging.Tools
             string version = Helpers.GetGameVersion(gameDir);
             RootDirectoryEntity root = new RootDirectoryEntity(version);
             await Task.Run(() => GameDirectoryParser.Parse(gameDirInfo, root, gameDirInfo.FullName.Length, false, null, new IgnoreList()));
-            string files = Helpers.TotalFiles(root).ToString();
-            string size = (Helpers.TotalSize(root) / (1024 * 1024)).ToString();
-            string result = string.Format("Directory: {0}\nVersion: {1}\nTotal files: {2}\nTotal size: {3} MB", gameDir, version, files, size);
+            long files = Helpers.TotalFiles(root);
+            long size = Helpers.TotalSize(root) / (1024 * 1024);
+            string result = string.Format("Directory: {0}\nVersion: {1}\nTotal files: {2:N0}\nTotal size: {3:N0} MB", gameDir, version, files, size);
 
             MessageBox.Show(result);
             btnShowInfo.IsEnabled = true;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Debugging"
         mc:Ignorable="d"
-        Title="Debugging tools for WoT Version Manager" Height="650" Width="1200">
+        Title="Debugging tools for WoT Version Manager" Height="750" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -20,6 +20,10 @@
         <Frame Source="Tools/CreateVersionData.xaml" Grid.Column="0" Grid.Row="0"></Frame>
         <Frame Source="Tools/CompareVersions.xaml" Grid.Column="1" Grid.Row="0"></Frame>
         <Frame Source="Tools/VersionInfo.xaml" Grid.Column="2" Grid.Row="0"></Frame>
+        <Frame Source="Tools/CompareMultiple.xaml" Grid.Column="0" Grid.Row="1"></Frame>
+        <Frame Source="Tools/Logo.xaml" Grid.Column="1" Grid.Row="1"></Frame>
+        <Frame Source="Tools/GenerateFolder.xaml" Grid.Column="2" Grid.Row="1"></Frame>
+        <Frame Source="Tools/ExtractToContainer.xaml" Grid.Column="0" Grid.Row="2"></Frame>
     </Grid>
     <Window.Resources>
 

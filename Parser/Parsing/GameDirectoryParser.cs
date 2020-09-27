@@ -11,7 +11,7 @@ namespace VersionManager.Parsing
         {
             foreach (FileInfo file in directory.EnumerateFiles())
             {
-                string relativePath = file.FullName.Substring(prefixLength);
+                string relativePath = file.FullName.Substring(prefixLength).TrimStart('\\');
 
                 if (ignoreList.IsIgnored(relativePath))
                 {

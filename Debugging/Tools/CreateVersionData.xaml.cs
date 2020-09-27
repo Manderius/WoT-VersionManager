@@ -31,7 +31,7 @@ namespace Debugging.Tools
             HashProvider sha1 = new SHA1HashProvider();
             btnCreateFile.IsEnabled = false;
             btnCreateFile.Content = "Creating...";
-            await Task.Run(() => GameDirectoryParser.Parse(wot, root, wot.FullName.Length, true, sha1, new IgnoreList()));
+            await Task.Run(() => GameDirectoryParser.Parse(wot, root, wot.FullName.Length, true, sha1, IgnoreList.FromEnumerable(File.ReadAllLines("ignored.txt"))));
             await Task.Run(() => new XMLStructureLoader().Serialize(root, output));
             btnCreateFile.Content = "Create";
             btnCreateFile.IsEnabled = true;

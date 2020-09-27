@@ -3,7 +3,7 @@ using System.IO;
 
 namespace VersionManager.Utils
 {
-    class DirectoryCache
+    public class DirectoryCache
     {
         HashSet<string> _existingPaths = new HashSet<string>();
 

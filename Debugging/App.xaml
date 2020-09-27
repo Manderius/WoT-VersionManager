@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Debugging"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <BitmapImage x:Key="VMLogo" UriSource="logo.png" />
     </Application.Resources>
 </Application>

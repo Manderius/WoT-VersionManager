@@ -1,19 +1,20 @@
 ﻿using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
-namespace VSUI.Pages
+namespace Debugging.Tools
 {
     /// <summary>
-    /// Interaction logic for Download.xaml
+    /// Interaction logic for Logo.xaml
     /// </summary>
-    public partial class Download : Page
+    public partial class Logo : Page
     {
-        public Download()
+        public Logo()
         {
             InitializeComponent();
         }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;

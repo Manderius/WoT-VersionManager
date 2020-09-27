@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using VersionManager.Filesystem;
 using Microsoft.Win32;
 using VersionManager.Persistence;
-using VersionManager.Utils;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;

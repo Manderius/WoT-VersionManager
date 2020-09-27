@@ -11,8 +11,8 @@
         <TextBlock DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Download other versions</TextBlock>
         <Grid>
             <TextBlock TextWrapping="Wrap">You can download older World of Tanks clients from other sources
-            (such as <Hyperlink Click="Hyperlink_Click">https://www.oldskool.vip/clients/</Hyperlink>
-            or <Hyperlink Click="Hyperlink_Click">http://wot.djgappa.com/</Hyperlink>) and use the "Import game client" tab to import them into the Manager.
+            (such as <Hyperlink NavigateUri="https://www.oldskool.vip/clients/" RequestNavigate="Hyperlink_RequestNavigate">https://www.oldskool.vip/clients/</Hyperlink>
+            or <Hyperlink NavigateUri="http://wot.djgappa.com/" RequestNavigate="Hyperlink_RequestNavigate">http://wot.djgappa.com/</Hyperlink>) and use the "Import game client" tab to import them into the Manager.
             <LineBreak></LineBreak>Downloading World of Tanks clients through this application is currently not supported.
             </TextBlock>
         </Grid>

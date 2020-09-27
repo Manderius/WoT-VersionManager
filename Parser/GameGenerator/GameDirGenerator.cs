@@ -6,7 +6,7 @@ using VersionManager.Filesystem;
 
 namespace VersionManager.GameGenerator
 {
-    class GameDirGenerator
+    public class GameDirGenerator
     {
         [DllImport("Kernel32.dll", CharSet = CharSet.Unicode)]
         static extern bool CreateHardLink(
