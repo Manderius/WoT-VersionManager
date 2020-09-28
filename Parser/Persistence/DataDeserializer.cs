@@ -2,8 +2,8 @@
 
 namespace VersionManager.Persistence
 {
-    interface DataDeserializer
+    interface DataDeserializer<T>
     {
-        RootDirectoryEntity Deserialize(string path);
+        T Deserialize(string path);
     }
 }

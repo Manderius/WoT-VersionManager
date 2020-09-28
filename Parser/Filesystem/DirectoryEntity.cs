@@ -28,14 +28,14 @@ namespace VersionManager.Filesystem
             file.RelativePath = Path.Combine(RelativePath, file.Name);
         }
 
-        public void Deserialize()
+        public void BuildPaths()
         {
             foreach (BaseEntity file in Contents)
             {
                 file.RelativePath = Path.Combine(RelativePath, file.Name);
                 if (file is DirectoryEntity de)
                 {
-                    de.Deserialize();
+                    de.BuildPaths();
                 }
             }
         }

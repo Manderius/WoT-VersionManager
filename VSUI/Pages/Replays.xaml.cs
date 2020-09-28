@@ -14,17 +14,17 @@ namespace VSUI.Pages
     /// </summary>
     public partial class Replays : Page
     {
-        private LocalVersionsService _localVersionsService { get; set; }
+        private ManagedVersionsService _localVersionsService { get; set; }
         private Replay _selectedReplay { get; set; }
         private LocalGameVersion _selectedVersion { get; set; }
         private ReplayService _replayService { get; set; }
         private DispatcherTimer _buttonTimer;
-        public Replays(LocalVersionsService localVersionsService, ReplayService replayService)
+        public Replays(ManagedVersionsService localVersionsService, ReplayService replayService)
         {
             _localVersionsService = localVersionsService;
             _replayService = replayService;
             InitializeComponent();
-            cmbVersions.ItemsSource = _localVersionsService.GetLocalVersions();
+            cmbVersions.ItemsSource = _localVersionsService.GetManagedVersions();
             versionPick.Visibility = Visibility.Hidden;
             warnNotAvailable.Visibility = Visibility.Hidden;
             _buttonTimer = new DispatcherTimer();

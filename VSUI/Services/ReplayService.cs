@@ -9,8 +9,8 @@ namespace VSUI.Services
 {
     public class ReplayService
     {
-        private LocalVersionsService _localVersionsService;
-        public ReplayService(LocalVersionsService localVersionsService) {
+        private ManagedVersionsService _localVersionsService;
+        public ReplayService(ManagedVersionsService localVersionsService) {
             _localVersionsService = localVersionsService;
         }
 
@@ -24,7 +24,7 @@ namespace VSUI.Services
 
         public void PlayReplay(Replay replay, GameVersion version)
         {
-            LocalGameVersion local = _localVersionsService.GetLocalVersions().FirstOrDefault(x => x.Version == version.Version);
+            LocalGameVersion local = _localVersionsService.GetManagedVersions().FirstOrDefault(x => x.Version == version.Version);
             if (local is null)
                 throw new InvalidOperationException("This version is not available.");
 

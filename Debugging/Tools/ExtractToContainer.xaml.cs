@@ -56,7 +56,7 @@ namespace Debugging.Tools
         private void ExtractGameDir(string containerPath, string versionFilePath, string gamePath)
         {
             ExtractionManager ex = new ExtractionManager(new List<Extractor>() { new PackageExtractor(), new FileExtractor() });
-            RootDirectoryEntity deser = new XMLStructureLoader().Deserialize(versionFilePath);
+            RootDirectoryEntity deser = new RootDirectoryEntityIO().Deserialize(versionFilePath);
             DirectoryCache cache = DirectoryCache.FromDirectory(containerPath);
             string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(containerPath, (entity as FileEntity).Hash);
             ex.Extract(deser, gamePath, entityToPath, cache);

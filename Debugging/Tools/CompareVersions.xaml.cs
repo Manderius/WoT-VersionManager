@@ -55,8 +55,8 @@ namespace Debugging.Tools
             string formatVersion(string version, IEnumerable<FileEntity> files, IEnumerable<FileEntity> unique) =>
                 string.Format("Version: {0}\nNumber of files: {1:N0}\nSize: {2:N0} MB\nUnique files: {3:N0} ({4:N0} MB)",
                 version, files.Count(), files.Select(f => f.Size).Sum() / (1024 * 1024), unique.Count(), unique.Select(f => f.Size).Sum() / (1024 * 1024));
-            RootDirectoryEntity first = new XMLStructureLoader().Deserialize(path1);
-            RootDirectoryEntity second = new XMLStructureLoader().Deserialize(path2);
+            RootDirectoryEntity first = new RootDirectoryEntityIO().Deserialize(path1);
+            RootDirectoryEntity second = new RootDirectoryEntityIO().Deserialize(path2);
 
             IEnumerable<FileEntity> firstFiles = first.GetAllFileEntities(true).OfType<FileEntity>();
             IEnumerable<FileEntity> secondFiles = second.GetAllFileEntities(true).OfType<FileEntity>();

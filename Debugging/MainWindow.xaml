@@ -24,6 +24,7 @@
         <Frame Source="Tools/Logo.xaml" Grid.Column="1" Grid.Row="1"></Frame>
         <Frame Source="Tools/GenerateFolder.xaml" Grid.Column="2" Grid.Row="1"></Frame>
         <Frame Source="Tools/ExtractToContainer.xaml" Grid.Column="0" Grid.Row="2"></Frame>
+        <Frame Source="Tools/DeleteVersion.xaml" Grid.Column="1" Grid.Row="2"></Frame>
     </Grid>
     <Window.Resources>
 

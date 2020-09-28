@@ -54,7 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
+    <Compile Include="GameRemover\GameFilesRemover.cs" />
+    <Compile Include="Persistence\RootDirectoryEntityIO.cs" />
     <Compile Include="Replay\GameVersion.cs" />
     <Compile Include="Replay\Replay.cs" />
     <Compile Include="Utils\CompressedFile.cs" />

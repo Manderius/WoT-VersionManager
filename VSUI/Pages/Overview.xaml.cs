@@ -11,14 +11,14 @@ namespace VSUI.Pages
     public partial class Overview : Page
     {
 
-        private LocalVersionsService _versionService;
+        private ManagedVersionsService _versionService;
 
-        public Overview(LocalVersionsService versionService)
+        public Overview(ManagedVersionsService versionService)
         {
             InitializeComponent();
             _versionService = versionService;
             
-            lbGameVersions.ItemsSource = _versionService.GetLocalVersions();
+            lbGameVersions.ItemsSource = _versionService.GetManagedVersions();
             lbGameVersions.SelectedIndex = 0;
         }
 

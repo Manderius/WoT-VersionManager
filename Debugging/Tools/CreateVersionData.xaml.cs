@@ -32,7 +32,7 @@ namespace Debugging.Tools
             btnCreateFile.IsEnabled = false;
             btnCreateFile.Content = "Creating...";
             await Task.Run(() => GameDirectoryParser.Parse(wot, root, wot.FullName.Length, true, sha1, IgnoreList.FromEnumerable(File.ReadAllLines("ignored.txt"))));
-            await Task.Run(() => new XMLStructureLoader().Serialize(root, output));
+            await Task.Run(() => new RootDirectoryEntityIO().Serialize(root, output));
             btnCreateFile.Content = "Create";
             btnCreateFile.IsEnabled = true;
         }

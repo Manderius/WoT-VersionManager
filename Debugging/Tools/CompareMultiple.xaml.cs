@@ -32,7 +32,7 @@ namespace Debugging.Tools
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    RootDirectoryEntity ent = new XMLStructureLoader().Deserialize(file);
+                    RootDirectoryEntity ent = new RootDirectoryEntityIO().Deserialize(file);
                     _items.Add(ent);
                 }
             }

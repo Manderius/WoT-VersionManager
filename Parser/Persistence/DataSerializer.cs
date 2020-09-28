@@ -2,8 +2,8 @@
 
 namespace VersionManager.Persistence
 {
-    interface DataSerializer
+    interface DataSerializer<T>
     {
-        void Serialize(RootDirectoryEntity baseEntity, string path);
+        void Serialize(T data, string path);
     }
 }

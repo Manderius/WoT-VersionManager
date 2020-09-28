@@ -1,33 +1,29 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
-using VersionManager.Filesystem;
 
 namespace VersionManager.Persistence
 {
-    public class XMLStructureLoader : DataDeserializer, DataSerializer
+    public class XMLStructureLoader<T> : DataDeserializer<T>, DataSerializer<T>
     {
-        public RootDirectoryEntity Deserialize(string path)
+        public virtual T Deserialize(string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(RootDirectoryEntity));
-
-            RootDirectoryEntity root;
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            T data;
 
             using (Stream reader = new FileStream(path, FileMode.Open))
             {
-                root = (RootDirectoryEntity)serializer.Deserialize(reader);
+                data = (T)serializer.Deserialize(reader);
             }
 
-            root.Deserialize();
-
-            return root;
+            return data;
         }
 
-        public void Serialize(RootDirectoryEntity baseEntity, string path)
+        public virtual void Serialize(T data, string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(RootDirectoryEntity));
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (StreamWriter writer = new StreamWriter(path))
             {
-                serializer.Serialize(writer, baseEntity);
+                serializer.Serialize(writer, data);
             }
         }
     }

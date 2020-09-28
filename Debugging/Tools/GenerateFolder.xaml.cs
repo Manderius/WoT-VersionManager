@@ -45,7 +45,7 @@ namespace Debugging.Tools
 
         private void GenerateGameFolder(string containerPath, string versionFilePath, string outputFolderPath)
         {
-            RootDirectoryEntity root = new XMLStructureLoader().Deserialize(versionFilePath);
+            RootDirectoryEntity root = new RootDirectoryEntityIO().Deserialize(versionFilePath);
             string gameFolder = Path.Combine(outputFolderPath, "World of Tanks " + root.Version);
             string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(containerPath, (entity as FileEntity).Hash);
             GameDirGenerator.Generate(root, gameFolder, containerPath, entityToPath);

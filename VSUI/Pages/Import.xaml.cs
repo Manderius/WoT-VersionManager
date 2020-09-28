@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using VSUI.Services;
-using static VSUI.Services.LocalVersionsService;
+using static VSUI.Services.ManagedVersionsService;
 
 namespace VSUI.Pages
 {
@@ -12,10 +12,10 @@ namespace VSUI.Pages
     /// </summary>
     public partial class Import : Page
     {
-        private LocalVersionsService _versionService;
+        private ManagedVersionsService _versionService;
         public PBar ProgressBarData = new PBar();
 
-        public Import(LocalVersionsService versionService)
+        public Import(ManagedVersionsService versionService)
         {
             InitializeComponent();
             _versionService = versionService;
@@ -26,12 +26,12 @@ namespace VSUI.Pages
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
-            ProgressBarData.progress += 10;
+            _versionService.Import(tbGameDir.Text);
         }
 
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string path = (sender as System.Windows.Controls.TextBox).Text;
+            string path = tbGameDir.Text;
             ImportStatus result = _versionService.CanImport(path);
             ShowBannerWithResult(result);
             btnImport.IsEnabled = result == ImportStatus.CAN_IMPORT;

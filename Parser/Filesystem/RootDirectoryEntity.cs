@@ -24,5 +24,10 @@
         {
             return ent != null && ent.Version == Version;
         }
+
+        public override int GetHashCode()
+        {
+            return Version.GetHashCode() + base.GetHashCode();
+        }
     }
 }

@@ -70,6 +70,9 @@
     <Compile Include="Tools\CreateVersionData.xaml.cs">
       <DependentUpon>CreateVersionData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\DeleteVersion.xaml.cs">
+      <DependentUpon>DeleteVersion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\ExtractToContainer.xaml.cs">
       <DependentUpon>ExtractToContainer.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tools\CreateVersionData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\DeleteVersion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
