@@ -39,6 +39,6 @@ jobs:
         with:
           name: wot-version-manager
           path: |
-            bin/*.exe
-            bin/*.dll
-            bin/*.txt
+            bin/Release/*.exe
+            bin/Release/*.dll
+            bin/Release/*.txt
