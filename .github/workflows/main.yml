@@ -34,3 +34,11 @@ jobs:
       - name: Build Solution
         run: msbuild WoT_VersionSwitcher.sln /p:Configuration=Release
         
+      - name: Upload generated files
+        uses: actions/upload-artifact@v2.1.4
+        with:
+          name: wot-version-manager
+          path: |
+            bin/*.exe
+            bin/*.dll
+            bin/*.txt
