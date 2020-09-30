@@ -1,2 +1,4 @@
 # WoT-VersionSwitcher
-App for switching WoT versions for playing replays easily.
+![Build](https://github.com/Manderius/WoT-VersionSwitcher/workflows/Build%20Solution/badge.svg)
+
+App for managing WoT versions for playing older replays easily.
