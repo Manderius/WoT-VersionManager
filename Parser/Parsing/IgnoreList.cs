@@ -2,7 +2,7 @@
 
 namespace VersionManager.Parsing
 {
-    class IgnoreList
+    public class IgnoreList
     {
         SortedSet<string> _ignored = new SortedSet<string>();
 

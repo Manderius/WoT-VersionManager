@@ -5,7 +5,7 @@ using VersionManager.Utils;
 
 namespace VersionManager.Extraction
 {
-    class FileExtractor : Extractor
+    public class FileExtractor : Extractor
     {
         public override bool CanExtract(BaseEntity entity)
         {

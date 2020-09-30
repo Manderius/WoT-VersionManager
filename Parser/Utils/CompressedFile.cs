@@ -46,7 +46,7 @@ namespace VersionManager.Utils
                 return false;
 
             return item1.Equals(item2) &&
-                   item1.Equals(item2);
+                   item2.Equals(item1);
         }
 
         public int GetHashCode(CompressedFile item)

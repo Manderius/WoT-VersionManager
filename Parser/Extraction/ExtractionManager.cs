@@ -5,7 +5,7 @@ using VersionManager.Utils;
 
 namespace VersionManager.Extraction
 {
-    class ExtractionManager
+    public class ExtractionManager
     {
         IList<Extractor> _extractors;
         public ExtractionManager(IList<Extractor> extractors)

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace VSUI.Pages
 {
@@ -12,10 +13,10 @@ namespace VSUI.Pages
             InitializeComponent();
         }
 
-        private void Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            string link = ((sender as System.Windows.Documents.Hyperlink).Inlines.FirstInline as System.Windows.Documents.Run).Text;
-            System.Diagnostics.Process.Start(link);
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

@@ -45,5 +45,30 @@ namespace VersionManager.Filesystem
             Hash = hash;
             Size = size;
         }
+
+        public override int GetHashCode()
+        {
+            if (Hash != null && Size != 0)
+            {
+                return new { Hash, Size, Name, RelativePath }.GetHashCode();
+            }
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as FileEntity);
+        }
+
+        public bool Equals(FileEntity other)
+        {
+            if (other == null)
+                return false;
+
+            if (Hash != null && Size != 0 && other.Hash != null && other.Size != 0)
+                return Hash == other.Hash && Size == other.Size && base.Equals(other);
+
+            return base.Equals(other);
+        }
     }
 }

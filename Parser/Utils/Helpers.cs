@@ -6,7 +6,7 @@ using VersionManager.Filesystem;
 
 namespace VersionManager.Utils
 {
-    class Helpers
+    public class Helpers
     {
         public static string GetFileDirectory(string container, string hash)
         {
@@ -27,12 +27,11 @@ namespace VersionManager.Utils
             return dir.GetAllFileEntities(true).Cast<FileEntity>().Aggregate(0L, (x, y) => x + y.Size);
         }
 
-        public static string GetGameVersion(string gameDir) {
+        public static string GetGameVersion(string gameDir)
+        {
             string versionXml = Path.Combine(gameDir, "version.xml");
             if (!Directory.Exists(gameDir) || !File.Exists(versionXml))
-            {
-                throw new FileNotFoundException(versionXml);
-            }
+                return null;
 
             XElement xml = XElement.Parse(File.ReadAllText(versionXml));
             string versionText = xml.Element("version").Value.Trim();

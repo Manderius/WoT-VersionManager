@@ -5,13 +5,13 @@ using VersionManager.Hashing;
 
 namespace VersionManager.Parsing
 {
-    class GameDirectoryParser
+    public class GameDirectoryParser
     {
         public static void Parse(DirectoryInfo directory, DirectoryEntity parent, int prefixLength, bool computeHash, HashProvider hashProvider, IgnoreList ignoreList)
         {
             foreach (FileInfo file in directory.EnumerateFiles())
             {
-                string relativePath = file.FullName.Substring(prefixLength);
+                string relativePath = file.FullName.Substring(prefixLength).TrimStart('\\');
 
                 if (ignoreList.IsIgnored(relativePath))
                 {

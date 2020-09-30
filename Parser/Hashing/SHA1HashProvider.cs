@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace VersionManager.Hashing
 {
-    class SHA1HashProvider : HashProvider
+    public class SHA1HashProvider : HashProvider
     {
         public override string FromStream(Stream stream)
         {
