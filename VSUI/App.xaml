@@ -1,7 +1,7 @@
-﻿<Application x:Class="VSUI.App"
+﻿<Application x:Class="VersionManagerUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:VSUI"
+             xmlns:local="clr-namespace:VersionManagerUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="Button">

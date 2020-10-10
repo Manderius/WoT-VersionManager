@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
-namespace VSUI.Data
+namespace VersionManagerUI.Data
 {
-    class ManagedGameVersion
+    [DataContract(Name = "ManagedGameVersion", Namespace = "VersionManagerUI")]
+    public class ManagedGameVersion
     {
+        [DataMember]
         public LocalGameVersion LocalVersion { get; set; }
+        [DataMember]
         public string GameXML { get; set; }
+
+        public ManagedGameVersion(LocalGameVersion localVersion, string gameXML)
+        {
+            LocalVersion = localVersion;
+            GameXML = gameXML;
+        }
     }
 }

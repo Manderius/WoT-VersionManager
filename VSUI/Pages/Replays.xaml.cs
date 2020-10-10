@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows;
-using VersionManager.Replay;
-using VSUI.Data;
-using VSUI.Services;
+using VersionManager.GameVersion;
+using VersionManagerUI.Data;
+using VersionManagerUI.Services;
 using System;
 using System.Windows.Threading;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
     /// <summary>
     /// Interaction logic for Replay.xaml
@@ -85,7 +85,7 @@ namespace VSUI.Pages
         {
             if (e.AddedItems.Count == 0)
                 return;
-            _selectedVersion = e.AddedItems[0] as LocalGameVersion;
+            _selectedVersion = (e.AddedItems[0] as ManagedGameVersion).LocalVersion;
             btnPlay.IsEnabled = true;
         }
     }

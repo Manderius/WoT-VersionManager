@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-
-namespace VersionManager.Replay
+﻿namespace VersionManager.GameVersion
 {
     public class Replay
     {

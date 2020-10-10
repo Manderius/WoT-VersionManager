@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace VSUI.Utils
+namespace VersionManagerUI.Utils
 {
-    class PageCache
+    class InstanceCache
     {
 		private Dictionary<Type, object> _instances = new Dictionary<Type, object>();
 

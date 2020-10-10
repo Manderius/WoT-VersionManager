@@ -1,9 +1,13 @@
-﻿namespace VersionManager.Replay
+﻿using System.Runtime.Serialization;
+
+namespace VersionManager.GameVersion
 {
+    [DataContract(Namespace = "VersionManager.GameVersion")]
     public class GameVersion
     {
         public static GameVersion UNKNOWN = new GameVersion("Unknown");
 
+        [DataMember]
         public string Version { get; private set; }
 
         public GameVersion(string version)

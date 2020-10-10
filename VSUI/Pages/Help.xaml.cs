@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
     public partial class Help : Page
     {

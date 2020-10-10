@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using VersionManager.Replay;
-using VSUI.Data;
+using VersionManager.GameVersion;
+using VersionManagerUI.Data;
 
-namespace VSUI.Services
+namespace VersionManagerUI.Services
 {
     public class ReplayService
     {
@@ -24,7 +24,7 @@ namespace VSUI.Services
 
         public void PlayReplay(Replay replay, GameVersion version)
         {
-            LocalGameVersion local = _localVersionsService.GetManagedVersions().FirstOrDefault(x => x.Version == version.Version);
+            LocalGameVersion local = _localVersionsService.GetManagedVersions().FirstOrDefault(x => x.LocalVersion.Version == version.Version).LocalVersion;
             if (local is null)
                 throw new InvalidOperationException("This version is not available.");
 

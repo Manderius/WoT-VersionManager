@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
-using VSUI.Data;
-using VSUI.Services;
+using VersionManagerUI.Data;
+using VersionManagerUI.Services;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
 
     /// <summary>
@@ -24,7 +24,7 @@ namespace VSUI.Pages
 
         private void lbGameVersions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            frmOverviewDetails.Navigate(new OverviewDetails(e.AddedItems[0] as LocalGameVersion));
+            frmOverviewDetails.Navigate(new OverviewDetails((e.AddedItems[0] as ManagedGameVersion).LocalVersion));
         }
     }
 

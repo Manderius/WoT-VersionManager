@@ -1,11 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace VersionManager.Utils
 {
+    [DataContract]
     public class DirectoryCache
     {
-        HashSet<string> _existingPaths = new HashSet<string>();
+        [DataMember]
+        private HashSet<string> ExistingPaths = new HashSet<string>();
+
+        public DirectoryCache() { }
+
+        public DirectoryCache(IEnumerable<string> source) {
+            ExistingPaths = new HashSet<string>(source);
+        }
 
         public static DirectoryCache FromDirectory(string path)
         {
@@ -18,7 +27,7 @@ namespace VersionManager.Utils
         {
             foreach (DirectoryInfo dir in new DirectoryInfo(root).EnumerateDirectories())
             {
-                _existingPaths.Add(dir.FullName);
+                ExistingPaths.Add(dir.FullName);
                 LoadExistingDirs(dir.FullName);
             }
         }
@@ -31,10 +40,10 @@ namespace VersionManager.Utils
         /// <returns>True if directory already was in cache, false otherwise</returns>
         public bool CacheDirectory(string dir)
         {
-            if (!_existingPaths.Contains(dir))
+            if (!ExistingPaths.Contains(dir))
             {
                 Directory.CreateDirectory(dir);
-                _existingPaths.Add(dir);
+                ExistingPaths.Add(dir);
                 return false;
             }
 

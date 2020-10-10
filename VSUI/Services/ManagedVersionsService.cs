@@ -1,60 +1,85 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using VersionManager.Replay;
+using System.Runtime.Serialization;
+using VersionManager.Persistence;
+using VersionManager.GameVersion;
 using VersionManager.Utils;
-using VSUI.Data;
+using VersionManagerUI.Data;
+using VersionManagerUI.Properties;
 
-namespace VSUI.Services
+namespace VersionManagerUI.Services
 {
+    [DataContract(Name = "ManagedVersions", Namespace = "VersionManagerUI")]
     public class ManagedVersionsService
     {
-        private ObservableCollection<LocalGameVersion> _items = new ObservableCollection<LocalGameVersion>()
-            {
-                new LocalGameVersion( "0.9.8",  @"C:\Program Files (x86)\World_of_Tanks"),
-                new LocalGameVersion( "1.1.0",  @"C:\Program Files (x86)\World_of_Tanks"),
-                new LocalGameVersion( "1.10.0.1",  @"C:\Program Files (x86)\World_of_Tanks_EU"),
-            };
+        public DataSerializer Serializer { private get; set; }
 
-        public ObservableCollection<LocalGameVersion> GetManagedVersions()
+        [DataMember(Name = "InstalledVersions")]
+        private ManagedVersionCollection _items { get; set; }
+
+        public ManagedVersionsService() {
+            _items = new ManagedVersionCollection();
+        }
+
+        public ManagedVersionsService(DataSerializer serializer)
+        {
+            Serializer = serializer;
+            _items = new ManagedVersionCollection()
+            {
+                new ManagedGameVersion( new LocalGameVersion( "0.9.4",  @"C:\Program Files (x86)\World_of_Tanks_EU"), @"E:\WoT\VersionData\094.xml")
+            };
+        }
+
+        public ObservableCollection<ManagedGameVersion> GetManagedVersions()
         {
             return _items;
         }
 
-        public bool Contains(GameVersion version)
+        public bool Contains(string version)
         {
-            return _items.FirstOrDefault(x => x.Version == version.Version) != null;
+            return Contains(new GameVersion(version));
         }
 
-        public bool Contains(LocalGameVersion version)
+        public bool Contains(GameVersion version)
+        {
+            return _items.FirstOrDefault(x => x.LocalVersion.Version == version.Version) != null;
+        }
+        
+        public bool Contains(ManagedGameVersion version)
         {
             return _items.Contains(version);
         }
-        public enum ImportStatus
+
+        public void Add(string versionXml, string directory)
         {
-            CAN_IMPORT, INVALID_PATH, ALREADY_EXISTS
-        }
+            string dirVersion = Helpers.GetGameVersion(directory);
+            string xmlVersion = new RootDirectoryEntityIO().Deserialize(versionXml).Version;
 
-        public ImportStatus CanImport(string path)
-        {
-            LocalGameVersion ver = new LocalGameVersion(Helpers.GetGameVersion(path), path);
-            if (ver.Version == null)
-                return ImportStatus.INVALID_PATH;
-
-            if (Contains(new GameVersion(ver.Version)))
-                return ImportStatus.ALREADY_EXISTS;
-
-            return ImportStatus.CAN_IMPORT;
-        }
-
-        public void Import(string path)
-        {
-            if (CanImport(path) != ImportStatus.CAN_IMPORT)
+            if (dirVersion != xmlVersion)
                 return;
 
-            //TODO actual import
+            if (Contains(dirVersion))
+                return;
 
-            _items.Add(new LocalGameVersion(Helpers.GetGameVersion(path), path));
+            Add(new ManagedGameVersion(new LocalGameVersion(dirVersion, directory), versionXml));
+        }
+
+        public void Add(ManagedGameVersion mgv)
+        {
+            _items.Add(mgv);
+            Save();
+        }
+
+        public void Save()
+        {
+            string path = Settings.Default.ManagedVersionsFile;
+            Serializer.Serialize(_items, path);
+        }
+
+        public void Load(DataDeserializer dds)
+        {
+            string path = Settings.Default.ManagedVersionsFile;
+            _items = dds.Deserialize<ManagedVersionCollection>(path);
         }
     }
 }

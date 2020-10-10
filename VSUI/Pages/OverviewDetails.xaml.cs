@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using VSUI.Data;
+using VersionManagerUI.Data;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
     /// <summary>
     /// Interaction logic for OverviewDetails.xaml

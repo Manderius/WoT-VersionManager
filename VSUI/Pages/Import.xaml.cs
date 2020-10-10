@@ -1,11 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using VSUI.Services;
-using static VSUI.Services.ManagedVersionsService;
+using VersionManagerUI.Services;
+using static VersionManagerUI.Services.ImportService;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
     /// <summary>
     /// Interaction logic for Import.xaml
@@ -13,26 +15,41 @@ namespace VSUI.Pages
     public partial class Import : Page
     {
         private ManagedVersionsService _versionService;
+        private ImportService _importService;
         public PBar ProgressBarData = new PBar();
 
-        public Import(ManagedVersionsService versionService)
+        public Import(ManagedVersionsService versionService, ImportService importService)
         {
             InitializeComponent();
             _versionService = versionService;
+            _importService = importService;
             ProgressBar.DataContext = ProgressBarData;
             bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
-
         }
 
-        private void btnImport_Click(object sender, RoutedEventArgs e)
+        private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
-            _versionService.Import(tbGameDir.Text);
+            btnImport.IsEnabled = false;
+            tbGameDir.IsEnabled = false;
+            btnBrowse.IsEnabled = false;
+            btnImportText.Text = "Importing...";
+            Progress<int> progress = new Progress<int>(percent =>
+            {
+                ProgressBarData.progress = percent;
+            });
+            string dir = tbGameDir.Text;
+            await Task.Run(() => _importService.Import(dir, progress));
+            tbGameDir.IsEnabled = true;
+            btnBrowse.IsEnabled = true;
+            btnImportText.Text = "Done";
         }
 
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ProgressBarData.progress = 0;
+            btnImportText.Text = "Import";
             string path = tbGameDir.Text;
-            ImportStatus result = _versionService.CanImport(path);
+            ImportStatus result = _importService.CanImport(path);
             ShowBannerWithResult(result);
             btnImport.IsEnabled = result == ImportStatus.CAN_IMPORT;
         }

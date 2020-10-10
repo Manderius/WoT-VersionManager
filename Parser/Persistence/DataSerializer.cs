@@ -1,9 +1,7 @@
-﻿using VersionManager.Filesystem;
-
-namespace VersionManager.Persistence
+﻿namespace VersionManager.Persistence
 {
-    interface DataSerializer<T>
+    public interface DataSerializer
     {
-        void Serialize(T data, string path);
+        void Serialize<T>(T data, string path);
     }
 }

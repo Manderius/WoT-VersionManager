@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Windows.Controls;
-using VersionManager.Replay;
+using VersionManager.GameVersion;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
     /// <summary>
     /// Interaction logic for ReplayDetails.xaml

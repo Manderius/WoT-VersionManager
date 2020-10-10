@@ -92,8 +92,7 @@ namespace Debugging.Tools
                 await Task.Run(() => Directory.Delete(gameDir, true));
             }
 
-            string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(container, (entity as FileEntity).Hash);
-            await Task.Run(() => GameFilesRemover.RemoveFiles(selected, _items.ToList(), container, entityToPath));
+            await Task.Run(() => GameFilesRemover.RemoveFiles(selected, _items.ToList(), container, Helpers.EntityToPath(container)));
             _items.Remove(selected);
 
             btnRemove.IsEnabled = true;

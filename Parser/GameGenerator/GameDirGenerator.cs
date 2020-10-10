@@ -30,18 +30,19 @@ namespace VersionManager.GameGenerator
             return CreateHardLink(path, source, IntPtr.Zero);
         }
 
-        public static void Generate(DirectoryEntity entity, string destination, string container, Func<BaseEntity, string> entityToDir)
+        public static void Generate(DirectoryEntity entity, string destination, string container, Func<BaseEntity, string> entityToDir, IProgress<int> progress)
         {
             Directory.CreateDirectory(destination);
 
             foreach (FileEntity file in entity.Contents.OfType<FileEntity>())
             {
                 CreateHardLinkForFileEntity(file, destination, Path.Combine(container, entityToDir(file)));
+                progress?.Report(1);
             }
 
             foreach (DirectoryEntity dir in entity.Contents.OfType<DirectoryEntity>())
             {
-                Generate(dir, Path.Combine(destination, dir.Name), container, entityToDir);
+                Generate(dir, Path.Combine(destination, dir.Name), container, entityToDir, progress);
             }
         }
     }

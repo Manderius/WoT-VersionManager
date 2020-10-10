@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace VersionManager.Filesystem
 {
+    [DataContract(Name = "Package", Namespace = "VersionManager.Filesystem")]
     public class PackageEntity : DirectoryEntity
     {
         public PackageEntity() : base()
