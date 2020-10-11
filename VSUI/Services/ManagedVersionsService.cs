@@ -9,12 +9,10 @@ using VersionManagerUI.Properties;
 
 namespace VersionManagerUI.Services
 {
-    [DataContract(Name = "ManagedVersions", Namespace = "VersionManagerUI")]
     public class ManagedVersionsService
     {
         public DataSerializer Serializer { private get; set; }
 
-        [DataMember(Name = "InstalledVersions")]
         private ManagedVersionCollection _items { get; set; }
 
         public ManagedVersionsService() {
@@ -26,7 +24,7 @@ namespace VersionManagerUI.Services
             Serializer = serializer;
             _items = new ManagedVersionCollection()
             {
-                new ManagedGameVersion( new LocalGameVersion( "0.9.4",  @"C:\Program Files (x86)\World_of_Tanks_EU"), @"E:\WoT\VersionData\094.xml")
+                new ManagedGameVersion( @"C:\Program Files (x86)\World_of_Tanks_EU", "0.9.4", @"E:\WoT\VersionData\094.xml")
             };
         }
 
@@ -61,7 +59,7 @@ namespace VersionManagerUI.Services
             if (Contains(dirVersion))
                 return;
 
-            Add(new ManagedGameVersion(new LocalGameVersion(dirVersion, directory), versionXml));
+            Add(new ManagedGameVersion(directory, dirVersion, versionXml));
         }
 
         public void Add(ManagedGameVersion mgv)

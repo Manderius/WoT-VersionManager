@@ -66,6 +66,9 @@
     <Compile Include="Pages\OverviewDetails.xaml.cs">
       <DependentUpon>OverviewDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\OverviewEmpty.xaml.cs">
+      <DependentUpon>OverviewEmpty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Replays.xaml.cs">
       <DependentUpon>Replays.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\OverviewDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OverviewEmpty.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

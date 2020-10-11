@@ -26,6 +26,7 @@ namespace VersionManagerUI.Utils
             if (File.Exists(Settings.Default.DirectoryCacheFile))
             {
                 dirCache = dds.Deserialize<DirectoryCache>(Settings.Default.DirectoryCacheFile);
+                dirCache.ContainerPath = Path.Combine(Settings.Default.DataDirectory, "Container");
             }
             cache.AddInstance(dirCache);
 

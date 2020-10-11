@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Debugging.Common;
+using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.IO;
@@ -57,14 +58,7 @@ namespace Debugging.Tools
 
         private void btnBrowseWoTFolder_Click(object sender, RoutedEventArgs e)
         {
-            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
-            {
-                dialog.IsFolderPicker = true;
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-                {
-                    txtGameFolder.Text = dialog.FileName;
-                }
-            }
+            txtGameFolder.Text = Utils.SelectDirectory();
         }
     }
 }

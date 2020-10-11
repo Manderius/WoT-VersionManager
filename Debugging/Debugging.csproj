@@ -73,6 +73,9 @@
     <Compile Include="Tools\DeleteVersion.xaml.cs">
       <DependentUpon>DeleteVersion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\EditManaged.xaml.cs">
+      <DependentUpon>EditManaged.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\ExtractToContainer.xaml.cs">
       <DependentUpon>ExtractToContainer.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,7 @@
     <Compile Include="Tools\VersionInfo.xaml.cs">
       <DependentUpon>VersionInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tools\DeleteVersion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\EditManaged.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,6 +169,10 @@
     <ProjectReference Include="..\Parser\VersionManager.csproj">
       <Project>{3d432c59-1ca2-46ed-9e4f-9b3a9a006abd}</Project>
       <Name>VersionManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VSUI\VersionManagerUI.csproj">
+      <Project>{669AF88D-5664-493B-8DAF-91D32A34D320}</Project>
+      <Name>VersionManagerUI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

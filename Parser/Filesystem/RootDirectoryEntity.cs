@@ -1,7 +1,11 @@
-﻿namespace VersionManager.Filesystem
+﻿using System.Runtime.Serialization;
+
+namespace VersionManager.Filesystem
 {
+    [DataContract(Name = "RootDirectory", Namespace = "VersionManager.Filesystem")]
     public class RootDirectoryEntity : DirectoryEntity
     {
+        [DataMember]
         public string Version { get; set; }
 
         public RootDirectoryEntity() : base("")

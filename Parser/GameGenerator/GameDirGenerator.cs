@@ -44,6 +44,18 @@ namespace VersionManager.GameGenerator
             {
                 Generate(dir, Path.Combine(destination, dir.Name), container, entityToDir, progress);
             }
+
+            if (entity is RootDirectoryEntity root)
+            {
+                CreateDirectory(Path.Combine(destination, "mods", root.Version));
+                CreateDirectory(Path.Combine(destination, "res_mods", root.Version));
+            }
+        }
+
+        private static void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
     }
 }

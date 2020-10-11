@@ -19,7 +19,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button x:Name="btnBrowse" Grid.Row="0" Grid.Column="0" Margin="0,0,10,0" Click="btnBrowse_Click">
-                    <TextBlock Margin="5" Text="Select a Replay" />
+                    <TextBlock Margin="5" Text="Select Replay" />
                 </Button>
                 <Button x:Name="btnPlay" Grid.Column="1" Grid.Row="0" Margin="10,0,10,0" Click="btnPlay_Click" IsEnabled="False">
                     <TextBlock Name="btnPlayText" Margin="5" Text="Play Replay" />

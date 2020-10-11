@@ -4,16 +4,18 @@ using System.Runtime.Serialization;
 
 namespace VersionManager.Utils
 {
-    [DataContract]
+    [DataContract(Namespace = "VersionManager.DirectoryCache")]
     public class DirectoryCache
     {
-        [DataMember]
-        private HashSet<string> ExistingPaths = new HashSet<string>();
+        [DataMember(Name = "ExistingPaths")]
+        private HashSet<string> _existingPaths = new HashSet<string>();
+
+        public string ContainerPath { get; set; }
 
         public DirectoryCache() { }
 
         public DirectoryCache(IEnumerable<string> source) {
-            ExistingPaths = new HashSet<string>(source);
+            _existingPaths = new HashSet<string>(source);
         }
 
         public static DirectoryCache FromDirectory(string path)
@@ -27,7 +29,7 @@ namespace VersionManager.Utils
         {
             foreach (DirectoryInfo dir in new DirectoryInfo(root).EnumerateDirectories())
             {
-                ExistingPaths.Add(dir.FullName);
+                _existingPaths.Add(dir.FullName);
                 LoadExistingDirs(dir.FullName);
             }
         }
@@ -40,14 +42,31 @@ namespace VersionManager.Utils
         /// <returns>True if directory already was in cache, false otherwise</returns>
         public bool CacheDirectory(string dir)
         {
-            if (!ExistingPaths.Contains(dir))
+            string relativePath = (dir.StartsWith(ContainerPath)) ? dir.Substring(ContainerPath.Length).TrimStart('\\') : dir;
+            if (!_existingPaths.Contains(relativePath))
             {
                 Directory.CreateDirectory(dir);
-                ExistingPaths.Add(dir);
+                _existingPaths.Add(relativePath);
                 return false;
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Delete directory from cache if present
+        /// </summary>
+        /// <param name="dir">Path to directory</param>
+        /// <returns>True if directory was in cache, false otherwise</returns>
+        public bool DeleteDirectoryFromCache(string dir)
+        {
+            string relativePath = (dir.StartsWith(ContainerPath)) ? dir.Substring(ContainerPath.Length).TrimStart('\\') : dir;
+            if (_existingPaths.Contains(relativePath))
+            {
+                _existingPaths.Remove(relativePath);
+                return true;
+            }
+            return false;
         }
     }
 }

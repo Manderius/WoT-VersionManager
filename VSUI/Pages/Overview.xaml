@@ -25,7 +25,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding LocalVersion.Version, StringFormat='World of Tanks {0}'}" />
+                                    <TextBlock Text="{Binding Version, StringFormat='World of Tanks {0}'}" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

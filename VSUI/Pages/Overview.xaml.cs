@@ -17,8 +17,11 @@ namespace VersionManagerUI.Pages
         {
             InitializeComponent();
             _versionService = versionService;
-            
+            frmOverviewDetails.Navigate(new OverviewEmpty());
+
             lbGameVersions.ItemsSource = _versionService.GetManagedVersions();
+            lbGameVersions.Items.SortDescriptions.Clear();
+            lbGameVersions.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("LocalVersion.Version", System.ComponentModel.ListSortDirection.Descending));
             lbGameVersions.SelectedIndex = 0;
         }
 

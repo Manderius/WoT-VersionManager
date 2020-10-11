@@ -42,7 +42,7 @@ namespace VersionManagerUI.Services
             return ImportStatus.CAN_IMPORT;
         }
 
-        public void Import(string path, IProgress<int> progress)
+        public void Import(string path, bool copyMods, IProgress<int> progress)
         {
 
             if (CanImport(path) != ImportStatus.CAN_IMPORT)
@@ -70,12 +70,22 @@ namespace VersionManagerUI.Services
             totalFiles = root.GetAllFileEntities(true).Count;
             processed = totalFiles * 2;
             CreateGameDirectory(xml, output, container, sum);
+            if (copyMods)
+            {
+                string modsDir = Path.Combine(path, "mods");
+                if (Directory.Exists(modsDir))
+                    CopyDirectory(new DirectoryInfo(modsDir), Path.Combine(output, "mods"));
+
+                string resModsDir = Path.Combine(path, "res_mods");
+                if (Directory.Exists(resModsDir))
+                    CopyDirectory(new DirectoryInfo(resModsDir), Path.Combine(output, "res_mods"));
+            }
             progress.Report(100);
 
             string cacheXml = Settings.Default.DirectoryCacheFile;
             _ds.Serialize(_dirCache, cacheXml);
 
-            App.Current.Dispatcher.BeginInvoke((Action)delegate ()
+            System.Windows.Application.Current.Dispatcher.BeginInvoke((Action)delegate ()
             {
                 _mvs.Add(xml, output);
             });
@@ -98,6 +108,21 @@ namespace VersionManagerUI.Services
         {
             RootDirectoryEntity root = new RootDirectoryEntityIO().Deserialize(versionXml);
             GameDirGenerator.Generate(root, outputDir, container, Helpers.EntityToPath(container), progress);
+        }
+
+        private void CopyDirectory(DirectoryInfo directory, string destination)
+        {
+            Directory.CreateDirectory(destination);
+
+            foreach (var file in directory.EnumerateFiles())
+            {
+                file.CopyTo(Path.Combine(destination, file.Name), true);
+            }
+
+            foreach (var dir in directory.EnumerateDirectories())
+            {
+                CopyDirectory(dir, Path.Combine(destination, dir.Name));
+            }
         }
     }
 }

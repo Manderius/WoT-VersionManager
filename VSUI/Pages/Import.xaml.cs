@@ -32,15 +32,18 @@ namespace VersionManagerUI.Pages
             btnImport.IsEnabled = false;
             tbGameDir.IsEnabled = false;
             btnBrowse.IsEnabled = false;
+            chbImportMods.IsEnabled = false;
             btnImportText.Text = "Importing...";
             Progress<int> progress = new Progress<int>(percent =>
             {
                 ProgressBarData.progress = percent;
             });
             string dir = tbGameDir.Text;
-            await Task.Run(() => _importService.Import(dir, progress));
+            bool importMods = chbImportMods.IsChecked.GetValueOrDefault(false);
+            await Task.Run(() => _importService.Import(dir, importMods, progress));
             tbGameDir.IsEnabled = true;
             btnBrowse.IsEnabled = true;
+            chbImportMods.IsEnabled = true;
             btnImportText.Text = "Done";
         }
 

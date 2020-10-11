@@ -19,7 +19,6 @@ namespace VersionManager.Filesystem
 
         public BaseEntity()
         {
-
         }
 
         public BaseEntity(string name)

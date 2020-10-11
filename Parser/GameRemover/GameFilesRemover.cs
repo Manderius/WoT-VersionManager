@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using VersionManager.Filesystem;
+using VersionManager.Utils;
 
 namespace VersionManager.GameRemover
 {
     public class GameFilesRemover
     {
-        public static void RemoveFiles(RootDirectoryEntity versionToRemove, List<RootDirectoryEntity> versions, string container, Func<BaseEntity, string> fileToPath)
+        public static void RemoveFiles(RootDirectoryEntity versionToRemove, List<RootDirectoryEntity> versions, string container, Func<BaseEntity, string> fileToPath, DirectoryCache cache)
         {
             HashSet<FileEntity> versionFiles = new HashSet<FileEntity>(versionToRemove.GetAllFileEntities(true).OfType<FileEntity>());
             List<RootDirectoryEntity> otherVersions = versions.ToList();
@@ -18,7 +20,12 @@ namespace VersionManager.GameRemover
 
             foreach (FileEntity fe in versionFiles)
             {
-
+                string path = fileToPath(fe);
+                if (cache.DeleteDirectoryFromCache(path))
+                {
+                    Directory.Delete(path, true);
+                }
+                
             }
         }
     }
