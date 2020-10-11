@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using VersionManagerUI.MessageWindows;
 using VersionManagerUI.Services;
 using static VersionManagerUI.Services.ImportService;
 
@@ -14,18 +15,16 @@ namespace VersionManagerUI.Pages
     /// </summary>
     public partial class Import : Page
     {
-        private ManagedVersionsService _versionService;
         private ImportService _importService;
         public PBar ProgressBarData = new PBar();
 
-        public Import(ManagedVersionsService versionService, ImportService importService)
+        public Import(ImportService importService)
         {
             InitializeComponent();
-            _versionService = versionService;
             _importService = importService;
             ProgressBar.DataContext = ProgressBarData;
             bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
-        }
+                    }
 
         private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
@@ -44,13 +43,13 @@ namespace VersionManagerUI.Pages
             tbGameDir.IsEnabled = true;
             btnBrowse.IsEnabled = true;
             chbImportMods.IsEnabled = true;
-            btnImportText.Text = "Done";
+            btnImportText.Text = "Import";
+            new MessageWindow("Finished", "Import successfully finished!\nYou can now play replays from this version through the Replays tab.\nAfter you make sure everything works, you can delete the original game directory.", MessageWindowButtons.OK).ShowDialog();
         }
 
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
         {
             ProgressBarData.progress = 0;
-            btnImportText.Text = "Import";
             string path = tbGameDir.Text;
             ImportStatus result = _importService.CanImport(path);
             ShowBannerWithResult(result);

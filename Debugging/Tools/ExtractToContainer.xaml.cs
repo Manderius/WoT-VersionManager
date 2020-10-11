@@ -1,5 +1,4 @@
 ﻿using Debugging.Common;
-using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Generic;
 using System.Threading.Tasks;

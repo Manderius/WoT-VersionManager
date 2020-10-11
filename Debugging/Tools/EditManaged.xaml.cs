@@ -1,5 +1,4 @@
 ﻿using Debugging.Common;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;

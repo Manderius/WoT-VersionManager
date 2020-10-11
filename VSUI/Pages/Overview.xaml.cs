@@ -23,6 +23,7 @@ namespace VersionManagerUI.Pages
             lbGameVersions.Items.SortDescriptions.Clear();
             lbGameVersions.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("LocalVersion.Version", System.ComponentModel.ListSortDirection.Descending));
             lbGameVersions.SelectedIndex = 0;
+
         }
 
         private void lbGameVersions_SelectionChanged(object sender, SelectionChangedEventArgs e)

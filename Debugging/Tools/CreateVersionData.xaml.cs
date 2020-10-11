@@ -1,6 +1,5 @@
 ﻿using Debugging.Common;
 using Microsoft.Win32;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.IO;
 using System.Threading.Tasks;

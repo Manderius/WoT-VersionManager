@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization;
 using VersionManager.Persistence;
 using VersionManager.GameVersion;
 using VersionManager.Utils;
