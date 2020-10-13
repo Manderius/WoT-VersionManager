@@ -71,8 +71,7 @@ namespace Debugging.Tools
                 otherVersions.Add(data);
             }
 
-
-            await Task.Run(() => GameFilesRemover.RemoveFiles(root, otherVersions, _containerPath, Helpers.EntityToPath(_containerPath), _dirCache));
+            await Task.Run(() => GameFilesRemover.RemoveFiles(root, otherVersions, _containerPath, Helpers.EntityToPath(_containerPath), _dirCache, null));
             ManagedVersions.Remove(selected);
             SaveManagedVersions();
             SaveDirCache();

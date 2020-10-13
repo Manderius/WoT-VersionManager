@@ -11,11 +11,13 @@ namespace VersionManagerUI.Pages
     /// </summary>
     public partial class OverviewDetails : Page
     {
-        public LocalGameVersion GameDetails { get; set; }
+        public ManagedGameVersion GameDetails { get; set; }
+        private Overview _parent { get; set; }
 
-        public OverviewDetails(LocalGameVersion versionItem)
+        public OverviewDetails(ManagedGameVersion versionItem, Overview parent)
         {
             GameDetails = versionItem;
+            _parent = parent;
             InitializeComponent();
             DataContext = this;
         }
@@ -32,7 +34,7 @@ namespace VersionManagerUI.Pages
             confirm.ShowDialog();
             if (confirm.Result != MessageWindowResult.Yes)
                 return;
-
+            _parent.DeleteVersion(GameDetails);
         }
 
         private void btnVerify_Click(object sender, RoutedEventArgs e)
@@ -42,6 +44,7 @@ namespace VersionManagerUI.Pages
             confirm.ShowDialog();
             if (confirm.Result != MessageWindowResult.Yes)
                 return;
+            _parent.RebuildDirectory(GameDetails);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace VersionManagerUI.Utils
             if (File.Exists(Settings.Default.DirectoryCacheFile))
             {
                 dirCache = dds.Deserialize<DirectoryCache>(Settings.Default.DirectoryCacheFile);
-                dirCache.ContainerPath = Path.Combine(Settings.Default.DataDirectory, "Container");
+                dirCache.ContainerPath = Settings.Default.ContainerDirectory;
             }
             cache.AddInstance(dirCache);
 
@@ -52,6 +52,7 @@ namespace VersionManagerUI.Utils
             Settings.Default.GameOutputDirectory = Path.Combine(appDir, "World of Tanks Versions");
             Settings.Default.ManagedVersionsFile = Path.Combine(Settings.Default.DataDirectory, "ManagedVersions.xml");
             Settings.Default.DirectoryCacheFile = Path.Combine(Settings.Default.DataDirectory, "DirectoryCache.xml");
+            Settings.Default.ContainerDirectory = Path.Combine(Settings.Default.DataDirectory, "Container");
 
             Settings.Default.Save();
         }

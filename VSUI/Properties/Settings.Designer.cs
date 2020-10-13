@@ -82,5 +82,17 @@ namespace VersionManagerUI.Properties {
                 this["DirectoryCacheFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ContainerDirectory {
+            get {
+                return ((string)(this["ContainerDirectory"]));
+            }
+            set {
+                this["ContainerDirectory"] = value;
+            }
+        }
     }
 }

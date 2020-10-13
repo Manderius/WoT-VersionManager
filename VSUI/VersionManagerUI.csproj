@@ -89,6 +89,11 @@
     <Compile Include="Pages\ReplayDetails.xaml.cs">
       <DependentUpon>ReplayDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgressWindows\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressWindows\ProgressWindowExtensions.cs" />
+    <Compile Include="Services\GameDirectoryService.cs" />
     <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\ManagedVersionsService.cs" />
     <Compile Include="Services\ReplayService.cs" />
@@ -151,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProgressWindows\ProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

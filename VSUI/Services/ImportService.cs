@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using VersionManager.Extraction;
 using VersionManager.Filesystem;
-using VersionManager.GameGenerator;
 using VersionManager.Persistence;
 using VersionManager.GameVersion;
 using VersionManager.Utils;
@@ -15,14 +12,12 @@ namespace VersionManagerUI.Services
     public class ImportService
     {
         private ManagedVersionsService _mvs;
-        private DirectoryCache _dirCache;
-        private DataSerializer _ds;
+        private GameDirectoryService _gds;
 
-        public ImportService(ManagedVersionsService mvs, DirectoryCache directoryCache, DataSerializer ds)
+        public ImportService(ManagedVersionsService mvs, GameDirectoryService gds)
         {
             _mvs = mvs;
-            _dirCache = directoryCache;
-            _ds = ds;
+            _gds = gds;
         }
 
         public enum ImportStatus
@@ -32,8 +27,14 @@ namespace VersionManagerUI.Services
 
         public ImportStatus CanImport(string path)
         {
-            LocalGameVersion ver = new LocalGameVersion(Helpers.GetGameVersion(path), path);
-            if (ver.Version == null)
+            LocalGameVersion ver = null;
+            try
+            {
+                ver = new LocalGameVersion(Helpers.GetGameVersion(path), path);
+            } 
+            catch (Exception ex) { }
+
+            if (ver == null || ver.Version == null)
                 return ImportStatus.INVALID_PATH;
 
             if (_mvs.Contains(new GameVersion(ver.Version)))
@@ -44,7 +45,6 @@ namespace VersionManagerUI.Services
 
         public void Import(string path, bool copyMods, IProgress<int> progress)
         {
-
             if (CanImport(path) != ImportStatus.CAN_IMPORT)
                 return;
 
@@ -61,29 +61,21 @@ namespace VersionManagerUI.Services
 
             string xmlFilename = root.Version.Replace(".", "_") + ".xml";
             string xml = Path.Combine(Settings.Default.DataDirectory, "VersionData", xmlFilename);
-            string container = Path.Combine(Settings.Default.DataDirectory, "Container");
             string output = Path.Combine(Settings.Default.GameOutputDirectory, "World of Tanks " + root.Version);
 
             CreateVersionXML(path, xml, sum);
 
-            ExtractToContainer(xml, container, path, sum);
+            _gds.ExtractToContainer(xml, path, sum);
             totalFiles = root.GetAllFileEntities(true).Count;
             processed = totalFiles * 2;
-            CreateGameDirectory(xml, output, container, sum);
+            _gds.CreateGameDirectory(xml, output, sum);
+
             if (copyMods)
             {
-                string modsDir = Path.Combine(path, "mods");
-                if (Directory.Exists(modsDir))
-                    CopyDirectory(new DirectoryInfo(modsDir), Path.Combine(output, "mods"));
-
-                string resModsDir = Path.Combine(path, "res_mods");
-                if (Directory.Exists(resModsDir))
-                    CopyDirectory(new DirectoryInfo(resModsDir), Path.Combine(output, "res_mods"));
+                CopyDirectory("mods", path, output);
+                CopyDirectory("res_mods", path, output);
             }
             progress.Report(100);
-
-            string cacheXml = Settings.Default.DirectoryCacheFile;
-            _ds.Serialize(_dirCache, cacheXml);
 
             System.Windows.Application.Current.Dispatcher.BeginInvoke((Action)delegate ()
             {
@@ -97,20 +89,14 @@ namespace VersionManagerUI.Services
             new RootDirectoryEntityIO().Serialize(root, output);
         }
 
-        private void ExtractToContainer(string versionXml, string container, string gameDir, IProgress<int> progress)
+        private void CopyDirectory(string dirname, string parent, string destination)
         {
-            ExtractionManager ex = new ExtractionManager(new List<Extractor>() { new PackageExtractor(), new FileExtractor() });
-            RootDirectoryEntity deser = new RootDirectoryEntityIO().Deserialize(versionXml);
-            ex.Extract(deser, gameDir, Helpers.EntityToPath(container), _dirCache, progress);
+            string dir = Path.Combine(parent, dirname);
+            if (Directory.Exists(dir))
+                CopyDirectoryRecursively(new DirectoryInfo(dir), Path.Combine(destination, dirname));
         }
 
-        private void CreateGameDirectory(string versionXml, string outputDir, string container, IProgress<int> progress)
-        {
-            RootDirectoryEntity root = new RootDirectoryEntityIO().Deserialize(versionXml);
-            GameDirGenerator.Generate(root, outputDir, container, Helpers.EntityToPath(container), progress);
-        }
-
-        private void CopyDirectory(DirectoryInfo directory, string destination)
+        private void CopyDirectoryRecursively(DirectoryInfo directory, string destination)
         {
             Directory.CreateDirectory(destination);
 
@@ -121,7 +107,7 @@ namespace VersionManagerUI.Services
 
             foreach (var dir in directory.EnumerateDirectories())
             {
-                CopyDirectory(dir, Path.Combine(destination, dir.Name));
+                CopyDirectoryRecursively(dir, Path.Combine(destination, dir.Name));
             }
         }
     }

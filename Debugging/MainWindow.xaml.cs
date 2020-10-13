@@ -10,7 +10,6 @@ namespace Debugging
         public MainWindow()
         {
             InitializeComponent();
-            Owner = App.Current.MainWindow;
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VersionManagerUI.MessageWindows"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="230" Width="370" ResizeMode="NoResize">
+        Title="{Binding WindowTitle}" Height="230" Width="370" ResizeMode="NoResize" Background="#FFEEEEEE">
     <DockPanel Margin="3">
         <TextBlock Name="tbTitle" DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="18" Text="{Binding WindowTitle}" Margin="10,4,10,0"></TextBlock>
         <Frame x:Name="frmOptions" DockPanel.Dock="Bottom" MinHeight="40" MaxHeight="40"></Frame>

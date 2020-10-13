@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using VersionManager.Persistence;
 using VersionManager.GameVersion;
 using VersionManager.Utils;
@@ -27,7 +26,7 @@ namespace VersionManagerUI.Services
             };
         }
 
-        public ObservableCollection<ManagedGameVersion> GetManagedVersions()
+        public ManagedVersionCollection GetManagedVersions()
         {
             return _items;
         }
@@ -66,6 +65,14 @@ namespace VersionManagerUI.Services
             _items.Add(mgv);
             Save();
         }
+        public void Remove(ManagedGameVersion game)
+        {
+            if (_items.Contains(game))
+            {
+                _items.Remove(game);
+                Save();
+            }
+        }
 
         public void Save()
         {
@@ -78,5 +85,7 @@ namespace VersionManagerUI.Services
             string path = Settings.Default.ManagedVersionsFile;
             _items = dds.Deserialize<ManagedVersionCollection>(path);
         }
+
+        
     }
 }

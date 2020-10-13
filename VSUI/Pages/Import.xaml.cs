@@ -24,7 +24,7 @@ namespace VersionManagerUI.Pages
             _importService = importService;
             ProgressBar.DataContext = ProgressBarData;
             bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
-                    }
+        }
 
         private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
@@ -35,7 +35,7 @@ namespace VersionManagerUI.Pages
             btnImportText.Text = "Importing...";
             Progress<int> progress = new Progress<int>(percent =>
             {
-                ProgressBarData.progress = percent;
+                ProgressBarData.Progress = percent;
             });
             string dir = tbGameDir.Text;
             bool importMods = chbImportMods.IsChecked.GetValueOrDefault(false);
@@ -49,7 +49,7 @@ namespace VersionManagerUI.Pages
 
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ProgressBarData.progress = 0;
+            ProgressBarData.Progress = 0;
             string path = tbGameDir.Text;
             ImportStatus result = _importService.CanImport(path);
             ShowBannerWithResult(result);
@@ -92,7 +92,7 @@ namespace VersionManagerUI.Pages
     public class PBar : INotifyPropertyChanged
     {
         private int _progress;
-        public int progress
+        public int Progress
         {
             get { return _progress; }
             set
