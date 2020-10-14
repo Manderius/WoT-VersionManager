@@ -1,8 +1,6 @@
-﻿using Microsoft.Win32;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Collections.ObjectModel;
+﻿using Debugging.Common;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +8,7 @@ using VersionManager.Filesystem;
 using VersionManager.GameRemover;
 using VersionManager.Persistence;
 using VersionManager.Utils;
+using VersionManagerUI.Data;
 
 namespace Debugging.Tools
 {
@@ -19,43 +18,15 @@ namespace Debugging.Tools
     public partial class DeleteVersion : Page
     {
 
-        public ObservableCollection<RootDirectoryEntity> _items;
+        public ManagedVersionCollection ManagedVersions { get; set; }
+        private string ManagedVersionsPath { get; set; }
+        private DirectoryCache _dirCache { get; set; }
+        private string _dirCacheFile { get; set; }
+        private string _containerPath { get; set; }
 
         public DeleteVersion()
         {
             InitializeComponent();
-            _items = new ObservableCollection<RootDirectoryEntity>();
-            lbVersions.ItemsSource = _items;
-        }
-
-        private string SelectDirectory(string title = "Select a directory")
-        {
-            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog(title))
-            {
-                dialog.IsFolderPicker = true;
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-                {
-                    return dialog.FileName;
-                }
-            }
-            return null;
-        }
-        private void btnAddVersion_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Version Manager XML File|*.xml";
-            dialog.Multiselect = true;
-            if (dialog.ShowDialog().GetValueOrDefault())
-            {
-                foreach (string file in dialog.FileNames)
-                {
-                    RootDirectoryEntity ent = new RootDirectoryEntityIO().Deserialize(file);
-                    if (!_items.Contains(ent))
-                    {
-                        _items.Add(ent);
-                    }
-                }
-            }
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
@@ -65,19 +36,20 @@ namespace Debugging.Tools
 
         private async void RemoveGameFiles()
         {
-            btnRemove.IsEnabled = false;
-            btnRemove.Content = "Removing...";
-
-            RootDirectoryEntity selected = lbVersions.SelectedItem as RootDirectoryEntity;
+            string btnContent = btnRemove.Content as string;
+            ManagedGameVersion selected = lbVersions.SelectedItem as ManagedGameVersion;
             if (selected == null)
                 return;
 
-            string container = txtContainer.Text;
-            if (container == null || !Directory.Exists(container))
+            _containerPath = txtContainer.Text;
+            if (_containerPath == null || !Directory.Exists(_containerPath))
             {
                 MessageBox.Show("Please select container directory.", "Error");
                 return;
             }
+
+            if (!LoadDirCache())
+                return;
 
             MessageBoxResult result = MessageBox.Show("This process will remove ALL files from the selected version and delete the game directory. Proceed?", "Warning", MessageBoxButton.YesNo);
             if (result != MessageBoxResult.Yes)
@@ -85,46 +57,73 @@ namespace Debugging.Tools
                 return;
             }
 
-            MessageBox.Show("Please select the selected game's directory, if it exists.", "Info");
-            string gameDir = GetGameDirectory(selected.Version);
-            if (gameDir != null)
+            btnRemove.IsEnabled = false;
+            btnRemove.Content = "Removing...";
+
+            if (Directory.Exists(selected.Path))
+                await Task.Run(() => Directory.Delete(selected.Path, true));
+
+            RootDirectoryEntity root = new RootDirectoryEntityIO().Deserialize(selected.GameXML);
+            List<RootDirectoryEntity> otherVersions = new List<RootDirectoryEntity>();
+            foreach (var mgv in ManagedVersions)
             {
-                await Task.Run(() => Directory.Delete(gameDir, true));
+                RootDirectoryEntity data = new RootDirectoryEntityIO().Deserialize(mgv.GameXML);
+                otherVersions.Add(data);
             }
 
-            string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(container, (entity as FileEntity).Hash);
-            await Task.Run(() => GameFilesRemover.RemoveFiles(selected, _items.ToList(), container, entityToPath));
-            _items.Remove(selected);
+            await Task.Run(() => GameFilesRemover.RemoveFiles(root, otherVersions, _containerPath, Helpers.EntityToPath(_containerPath), _dirCache, null));
+            ManagedVersions.Remove(selected);
+            SaveManagedVersions();
+            SaveDirCache();
 
             btnRemove.IsEnabled = true;
-            btnRemove.Content = "Remove version";
-        }
-
-        private string GetGameDirectory(string selectedVersion)
-        {
-
-            string dir = SelectDirectory();
-            if (Directory.Exists(dir))
-            {
-                string version = Helpers.GetGameVersion(dir);
-                if (version != selectedVersion)
-                {
-                    MessageBox.Show(string.Format("You wanted to delete version {0}, but selected folder with {1}. Please try again or cancel the folder picker dialog.", selectedVersion, version), "Error");
-                    return GetGameDirectory(selectedVersion);
-                }
-
-                return dir;
-            }
-            else
-            {
-                MessageBox.Show("You didn't select a valid directory. Version files will be marked for removal now. You will have to remove the game directory manually later.", "Info");
-            }
-            return null;
+            btnRemove.Content = btnContent;
         }
 
         private void btnBrowseContainer_Click(object sender, RoutedEventArgs e)
         {
-            txtContainer.Text = SelectDirectory("Select container directory");
+            txtContainer.Text = Utils.SelectDirectory("Select container directory");
+        }
+
+        private void btnSelectMVFile_Click(object sender, RoutedEventArgs e)
+        {
+            string path = Utils.SelectXML("ManagedVersions");
+            if (path != null)
+            {
+                ManagedVersionsPath = path;
+                LoadManagedVersions();
+            }
+        }
+
+        private void LoadManagedVersions()
+        {
+            DataContractXMLLoader dds = new DataContractXMLLoader();
+            ManagedVersions = dds.Deserialize<ManagedVersionCollection>(ManagedVersionsPath);
+            lbVersions.ItemsSource = ManagedVersions;
+        }
+
+        private void SaveManagedVersions()
+        {
+            DataContractXMLLoader dds = new DataContractXMLLoader();
+            dds.Serialize(ManagedVersions, ManagedVersionsPath);
+        }
+
+        private bool LoadDirCache()
+        {
+            MessageBox.Show("Select your DirectoryCache.xml file. It should be in \"WoT Version Manager/Data\" directory.");
+            string cacheFile = Utils.SelectXML("DirectoryCache");
+            if (cacheFile == null)
+                return false;
+
+            _dirCacheFile = cacheFile;
+            _dirCache = new DataContractXMLLoader().Deserialize<DirectoryCache>(cacheFile);
+            _dirCache.ContainerPath = _containerPath;
+            return true;
+        }
+
+        private void SaveDirCache()
+        {
+            new DataContractXMLLoader().Serialize(_dirCache, _dirCacheFile);
         }
     }
 }

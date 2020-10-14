@@ -47,8 +47,7 @@ namespace Debugging.Tools
         {
             RootDirectoryEntity root = new RootDirectoryEntityIO().Deserialize(versionFilePath);
             string gameFolder = Path.Combine(outputFolderPath, "World of Tanks " + root.Version);
-            string entityToPath(BaseEntity entity) => Helpers.GetFileDirectory(containerPath, (entity as FileEntity).Hash);
-            GameDirGenerator.Generate(root, gameFolder, containerPath, entityToPath);
+            GameDirGenerator.Generate(root, gameFolder, containerPath, Helpers.EntityToPath(containerPath), null);
         }
 
         private void btnBrowseContainer_Click(object sender, RoutedEventArgs e)

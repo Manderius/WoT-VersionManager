@@ -43,6 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,10 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameRemover\GameFilesRemover.cs" />
+    <Compile Include="Persistence\DataContractXMLLoader.cs" />
     <Compile Include="Persistence\RootDirectoryEntityIO.cs" />
-    <Compile Include="Replay\GameVersion.cs" />
+    <Compile Include="GameVersion\GameVersion.cs" />
     <Compile Include="Replay\Replay.cs" />
-    <Compile Include="Utils\CompressedFile.cs" />
     <Compile Include="Replay\ReplayParser.cs" />
     <Compile Include="Utils\DirectoryCache.cs" />
     <Compile Include="Extraction\ExtractionManager.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Filesystem\FileEntity.cs" />
     <Compile Include="Filesystem\PackageEntity.cs" />
     <Compile Include="Filesystem\RootDirectoryEntity.cs" />
-    <Compile Include="Utils\FolderCompare.cs" />
     <Compile Include="GameGenerator\GameDirGenerator.cs" />
     <Compile Include="Hashing\HashProvider.cs" />
     <Compile Include="Hashing\SHA1HashProvider.cs" />

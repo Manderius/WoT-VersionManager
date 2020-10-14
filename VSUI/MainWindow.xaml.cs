@@ -3,18 +3,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using VSUI.Data;
-using VSUI.Pages;
-using VSUI.Utils;
+using VersionManagerUI.Pages;
+using VersionManagerUI.Utils;
 
-namespace VSUI
+namespace VersionManagerUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PageCache _cache = new PageCache();
+        private InstanceCache _cache = new InstanceCache();
         private List<StackPanel> _menuItems;
         private Brush _itemSelected = new SolidColorBrush(Color.FromRgb(0, 85, 155));
         private Brush _itemDeselected = new SolidColorBrush(Color.FromRgb(0, 55, 100));
@@ -23,6 +22,7 @@ namespace VSUI
         {
             InitializeComponent();
             _menuItems = new List<StackPanel> { MenuOverview, MenuDownload, MenuImportGame, MenuReplays, MenuHelp};
+            _cache = VMSettings.LoadSettings();
             ChangePage<Overview>();
             SelectMenuItem(MenuOverview);
         }
@@ -67,6 +67,5 @@ namespace VSUI
             _menuItems.ForEach(panel => panel.Background = _itemDeselected);
             selected.Background = _itemSelected;
         }
-
     }
 }

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{669AF88D-5664-493B-8DAF-91D32A34D320}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>VSUI</RootNamespace>
+    <RootNamespace>VersionManagerUI</RootNamespace>
     <AssemblyName>WoT Version Manager</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,6 +40,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,8 +62,26 @@
     </ApplicationDefinition>
     <Compile Include="Data\LocalGameVersion.cs" />
     <Compile Include="Data\ManagedGameVersion.cs" />
+    <Compile Include="Data\ManagedVersionCollection.cs" />
+    <Compile Include="MessageWindows\Buttons\ButtonsOK.xaml.cs">
+      <DependentUpon>ButtonsOK.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageWindows\Buttons\ButtonsOkCancel.xaml.cs">
+      <DependentUpon>ButtonsOkCancel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageWindows\Buttons\ButtonsYesNo.xaml.cs">
+      <DependentUpon>ButtonsYesNo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageWindows\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageWindows\MessageWindowButtons.cs" />
+    <Compile Include="MessageWindows\MessageWindowResult.cs" />
     <Compile Include="Pages\OverviewDetails.xaml.cs">
       <DependentUpon>OverviewDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OverviewEmpty.xaml.cs">
+      <DependentUpon>OverviewEmpty.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Replays.xaml.cs">
       <DependentUpon>Replays.xaml</DependentUpon>
@@ -70,10 +89,16 @@
     <Compile Include="Pages\ReplayDetails.xaml.cs">
       <DependentUpon>ReplayDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgressWindows\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressWindows\ProgressWindowExtensions.cs" />
+    <Compile Include="Services\GameDirectoryService.cs" />
+    <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\ManagedVersionsService.cs" />
     <Compile Include="Services\ReplayService.cs" />
-    <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\PageCache.cs" />
+    <Compile Include="Utils\InstanceCache.cs" />
+    <Compile Include="Utils\VMSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,6 +111,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MessageWindows\Buttons\ButtonsOK.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageWindows\Buttons\ButtonsOkCancel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageWindows\Buttons\ButtonsYesNo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageWindows\MessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Download.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -102,6 +143,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\OverviewEmpty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Replays.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -111,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProgressWindows\ProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,8 +211,6 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Parsers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

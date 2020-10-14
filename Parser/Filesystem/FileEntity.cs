@@ -1,12 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace VersionManager.Filesystem
 {
+    [DataContract(Name = "File", Namespace = "VersionManager.Filesystem")]
     public class FileEntity : BaseEntity
     {
+        [DataMember]
         public string Hash;
+        [DataMember]
         public long Size;
         [XmlIgnore]
         public Func<Stream> Contents;

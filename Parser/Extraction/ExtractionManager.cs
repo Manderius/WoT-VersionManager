@@ -13,7 +13,7 @@ namespace VersionManager.Extraction
             _extractors = extractors;
         }
 
-        public void Extract(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache)
+        public void Extract(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache, IProgress<int> progress)
         {
             foreach (BaseEntity ent in entity.GetAllFileEntities())
             {
@@ -22,6 +22,7 @@ namespace VersionManager.Extraction
                     if (ex.CanExtract(ent))
                     {
                         ex.Extract(root, ent, fileToPath, cache);
+                        progress?.Report(1);
                         break;
                     }
                 }

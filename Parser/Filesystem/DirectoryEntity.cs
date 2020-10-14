@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace VersionManager.Filesystem
 {
     [XmlInclude(typeof(PackageEntity))]
+    [DataContract(Name = "Directory", Namespace = "VersionManager.Filesystem")]
     public class DirectoryEntity : BaseEntity
     {
         [XmlArrayItem(ElementName = "File", Type = typeof(FileEntity))]
         [XmlArrayItem(ElementName = "Directory", Type = typeof(DirectoryEntity))]
+        [DataMember]
         public List<BaseEntity> Contents = new List<BaseEntity>();
 
         public DirectoryEntity() : base()

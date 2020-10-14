@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace VersionManager.Replay
+namespace VersionManager.GameVersion
 {
     public class ReplayParser
     {

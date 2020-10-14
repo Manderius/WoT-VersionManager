@@ -1,11 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using VersionManager.Filesystem;
-using Microsoft.Win32;
 using VersionManager.Persistence;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Debugging.Common;
 
 namespace Debugging.Tools
 {
@@ -21,21 +21,11 @@ namespace Debugging.Tools
 
         private void btnBrowseFirst_Click(object sender, RoutedEventArgs e)
         {
-            SelectGameXML(txtFirstVersion);
+            txtFirstVersion.Text = Utils.SelectXML();
         }
         private void btnBrowseSecond_Click(object sender, RoutedEventArgs e)
         {
-            SelectGameXML(txtSecondVersion);
-        }
-
-        private void SelectGameXML(TextBox location)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Version Manager XML File|*.xml";
-            if (dialog.ShowDialog().GetValueOrDefault())
-            {
-                location.Text = dialog.FileName;
-            }
+            txtSecondVersion.Text = Utils.SelectXML();
         }
 
         private async void btnCompare_Click(object sender, RoutedEventArgs e)

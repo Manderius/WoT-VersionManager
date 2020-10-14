@@ -1,38 +1,57 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using VSUI.Services;
-using static VSUI.Services.ManagedVersionsService;
+using VersionManagerUI.MessageWindows;
+using VersionManagerUI.Services;
+using static VersionManagerUI.Services.ImportService;
 
-namespace VSUI.Pages
+namespace VersionManagerUI.Pages
 {
     /// <summary>
     /// Interaction logic for Import.xaml
     /// </summary>
     public partial class Import : Page
     {
-        private ManagedVersionsService _versionService;
+        private ImportService _importService;
         public PBar ProgressBarData = new PBar();
 
-        public Import(ManagedVersionsService versionService)
+        public Import(ImportService importService)
         {
             InitializeComponent();
-            _versionService = versionService;
+            _importService = importService;
             ProgressBar.DataContext = ProgressBarData;
             bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
-
         }
 
-        private void btnImport_Click(object sender, RoutedEventArgs e)
+        private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
-            _versionService.Import(tbGameDir.Text);
+            btnImport.IsEnabled = false;
+            tbGameDir.IsEnabled = false;
+            btnBrowse.IsEnabled = false;
+            chbImportMods.IsEnabled = false;
+            btnImportText.Text = "Importing...";
+            Progress<int> progress = new Progress<int>(percent =>
+            {
+                ProgressBarData.Progress = percent;
+            });
+            string dir = tbGameDir.Text;
+            bool importMods = chbImportMods.IsChecked.GetValueOrDefault(false);
+            await Task.Run(() => _importService.Import(dir, importMods, progress));
+            tbGameDir.IsEnabled = true;
+            btnBrowse.IsEnabled = true;
+            chbImportMods.IsEnabled = true;
+            btnImportText.Text = "Import";
+            new MessageWindow("Finished", "Import successfully finished!\nYou can now play replays from this version through the Replays tab.\nAfter you make sure everything works, you can delete the original game directory.", MessageWindowButtons.OK).ShowDialog();
         }
 
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ProgressBarData.Progress = 0;
             string path = tbGameDir.Text;
-            ImportStatus result = _versionService.CanImport(path);
+            ImportStatus result = _importService.CanImport(path);
             ShowBannerWithResult(result);
             btnImport.IsEnabled = result == ImportStatus.CAN_IMPORT;
         }
@@ -73,7 +92,7 @@ namespace VSUI.Pages
     public class PBar : INotifyPropertyChanged
     {
         private int _progress;
-        public int progress
+        public int Progress
         {
             get { return _progress; }
             set

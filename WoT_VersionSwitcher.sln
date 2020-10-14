@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VersionManager", "Parser\VersionManager.csproj", "{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMUI", "VSUI\VMUI.csproj", "{669AF88D-5664-493B-8DAF-91D32A34D320}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VersionManagerUI", "VSUI\VersionManagerUI.csproj", "{669AF88D-5664-493B-8DAF-91D32A34D320}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debugging", "Debugging\Debugging.csproj", "{5C477D27-FBFF-4E2B-B996-008129E46D5E}"
 EndProject

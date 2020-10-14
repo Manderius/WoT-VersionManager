@@ -10,7 +10,7 @@
     
     <StackPanel Margin="5">
         <TextBlock FontSize="20">Save WoT folder to container</TextBlock>
-        <Grid Margin="20">
+        <Grid Margin="20, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -24,22 +24,29 @@
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0">Select container folder:</Label>
+            <Label Grid.Row="0" Grid.Column="0" Margin="0,-2">Select container folder:</Label>
             <TextBox Grid.Row="1" Grid.Column="0" Name="txtContainer"></TextBox>
             <Button Grid.Row="1" Grid.Column="1" Name="btnBrowseContainer" Click="btnBrowseContainer_Click">Browse</Button>
 
-            <Label Grid.Row="2" Grid.Column="0">Select version file:</Label>
+            <Label Grid.Row="2" Grid.Column="0" Margin="0,-2">Select version data file:</Label>
             <TextBox Grid.Row="3" Grid.Column="0" Name="txtVersionFile"></TextBox>
             <Button Grid.Row="3" Grid.Column="1" Name="btnBrowseVersionFile" Click="btnBrowseVersionFile_Click">Browse</Button>
 
-            <Label Grid.Row="4" Grid.Column="0">Select WoT folder:</Label>
+            <Label Grid.Row="4" Grid.Column="0" Margin="0,-2">Select WoT game folder:</Label>
             <TextBox Grid.Row="5" Grid.Column="0" Name="txtGameFolder"></TextBox>
-            <Button Grid.Row="5" Grid.Column="1" Name="btnBrowsGameFolder" Click="btnBrowseGameFolder_Click">Browse</Button>
+            <Button Grid.Row="5" Grid.Column="1" Name="btnBrowseGameFolder" Click="btnBrowseGameFolder_Click">Browse</Button>
 
-            <TextBlock Grid.Row="6"></TextBlock>
+            <Label Grid.Row="6" Grid.Column="0" Margin="0,-2">Select DirectoryCache.xml file:</Label>
+            <TextBox Grid.Row="7" Grid.Column="0" Name="txtDirCacheFile"></TextBox>
+            <Button Grid.Row="7" Grid.Column="1" Name="btnBrowseDirCache" Click="btnBrowseDirCache_Click">Browse</Button>
 
-            <Button Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Name="btnExtract" Click="btnExtract_Click">Save</Button>
+            <TextBlock Grid.Row="9" Margin="0,-5"></TextBlock>
+            
+            <Button Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Name="btnExtract" Click="btnExtract_Click">Save</Button>
         </Grid>
     </StackPanel>
     <d:DesignerProperties.DesignStyle>

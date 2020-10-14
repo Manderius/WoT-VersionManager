@@ -1,5 +1,5 @@
-﻿using Microsoft.Win32;
-using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Debugging.Common;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace Debugging.Tools
             HashProvider sha1 = new SHA1HashProvider();
             btnCreateFile.IsEnabled = false;
             btnCreateFile.Content = "Creating...";
-            await Task.Run(() => GameDirectoryParser.Parse(wot, root, wot.FullName.Length, true, sha1, IgnoreList.FromEnumerable(File.ReadAllLines("ignored.txt"))));
+            await Task.Run(() => GameDirectoryParser.Parse(wot, root, wot.FullName.Length, sha1, IgnoreList.FromEnumerable(File.ReadAllLines("ignored.txt")), null));
             await Task.Run(() => new RootDirectoryEntityIO().Serialize(root, output));
             btnCreateFile.Content = "Create";
             btnCreateFile.IsEnabled = true;
@@ -42,7 +42,7 @@ namespace Debugging.Tools
             string version = "version";
             try
             {
-                version = Helpers.GetGameVersion(txtGameFolder.Text).Replace(".", "");
+                version = Helpers.GetGameVersion(txtGameFolder.Text).Replace(".", "_");
             }
             catch (Exception) { }
 
@@ -57,14 +57,7 @@ namespace Debugging.Tools
 
         private void btnBrowseWoTFolder_Click(object sender, RoutedEventArgs e)
         {
-            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
-            {
-                dialog.IsFolderPicker = true;
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-                {
-                    txtGameFolder.Text = dialog.FileName;
-                }
-            }
+            txtGameFolder.Text = Utils.SelectDirectory();
         }
     }
 }

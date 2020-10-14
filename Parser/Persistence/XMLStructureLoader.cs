@@ -3,9 +3,9 @@ using System.Xml.Serialization;
 
 namespace VersionManager.Persistence
 {
-    public class XMLStructureLoader<T> : DataDeserializer<T>, DataSerializer<T>
+    public class XMLStructureLoader: DataDeserializer, DataSerializer
     {
-        public virtual T Deserialize(string path)
+        public T Deserialize<T>(string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             T data;
@@ -18,7 +18,7 @@ namespace VersionManager.Persistence
             return data;
         }
 
-        public virtual void Serialize(T data, string path)
+        public void Serialize<T>(T data, string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (StreamWriter writer = new StreamWriter(path))

@@ -1,9 +1,7 @@
-﻿using VersionManager.Filesystem;
-
-namespace VersionManager.Persistence
+﻿namespace VersionManager.Persistence
 {
-    interface DataDeserializer<T>
+    public interface DataDeserializer
     {
-        T Deserialize(string path);
+        T Deserialize<T>(string path);
     }
 }

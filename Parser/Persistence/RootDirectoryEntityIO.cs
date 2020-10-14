@@ -2,11 +2,12 @@
 
 namespace VersionManager.Persistence
 {
-    public class RootDirectoryEntityIO: XMLStructureLoader<RootDirectoryEntity>
+    public class RootDirectoryEntityIO: DataContractXMLLoader
     {
-        public override RootDirectoryEntity Deserialize(string path)
+        public RootDirectoryEntity Deserialize(string path)
         {
-            RootDirectoryEntity root = base.Deserialize(path);
+            RootDirectoryEntity root = base.Deserialize<RootDirectoryEntity>(path);
+            root.RelativePath = "";
             root.BuildPaths();
             return root;
         }
