@@ -29,7 +29,7 @@ namespace VersionManager.GameVersion
                 throw new FileNotFoundException();
             }
 
-            using (BinaryReader b = new BinaryReader(File.Open(path, FileMode.Open)))
+            using (BinaryReader b = new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
             {
                 b.ReadInt32(); // Skips magic number
                 b.ReadInt32(); // Skips result
