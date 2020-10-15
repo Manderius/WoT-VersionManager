@@ -35,5 +35,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <BitmapImage x:Key="Tutorial/Drive.png" UriSource="Images/Drive.png" />
+        <BitmapImage x:Key="Tutorial/Explanation.png" UriSource="Images/explanation.png" />
+        <BitmapImage x:Key="Tutorial/Welcome.png" UriSource="Images/compare-size.png" />
     </Application.Resources>
 </Application>

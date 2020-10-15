@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using VersionManagerUI.Pages;
+using VersionManagerUI.Tutorial;
 using VersionManagerUI.Utils;
 
 namespace VersionManagerUI
@@ -22,6 +23,12 @@ namespace VersionManagerUI
         {
             InitializeComponent();
             _menuItems = new List<StackPanel> { MenuOverview, MenuDownload, MenuImportGame, MenuReplays, MenuHelp};
+            if (VMSettings.IsFirstRun)
+            {
+                TutorialWindow tutorial = new TutorialWindow();
+                tutorial.ShowDialog();
+                VMSettings.CreateDefaultSettings();
+            }
             _cache = VMSettings.LoadSettings();
             ChangePage<Overview>();
             SelectMenuItem(MenuOverview);

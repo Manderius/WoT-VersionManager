@@ -1,0 +1,41 @@
+﻿<Page x:Class="VersionManagerUI.Tutorial.Pages.Completed"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VersionManagerUI.Tutorial.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Completed">
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="4" Name="btnDone" Click="btnDone_Click" Margin="10,0,0,0">Done</Button>
+        </Grid>
+        <StackPanel>
+            <TextBlock FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Completed</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="15">
+                Everything is ready. You can now start using WoT Version Manager.
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="15">
+                Remember to import your WoT versions via the Import tab later if you want them saved!
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="15">
+                <Bold>Tip:</Bold> Only a copy of the original game client is stored in Version Manager. After the import process, you can delete the original directory (only delete old versions that you stored manually,
+                do not delete your main WoT client).
+            </TextBlock>
+        </StackPanel>
+    </DockPanel>
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="Page">
+            <Setter Property="Background" Value="White"></Setter>
+        </Style>
+    </d:DesignerProperties.DesignStyle>
+</Page>
