@@ -29,10 +29,10 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.2
         
       - name: Restore NuGet packages
-        run: nuget restore WoT_VersionSwitcher.sln
+        run: nuget restore WoT_VersionManager.sln
         
       - name: Build Solution
-        run: msbuild WoT_VersionSwitcher.sln /p:Configuration=Release
+        run: msbuild WoT_VersionManager.sln /p:Configuration=Release
         
       - name: Upload generated files
         uses: actions/upload-artifact@v2.1.4
