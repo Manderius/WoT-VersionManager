@@ -52,7 +52,7 @@ namespace VersionManager.Utils
         public static RootDirectoryEntity CreateRootEntityFromDirectory(string path, bool withHash = true, IProgress<int> progress = null)
         {
             DirectoryInfo wot = new DirectoryInfo(path);
-            RootDirectoryEntity root = new RootDirectoryEntity(Helpers.GetGameVersion(path));
+            RootDirectoryEntity root = new RootDirectoryEntity(GetGameVersion(path));
             HashProvider hp = withHash ? new SHA1HashProvider() : null;
             GameDirectoryParser.Parse(wot, root, wot.FullName.Length, hp, IgnoreList.FromEnumerable(File.ReadAllLines("ignored.txt")), progress);
             return root;

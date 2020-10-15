@@ -28,7 +28,7 @@ namespace VersionManager.Parsing
                 }
                 else
                 {
-                    FileEntity fileEnt = computeHash ? new FileEntity(file.Name, hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open)) + relativePath.GetHashCode(), file.Length) : new FileEntity(file.Name, file.Length);
+                    FileEntity fileEnt = computeHash ? new FileEntity(file.Name, hashProvider.FromStream(new FileStream(file.FullName, FileMode.Open, FileAccess.Read)) + relativePath.GetHashCode(), file.Length) : new FileEntity(file.Name, file.Length);
                     parent.Add(fileEnt);
                     progress?.Report(1);
                 }

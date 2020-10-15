@@ -94,5 +94,17 @@ namespace VersionManagerUI.Properties {
                 this["ContainerDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string VersionDataDirectory {
+            get {
+                return ((string)(this["VersionDataDirectory"]));
+            }
+            set {
+                this["VersionDataDirectory"] = value;
+            }
+        }
     }
 }

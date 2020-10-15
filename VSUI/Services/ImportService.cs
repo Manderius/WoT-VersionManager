@@ -60,7 +60,7 @@ namespace VersionManagerUI.Services
             });
 
             string xmlFilename = root.Version.Replace(".", "_") + ".xml";
-            string xml = Path.Combine(Settings.Default.DataDirectory, "VersionData", xmlFilename);
+            string xml = Path.Combine(Settings.Default.VersionDataDirectory, xmlFilename);
             string output = Path.Combine(Settings.Default.GameOutputDirectory, "World of Tanks " + root.Version);
 
             CreateVersionXML(path, xml, sum);

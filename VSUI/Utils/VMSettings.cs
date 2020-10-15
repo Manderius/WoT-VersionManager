@@ -22,8 +22,8 @@ namespace VersionManagerUI.Utils
             if (File.Exists(Settings.Default.DirectoryCacheFile))
             {
                 dirCache = dds.Deserialize<DirectoryCache>(Settings.Default.DirectoryCacheFile);
-                dirCache.ContainerPath = Settings.Default.ContainerDirectory;
             }
+            dirCache.ContainerPath = Settings.Default.ContainerDirectory;
             cache.AddInstance(dirCache);
 
             ManagedVersionsService mvs = new ManagedVersionsService();
@@ -46,6 +46,12 @@ namespace VersionManagerUI.Utils
             Settings.Default.ManagedVersionsFile = Path.Combine(Settings.Default.DataDirectory, "ManagedVersions.xml");
             Settings.Default.DirectoryCacheFile = Path.Combine(Settings.Default.DataDirectory, "DirectoryCache.xml");
             Settings.Default.ContainerDirectory = Path.Combine(Settings.Default.DataDirectory, "Container");
+            Settings.Default.VersionDataDirectory = Path.Combine(Settings.Default.DataDirectory, "VersionData");
+
+            Directory.CreateDirectory(Settings.Default.GameOutputDirectory);
+            Directory.CreateDirectory(Settings.Default.DataDirectory);
+            Directory.CreateDirectory(Settings.Default.ContainerDirectory);
+            Directory.CreateDirectory(Settings.Default.VersionDataDirectory);
 
             Settings.Default.Save();
         }
