@@ -23,7 +23,7 @@ namespace VersionManagerUI
         {
             InitializeComponent();
             _menuItems = new List<StackPanel> { MenuOverview, MenuDownload, MenuImportGame, MenuReplays, MenuHelp};
-            if (VMSettings.IsFirstRun || true)
+            if (VMSettings.IsFirstRun)
             {
                 TutorialWindow tutorial = new TutorialWindow();
                 tutorial.ShowDialog();
