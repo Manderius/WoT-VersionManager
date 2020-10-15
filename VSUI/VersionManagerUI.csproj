@@ -97,6 +97,22 @@
     <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\ManagedVersionsService.cs" />
     <Compile Include="Services\ReplayService.cs" />
+    <Compile Include="Tutorial\IPagination.cs" />
+    <Compile Include="Tutorial\Pages\Completed.xaml.cs">
+      <DependentUpon>Completed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\Pages\HowItWorks.xaml.cs">
+      <DependentUpon>HowItWorks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\Pages\Location.xaml.cs">
+      <DependentUpon>Location.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\Pages\Welcome.xaml.cs">
+      <DependentUpon>Welcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\TutorialWindow.xaml.cs">
+      <DependentUpon>TutorialWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\InstanceCache.cs" />
     <Compile Include="Utils\VMSettings.cs" />
     <Page Include="MainWindow.xaml">
@@ -163,6 +179,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Tutorial\Pages\Completed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\HowItWorks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\Location.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\Welcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\TutorialWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\Download.xaml.cs">
@@ -211,6 +247,14 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Drive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\explanation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\compare-size.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

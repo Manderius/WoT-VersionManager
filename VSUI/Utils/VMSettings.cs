@@ -7,16 +7,12 @@ using VersionManagerUI.Services;
 
 namespace VersionManagerUI.Utils
 {
-    class VMSettings
+    static class VMSettings
     {
+        public static bool IsFirstRun => Settings.Default.AppDirectory == string.Empty;
         public static InstanceCache LoadSettings()
         {
             InstanceCache cache = new InstanceCache();
-
-            if (Settings.Default.AppDirectory == string.Empty)
-            {
-                CreateDefaultSettings();
-            }
 
             DataDeserializer dds = new DataContractXMLLoader();
             cache.AddInstance(dds);
@@ -30,7 +26,6 @@ namespace VersionManagerUI.Utils
             }
             cache.AddInstance(dirCache);
 
-
             ManagedVersionsService mvs = new ManagedVersionsService();
             if (File.Exists(Settings.Default.ManagedVersionsFile))
             {
@@ -42,10 +37,8 @@ namespace VersionManagerUI.Utils
             return cache;
         }
 
-        private static void CreateDefaultSettings()
+        public static void CreateDefaultSettings()
         {
-            // TODO first run wizard
-
             string appDir = AppDomain.CurrentDomain.BaseDirectory;
             Settings.Default.AppDirectory = appDir;
             Settings.Default.DataDirectory = Path.Combine(appDir, "Data");

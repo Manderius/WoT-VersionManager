@@ -52,7 +52,7 @@ namespace VersionManagerUI.Pages
 
         public async void DeleteVersion(ManagedGameVersion version)
         {
-            ProgressWindow pw = new ProgressWindow("Deleting version", "Deleting selected World of Tanks. Do not close the application.");
+            ProgressWindow pw = new ProgressWindow("Deleting version", "Deleting selected World of Tanks version. Do not close the application.");
             pw.CloseOnComplete = true;
             var winTask = pw.ShowDialogAsync();
 
