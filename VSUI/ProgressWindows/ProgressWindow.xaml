@@ -10,7 +10,7 @@
         <TextBlock Name="tbTitle" DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="18" Text="{Binding WindowTitle}" Margin="10,4,10,0"></TextBlock>
         <Grid DockPanel.Dock="Bottom" Height="35">
             <ProgressBar x:Name="ProgressBar" Maximum="100" Minimum="0" Value="{Binding Progress, UpdateSourceTrigger=PropertyChanged}" Background="White"/>
-            <TextBlock Text="{Binding ElementName=ProgressBar, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Text="{Binding ElementName=ProgressBar, Path=Value, StringFormat={}{0:0} %}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
         <TextBlock x:Name="tbText" Text="{Binding Text}" TextWrapping="Wrap" VerticalAlignment="Stretch" Margin="10,10,10,10"></TextBlock>
     </DockPanel>

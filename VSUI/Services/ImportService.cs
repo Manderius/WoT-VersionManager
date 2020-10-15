@@ -48,27 +48,22 @@ namespace VersionManagerUI.Services
             if (CanImport(path) != ImportStatus.CAN_IMPORT)
                 return;
 
-            RootDirectoryEntity root = Helpers.CreateRootEntityFromDirectory(path, false);
-            int totalFiles = root.GetAllFileEntities(false).Count;
-            int processed = 0;
-
-            Progress<int> sum = new Progress<int>(prog =>
+            int basePercent = 0; 
+            Progress<int> partialProgress = new Progress<int>(percent =>
             {
-                processed++;
-                int percent = processed * 100 / totalFiles;
-                progress.Report(percent / 3);
+                progress.Report(basePercent + percent / 3);
             });
 
-            string xmlFilename = root.Version.Replace(".", "_") + ".xml";
+            string gameVersion = Helpers.GetGameVersion(path);
+            string xmlFilename = gameVersion.Replace(".", "_") + ".xml";
             string xml = Path.Combine(Settings.Default.VersionDataDirectory, xmlFilename);
-            string output = Path.Combine(Settings.Default.GameOutputDirectory, "World of Tanks " + root.Version);
+            string output = Path.Combine(Settings.Default.GameOutputDirectory, "World of Tanks " + gameVersion);
 
-            CreateVersionXML(path, xml, sum);
-
-            _gds.ExtractToContainer(xml, path, sum);
-            totalFiles = root.GetAllFileEntities(true).Count;
-            processed = totalFiles * 2;
-            _gds.CreateGameDirectory(xml, output, sum);
+            CreateVersionXML(path, xml, partialProgress);
+            basePercent = 33;
+            _gds.ExtractToContainer(xml, path, partialProgress);
+            basePercent = 66;
+            _gds.CreateGameDirectory(xml, output, partialProgress);
 
             if (copyMods)
             {

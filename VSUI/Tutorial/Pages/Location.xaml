@@ -24,7 +24,7 @@
         <StackPanel Margin="10">
             <TextBlock FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Location</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="15">
-                When importing a version of World of Tanks, WoT Version Manager creates a copy and stores it in its directory. Your original WoT client stays intact.
+                When importing a World of Tanks client, WoT Version Manager creates a copy and stores it in its directory. Your original WoT client stays intact.
                 
             </TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="15">

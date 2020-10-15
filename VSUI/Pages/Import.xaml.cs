@@ -46,15 +46,21 @@ namespace VersionManagerUI.Pages
             chbImportMods.IsEnabled = true;
             btnImportText.Text = "Import";
             new MessageWindow("Finished", "Import successfully finished!\nYou can now play replays from this version through the Replays tab.\nAfter you make sure everything works, you can delete the original game directory.", MessageWindowButtons.OK).ShowDialog();
+            OnPathChanged();
         }
 
-        private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
+        private void OnPathChanged()
         {
             ProgressBarData.Progress = 0;
             string path = tbGameDir.Text;
             ImportStatus result = _importService.CanImport(path);
             ShowBannerWithResult(result);
             btnImport.IsEnabled = result == ImportStatus.CAN_IMPORT;
+        }
+
+        private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            OnPathChanged();
         }
 
         private void ShowBannerWithResult(ImportStatus result)

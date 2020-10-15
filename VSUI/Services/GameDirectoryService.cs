@@ -80,17 +80,12 @@ namespace VersionManagerUI.Services
             if (Directory.Exists(game.Path))
                 Directory.Delete(game.Path, true);
 
-            RootDirectoryEntity root = new RootDirectoryEntityIO().Deserialize(game.GameXML);
-            int totalFiles = root.GetAllFileEntities(true).Count;
-            int processed = 0;
-            Progress<int> partialProgress = new Progress<int>(prog =>
+            Progress<int> partialProgress = new Progress<int>(percent =>
             {
-                int percent = 90 * ++processed / totalFiles;
-                progress.Report(10 + percent);
+                progress.Report((int) (10 + 0.9 * percent));
             });
 
-            string container = Settings.Default.ContainerDirectory;
-            GameDirGenerator.Generate(root, game.Path, container, Helpers.EntityToPath(container), partialProgress);
+            CreateGameDirectory(game.GameXML, game.Path, partialProgress);
             progress.Report(100);
         }
 

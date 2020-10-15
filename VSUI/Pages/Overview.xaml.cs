@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using VersionManagerUI.Data;
+using VersionManagerUI.MessageWindows;
 using VersionManagerUI.ProgressWindows;
 using VersionManagerUI.Services;
 
@@ -36,9 +38,13 @@ namespace VersionManagerUI.Pages
 
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            lbGameVersions.SelectedIndex = 0;
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                lbGameVersions.SelectedIndex = 0;
+                if ((sender as ManagedVersionCollection).Count == 0)
+                {
+                    frmOverviewDetails.Navigate(new OverviewEmpty());
+                }
             }
         }
 
@@ -80,7 +86,15 @@ namespace VersionManagerUI.Pages
                     pw.SetProgress(prog);
                 previous = prog;
             });
-            await Task.Run(() => _gameDirService.RebuildGameDirectory(version, progress));
+            try
+            {
+                await Task.Run(() => _gameDirService.RebuildGameDirectory(version, progress));
+            }
+            catch (FileNotFoundException ex)
+            {
+                new MessageWindow("Error", "Corrupted files detected. Please delete this version and re-import it.", MessageWindowButtons.OK).ShowDialog();
+                (progress as IProgress<int>).Report(100);
+            } 
             await winTask;
         }
     }

@@ -9,6 +9,6 @@
     <DockPanel Margin="3">
         <TextBlock Name="tbTitle" DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="18" Text="{Binding WindowTitle}" Margin="10,4,10,0"></TextBlock>
         <Frame x:Name="frmOptions" DockPanel.Dock="Bottom" MinHeight="40" MaxHeight="40"></Frame>
-        <TextBlock x:Name="tbText" Text="{Binding Text}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,10,10,10"></TextBlock>
+        <TextBlock x:Name="tbText" Text="{Binding Text}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,10,10,10"></TextBlock>
     </DockPanel>
 </Window>

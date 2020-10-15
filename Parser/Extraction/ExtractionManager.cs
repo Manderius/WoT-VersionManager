@@ -15,14 +15,26 @@ namespace VersionManager.Extraction
 
         public void Extract(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache, IProgress<int> progress)
         {
+            int totalFiles = entity.GetAllFileEntities(true).Count;
+            int processed = 0;
+            Progress<int> sumProgress = new Progress<int>(prog =>
+            {
+                int percent = ++processed * 100 / totalFiles;
+                progress.Report(percent);
+            });
+
+            ExtractInner(entity, root, fileToPath, cache, sumProgress);
+        }
+
+        private void ExtractInner(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache, IProgress<int> progress)
+        {
             foreach (BaseEntity ent in entity.GetAllFileEntities())
             {
                 foreach (Extractor ex in _extractors)
                 {
                     if (ex.CanExtract(ent))
                     {
-                        ex.Extract(root, ent, fileToPath, cache);
-                        progress?.Report(1);
+                        ex.Extract(root, ent, fileToPath, cache, progress);
                         break;
                     }
                 }

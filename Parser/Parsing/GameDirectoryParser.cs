@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using VersionManager.Filesystem;
@@ -8,7 +9,28 @@ namespace VersionManager.Parsing
 {
     public class GameDirectoryParser
     {
-        public static void Parse(DirectoryInfo directory, DirectoryEntity parent, int prefixLength, HashProvider hashProvider, IgnoreList ignoreList, IProgress<int> progress)
+        public static void Parse(DirectoryInfo directory, RootDirectoryEntity root, int prefixLength, HashProvider hashProvider, IgnoreList ignoreList, IProgress<int> progress)
+        {
+            RootDirectoryEntity temp = new RootDirectoryEntity();
+            ParseInner(directory, temp, prefixLength, null, ignoreList, null);
+
+            if (hashProvider == null)
+            {
+                progress?.Report(100);
+                return;
+            }
+
+            int totalFiles = temp.GetAllFileEntities(true).Count;
+            int processed = 0;
+            Progress<int> sumProgress = new Progress<int>(prog =>
+            {
+                int percent = ++processed * 100 / totalFiles;
+                progress.Report(percent);
+            });
+            ParseInner(directory, root, prefixLength, hashProvider, ignoreList, sumProgress);
+        }
+
+        private static void ParseInner(DirectoryInfo directory, DirectoryEntity parent, int prefixLength, HashProvider hashProvider, IgnoreList ignoreList, IProgress<int> progress)
         {
             bool computeHash = hashProvider != null;
 
@@ -23,7 +45,7 @@ namespace VersionManager.Parsing
 
                 if (file.Extension == ".pkg")
                 {
-                    ParsePackage(file, parent, hashProvider);
+                    ParsePackage(file, parent, hashProvider, progress);
                     progress?.Report(1);
                 }
                 else
@@ -41,11 +63,11 @@ namespace VersionManager.Parsing
 
                 DirectoryEntity child = new DirectoryEntity(dir.Name);
                 parent.Add(child);
-                Parse(dir, child, prefixLength, hashProvider, ignoreList, progress);
+                ParseInner(dir, child, prefixLength, hashProvider, ignoreList, progress);
             }
         }
 
-        private static void ParsePackage(FileInfo package, DirectoryEntity parent, HashProvider hashProvider)
+        private static void ParsePackage(FileInfo package, DirectoryEntity parent, HashProvider hashProvider, IProgress<int> progress)
         {
             PackageEntity root = new PackageEntity(package.Name);
             parent.Add(root);
@@ -62,6 +84,7 @@ namespace VersionManager.Parsing
                     string relativePath = entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length);
                     FileEntity file = computeHash ? new FileEntity(entry.Name, hashProvider.FromStream(entry.Open()) + entry.FullName.GetHashCode(), entry.Length) : new FileEntity(entry.Name, entry.Length);
                     (root.GetEntityFromRelativePath(relativePath, true) as DirectoryEntity).Add(file);
+                    progress?.Report(1);
                 }
             }
         }

@@ -13,7 +13,7 @@ namespace VersionManager.Extraction
             return entity is PackageEntity;
         }
 
-        public override void Extract(string root, BaseEntity entity, Func<BaseEntity, string> entityToDir, DirectoryCache cache)
+        public override void Extract(string root, BaseEntity entity, Func<BaseEntity, string> entityToDir, DirectoryCache cache, IProgress<int> progress)
         {
             PackageEntity package = entity as PackageEntity;
             using (ZipArchive arch = ZipFile.OpenRead(Path.Combine(root, entity.RelativePath)))
@@ -32,6 +32,7 @@ namespace VersionManager.Extraction
                         {
                             entry.ExtractToFile(Path.Combine(dir, ent.Name), false);
                         }
+                        progress?.Report(1);
                     }
                 }
             }

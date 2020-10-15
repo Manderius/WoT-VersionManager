@@ -42,7 +42,7 @@ namespace VersionManager.Utils
         /// <returns>True if directory already was in cache, false otherwise</returns>
         public bool CacheDirectory(string dir)
         {
-            string relativePath = (dir.StartsWith(ContainerPath)) ? dir.Substring(ContainerPath.Length).TrimStart('\\') : dir;
+            string relativePath = dir.StartsWith(ContainerPath) ? dir.Substring(ContainerPath.Length).TrimStart('\\') : dir;
             if (!_existingPaths.Contains(relativePath))
             {
                 Directory.CreateDirectory(dir);

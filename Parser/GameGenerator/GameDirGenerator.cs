@@ -30,7 +30,19 @@ namespace VersionManager.GameGenerator
             return CreateHardLink(path, source, IntPtr.Zero);
         }
 
-        public static void Generate(DirectoryEntity entity, string destination, string container, Func<BaseEntity, string> entityToDir, IProgress<int> progress)
+        public static void Generate(DirectoryEntity root, string destination, string container, Func<BaseEntity, string> entityToDir, IProgress<int> progress)
+        {
+            int totalFiles = root.GetAllFileEntities(true).Count;
+            int processed = 0;
+            Progress<int> sumProgress = new Progress<int>(prog =>
+            {
+                int percent = ++processed * 100 / totalFiles;
+                progress.Report(percent);
+            });
+            GenerateInner(root, destination, container, entityToDir, sumProgress);
+        }
+
+        private static void GenerateInner(DirectoryEntity entity, string destination, string container, Func<BaseEntity, string> entityToDir, IProgress<int> progress)
         {
             Directory.CreateDirectory(destination);
 
@@ -42,7 +54,7 @@ namespace VersionManager.GameGenerator
 
             foreach (DirectoryEntity dir in entity.Contents.OfType<DirectoryEntity>())
             {
-                Generate(dir, Path.Combine(destination, dir.Name), container, entityToDir, progress);
+                GenerateInner(dir, Path.Combine(destination, dir.Name), container, entityToDir, progress);
             }
 
             if (entity is RootDirectoryEntity root)
