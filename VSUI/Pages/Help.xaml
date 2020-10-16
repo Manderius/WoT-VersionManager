@@ -79,9 +79,12 @@
                 </TextBlock>
                 <TextBlock TextWrapping="Wrap" Margin="20,0,0,0">
                     If you want to delete an imported client, <Bold>do not delete the directory</Bold> by yourself. This might cause your other
-                    clients to stop working.<LineBreak></LineBreak><Bold>Always use the Delete button</Bold> in the "Overview" tab.
+                    clients to stop working. <Bold>Always use the Delete button</Bold> in the "Overview" tab.
                 </TextBlock>
 
+                <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
+                    For more info, visit the official <Hyperlink NavigateUri="http://forum.worldoftanks.eu/" RequestNavigate="Hyperlink_RequestNavigate">EU Forum post</Hyperlink>.
+                </TextBlock>
             </StackPanel>
         </Grid>
     </DockPanel>
