@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using VersionManagerUI.Data;
@@ -28,24 +30,27 @@ namespace VersionManagerUI.Pages
             frmOverviewDetails.Navigate(new OverviewEmpty());
 
             ManagedVersionCollection versions = _versionService.GetManagedVersions();
-            lbGameVersions.ItemsSource = versions;
-            lbGameVersions.Items.SortDescriptions.Clear();
-            lbGameVersions.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Version", System.ComponentModel.ListSortDirection.Descending));
-            lbGameVersions.SelectedIndex = 0;
-
             versions.CollectionChanged += ContentCollectionChanged;
+            ShowVersions();
         }
 
-        public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            lbGameVersions.SelectedIndex = 0;
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 if ((sender as ManagedVersionCollection).Count == 0)
                 {
                     frmOverviewDetails.Navigate(new OverviewEmpty());
+                    return;
                 }
             }
+            ShowVersions();
+        }
+
+        private void ShowVersions()
+        {
+            lbGameVersions.ItemsSource = _versionService.GetManagedVersions().OrderByDescending(v => v.LocalVersion);
+            lbGameVersions.SelectedIndex = 0;
         }
 
         private void lbGameVersions_SelectionChanged(object sender, SelectionChangedEventArgs e)

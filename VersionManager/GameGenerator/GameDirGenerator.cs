@@ -37,9 +37,18 @@ namespace VersionManager.GameGenerator
             Progress<int> sumProgress = new Progress<int>(prog =>
             {
                 int percent = ++processed * 100 / totalFiles;
-                progress.Report(percent);
+                progress?.Report(percent);
             });
             GenerateInner(root, destination, container, entityToDir, sumProgress);
+            FixPathsFile(destination);
+        }
+
+        private static void FixPathsFile(string dir)
+        {
+            string paths = Path.Combine(dir, "paths.xml");
+            string[] lines = File.ReadAllLines(paths);
+            string[] edited = lines.Select(line => line.Replace("<Package ", "<Path ").Replace("</Package>", "</Path>")).Where(line => !line.Contains("Packages>")).ToArray();
+            File.WriteAllLines(paths, edited);
         }
 
         private static void GenerateInner(DirectoryEntity entity, string destination, string container, Func<BaseEntity, string> entityToDir, IProgress<int> progress)

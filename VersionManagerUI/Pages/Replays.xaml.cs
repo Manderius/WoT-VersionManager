@@ -6,6 +6,9 @@ using VersionManagerUI.Data;
 using VersionManagerUI.Services;
 using System;
 using System.Windows.Threading;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace VersionManagerUI.Pages
 {
@@ -24,12 +27,24 @@ namespace VersionManagerUI.Pages
             _localVersionsService = localVersionsService;
             _replayService = replayService;
             InitializeComponent();
-            cmbVersions.ItemsSource = _localVersionsService.GetManagedVersions();
+            ManagedVersionCollection versions = _localVersionsService.GetManagedVersions();
+            versions.CollectionChanged += ContentCollectionChanged;
+            UpdateVersions();
             versionPick.Visibility = Visibility.Hidden;
             warnNotAvailable.Visibility = Visibility.Hidden;
             _buttonTimer = new DispatcherTimer();
             _buttonTimer.Interval = new TimeSpan(0, 0, 5);
             _buttonTimer.Tick += OnReplayLaunched;
+        }
+
+        private void UpdateVersions()
+        {
+            cmbVersions.ItemsSource = _localVersionsService.GetManagedVersions().OrderByDescending(v => v.LocalVersion);
+        }
+
+        private void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UpdateVersions();
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)

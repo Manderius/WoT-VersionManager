@@ -35,9 +35,18 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Margin="0,20,0,0" Name="versionPick" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBlock TextWrapping="Wrap">Game Version cannot be determined. This is often caused by old replays.<LineBreak/>If you know the
-                correct version and have it installed, please select it below:</TextBlock>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="0,20,0,0">
+                    Keep in mind that game files are compressed, therefore launching a client might take longer than usual. Wait until the game loads completely.
+                </TextBlock>
+                <StackPanel Margin="0,20,0,0" Name="versionPick" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+                    <TextBlock TextWrapping="Wrap">
+                        Game Version cannot be determined. This is often caused by old replays.<LineBreak/>If you know the
+                        correct version and have it installed, please select it below:
+                    </TextBlock>
                     <ComboBox Name="cmbVersions" SelectionChanged="cmbVersions_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>

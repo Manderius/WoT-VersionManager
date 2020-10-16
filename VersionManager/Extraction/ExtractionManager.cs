@@ -20,10 +20,10 @@ namespace VersionManager.Extraction
             Progress<int> sumProgress = new Progress<int>(prog =>
             {
                 int percent = ++processed * 100 / totalFiles;
-                progress.Report(percent);
+                progress?.Report(percent);
             });
 
-            ExtractInner(entity, root, fileToPath, cache, sumProgress);
+            ExtractInner(entity, root, fileToPath, cache, (progress != null) ? sumProgress : null);
         }
 
         private void ExtractInner(DirectoryEntity entity, string root, Func<BaseEntity, string> fileToPath, DirectoryCache cache, IProgress<int> progress)

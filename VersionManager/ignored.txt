@@ -4,7 +4,6 @@ python.log
 unins000.dat
 unins000.exe
 WargamingGameUpdater.exe
-wgc_api.dll
 wgc_api.exe
 WOTLauncher.cfg
 WOTLauncher.exe
