@@ -74,8 +74,11 @@
                         all the WoT versions saved.
                     </TextBlock>
                     <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontSize="13">
-                        Importing a client might take up to 30 minutes. The first import takes the longest. Make sure you have enough space on your drive where Version Manager
+                        Importing a client might take up to 30 minutes. Make sure you have enough space on your drive where Version Manager
                         is located.
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap" FontSize="13">
+                        <Bold>Note:</Bold> The first import might take up to 2 hours on slower systems. The following imports are much faster.
                     </TextBlock>
 
 

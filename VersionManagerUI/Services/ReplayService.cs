@@ -34,8 +34,11 @@ namespace VersionManagerUI.Services
         public void PlayReplay(Replay replay, LocalGameVersion version)
         {
             string executable = Path.Combine(version.Path, "WorldOfTanks.exe");
-            ProcessStartInfo startInfo = new ProcessStartInfo(executable);
-            startInfo.Arguments = string.Format("\"{0}\"", replay.Path);
+            ProcessStartInfo startInfo = new ProcessStartInfo(executable)
+            {
+                Arguments = string.Format("\"{0}\"", replay.Path),
+                WorkingDirectory = version.Path
+            };
             Process.Start(startInfo);
         }
     }

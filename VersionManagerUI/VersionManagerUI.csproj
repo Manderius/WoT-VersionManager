@@ -246,12 +246,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Parser\VersionManager.csproj">
-      <Project>{3D432C59-1CA2-46ED-9E4F-9B3A9A006ABD}</Project>
-      <Name>VersionManager</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +256,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\compare-size.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VersionManager\VersionManager.csproj">
+      <Project>{3d432c59-1ca2-46ed-9e4f-9b3a9a006abd}</Project>
+      <Name>VersionManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

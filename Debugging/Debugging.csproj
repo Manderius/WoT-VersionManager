@@ -166,13 +166,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Parser\VersionManager.csproj">
+    <ProjectReference Include="..\VersionManagerUI\VersionManagerUI.csproj">
+      <Project>{669af88d-5664-493b-8daf-91d32a34d320}</Project>
+      <Name>VersionManagerUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VersionManager\VersionManager.csproj">
       <Project>{3d432c59-1ca2-46ed-9e4f-9b3a9a006abd}</Project>
       <Name>VersionManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VSUI\VersionManagerUI.csproj">
-      <Project>{669AF88D-5664-493B-8DAF-91D32A34D320}</Project>
-      <Name>VersionManagerUI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
