@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C477D27-FBFF-4E2B-B996-008129E46D5E}</ProjectGuid>
+    <ProjectGuid>{669AF88D-5664-493B-8DAF-91D32A34D320}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Debugging</RootNamespace>
-    <AssemblyName>Debugging</AssemblyName>
+    <RootNamespace>VersionManagerUI</RootNamespace>
+    <AssemblyName>WoT Version Manager</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -43,6 +46,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,34 +66,61 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Tools\CompareMultiple.xaml.cs">
-      <DependentUpon>CompareMultiple.xaml</DependentUpon>
+    <Compile Include="Data\LocalGameVersion.cs" />
+    <Compile Include="Data\ManagedGameVersion.cs" />
+    <Compile Include="Data\ManagedVersionCollection.cs" />
+    <Compile Include="MessageWindows\Buttons\ButtonsOK.xaml.cs">
+      <DependentUpon>ButtonsOK.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\CompareVersions.xaml.cs">
-      <DependentUpon>CompareVersions.xaml</DependentUpon>
+    <Compile Include="MessageWindows\Buttons\ButtonsOkCancel.xaml.cs">
+      <DependentUpon>ButtonsOkCancel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\CreateVersionData.xaml.cs">
-      <DependentUpon>CreateVersionData.xaml</DependentUpon>
+    <Compile Include="MessageWindows\Buttons\ButtonsYesNo.xaml.cs">
+      <DependentUpon>ButtonsYesNo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\DeleteVersion.xaml.cs">
-      <DependentUpon>DeleteVersion.xaml</DependentUpon>
+    <Compile Include="MessageWindows\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\EditManaged.xaml.cs">
-      <DependentUpon>EditManaged.xaml</DependentUpon>
+    <Compile Include="MessageWindows\MessageWindowButtons.cs" />
+    <Compile Include="MessageWindows\MessageWindowResult.cs" />
+    <Compile Include="Pages\OverviewDetails.xaml.cs">
+      <DependentUpon>OverviewDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\ExtractToContainer.xaml.cs">
-      <DependentUpon>ExtractToContainer.xaml</DependentUpon>
+    <Compile Include="Pages\OverviewEmpty.xaml.cs">
+      <DependentUpon>OverviewEmpty.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\GenerateFolder.xaml.cs">
-      <DependentUpon>GenerateFolder.xaml</DependentUpon>
+    <Compile Include="Pages\Replays.xaml.cs">
+      <DependentUpon>Replays.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Logo.xaml.cs">
-      <DependentUpon>Logo.xaml</DependentUpon>
+    <Compile Include="Pages\ReplayDetails.xaml.cs">
+      <DependentUpon>ReplayDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\VersionInfo.xaml.cs">
-      <DependentUpon>VersionInfo.xaml</DependentUpon>
+    <Compile Include="ProgressWindows\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Utils.cs" />
+    <Compile Include="ProgressWindows\ProgressWindowExtensions.cs" />
+    <Compile Include="Services\GameDirectoryService.cs" />
+    <Compile Include="Services\ImportService.cs" />
+    <Compile Include="Services\ManagedVersionsService.cs" />
+    <Compile Include="Services\ReplayService.cs" />
+    <Compile Include="Tutorial\IPagination.cs" />
+    <Compile Include="Tutorial\Pages\Completed.xaml.cs">
+      <DependentUpon>Completed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\Pages\HowItWorks.xaml.cs">
+      <DependentUpon>HowItWorks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\Pages\Location.xaml.cs">
+      <DependentUpon>Location.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\Pages\Welcome.xaml.cs">
+      <DependentUpon>Welcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial\TutorialWindow.xaml.cs">
+      <DependentUpon>TutorialWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\InstanceCache.cs" />
+    <Compile Include="Utils\VMSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,44 +133,92 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Tools\CompareMultiple.xaml">
+    <Page Include="MessageWindows\Buttons\ButtonsOK.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\CompareVersions.xaml">
+    <Page Include="MessageWindows\Buttons\ButtonsOkCancel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\CreateVersionData.xaml">
+    <Page Include="MessageWindows\Buttons\ButtonsYesNo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\DeleteVersion.xaml">
+    <Page Include="MessageWindows\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\EditManaged.xaml">
+    <Page Include="Pages\Download.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\ExtractToContainer.xaml">
+    <Page Include="Pages\Overview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\GenerateFolder.xaml">
+    <Page Include="Pages\Import.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\Logo.xaml">
+    <Page Include="Pages\OverviewDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\VersionInfo.xaml">
+    <Page Include="Pages\OverviewEmpty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Replays.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReplayDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProgressWindows\ProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\Completed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\HowItWorks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\Location.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\Pages\Welcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tutorial\TutorialWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\Download.xaml.cs">
+      <DependentUpon>Download.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Import.xaml.cs">
+      <DependentUpon>Import.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -166,17 +246,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VersionManagerUI\VersionManagerUI.csproj">
-      <Project>{669af88d-5664-493b-8daf-91d32a34d320}</Project>
-      <Name>VersionManagerUI</Name>
-    </ProjectReference>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Drive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\explanation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\compare-size.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\VersionManager\VersionManager.csproj">
       <Project>{3d432c59-1ca2-46ed-9e4f-9b3a9a006abd}</Project>
       <Name>VersionManager</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

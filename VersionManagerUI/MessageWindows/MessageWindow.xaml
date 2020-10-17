@@ -1,0 +1,14 @@
+﻿<Window x:Class="VersionManagerUI.MessageWindows.MessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VersionManagerUI.MessageWindows"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="230" Width="370" ResizeMode="NoResize" Background="#FFEEEEEE">
+    <DockPanel Margin="3">
+        <TextBlock Name="tbTitle" DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="18" Text="{Binding WindowTitle}" Margin="10,4,10,0"></TextBlock>
+        <Frame x:Name="frmOptions" DockPanel.Dock="Bottom" MinHeight="40" MaxHeight="40"></Frame>
+        <TextBlock x:Name="tbText" Text="{Binding Text}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,10,10,10"></TextBlock>
+    </DockPanel>
+</Window>
