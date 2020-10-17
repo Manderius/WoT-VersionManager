@@ -27,8 +27,8 @@
             <TextBlock TextWrapping="Wrap" FontSize="15">
                 Remember to import your WoT versions via the Import tab later if you want them saved!
             </TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="15">
-                <Bold>Tip:</Bold> Only a copy of the original game client is stored in Version Manager. After the import process, you can delete the original directory (only delete old versions that you stored manually,
+            <TextBlock TextWrapping="Wrap" FontSize="15" Margin="0,20,0,0">
+                <Bold>Tip:</Bold> Only a copy of the original game client is stored in Version Manager. After the import process, you can delete the original directory to free up disk space (only delete old versions that you stored manually,
                 do not delete your main WoT client).
             </TextBlock>
         </StackPanel>

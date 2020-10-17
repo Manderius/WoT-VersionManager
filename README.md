@@ -14,7 +14,7 @@ No more micropatches ruining your replays!
 ## How to use
 This section only contains basic usage. For more info, see [Download and Help](#download-and-help).
 
-1. Make sure you have enough space on your disk. This application will copy WoT client files to a new location, so you need to have at least 40 GB of free space.
+1. Make sure you have enough space on your disk. This application will copy WoT client files to a new location, so you need to have at least 50 GB of free space.
 1. Go to "Import game client" and select one of the WoT client directories. You can also select your main client.
 1. Start the import process and wait until it's completed. This process might take up to 30 minutes.
 1. Once the import finishes, go to "Overview" and verify that the imported version works (you can also play a replay through the "Replays" tab).
@@ -22,4 +22,4 @@ This section only contains basic usage. For more info, see [Download and Help](#
 1. Repeat steps 2 - 5 for every WoT version you have.
 
 ## Download and Help
-More info and download links are available on the official [EU Forum Post](http://forum.worldoftanks.eu/).
+More info and download links are available on the official [EU Forum Post](http://forum.worldoftanks.eu/index.php?/topic/755268-).

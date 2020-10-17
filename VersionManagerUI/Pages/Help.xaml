@@ -83,7 +83,7 @@
                 </TextBlock>
 
                 <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
-                    For more info, visit the official <Hyperlink NavigateUri="http://forum.worldoftanks.eu/" RequestNavigate="Hyperlink_RequestNavigate">EU Forum post</Hyperlink>.
+                    For more info, visit the official <Hyperlink NavigateUri="http://forum.worldoftanks.eu/index.php?/topic/755268-" RequestNavigate="Hyperlink_RequestNavigate">EU Forum post</Hyperlink>.
                 </TextBlock>
             </StackPanel>
         </Grid>

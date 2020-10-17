@@ -27,7 +27,7 @@
                 Different files get saved into Version Manager's directory and a new game folder is created for your imported version.
             </TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="15">
-                Thanks to this, saved versions are usually just several megabytes large and you save space on your hard drive!
+                Thanks to this, saved versions are usually just a couple of gigabytes and you save space on your hard drive!
             </TextBlock>
             <Image Source="{StaticResource Tutorial/Explanation.png}" Height="230"></Image>
         </StackPanel>

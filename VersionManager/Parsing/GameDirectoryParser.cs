@@ -24,7 +24,7 @@ namespace VersionManager.Parsing
             Progress<int> sumProgress = new Progress<int>(prog =>
             {
                 int percent = ++processed * 100 / totalFiles;
-                progress.Report(percent);
+                progress?.Report(percent);
             });
             ParseInner(directory, root, prefixLength, hashProvider, ignoreList, sumProgress);
         }

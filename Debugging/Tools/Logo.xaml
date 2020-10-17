@@ -11,7 +11,7 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" FontSize="20" HorizontalAlignment="Center">Debugging tool for WoT Version Manager</TextBlock>
         <TextBlock DockPanel.Dock="Bottom" FontSize="16" HorizontalAlignment="Center">Made by noobkiller3759.
-            <Hyperlink NavigateUri="http://www.google.com" RequestNavigate="Hyperlink_RequestNavigate">
+            <Hyperlink NavigateUri="http://forum.worldoftanks.eu/index.php?/topic/755268-" RequestNavigate="Hyperlink_RequestNavigate">
                 EU Forum Link
             </Hyperlink>
         </TextBlock>
