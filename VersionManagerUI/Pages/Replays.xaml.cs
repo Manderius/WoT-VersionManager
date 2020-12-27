@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using VersionManagerUI.MessageWindows;
 
 namespace VersionManagerUI.Pages
 {
@@ -78,6 +79,11 @@ namespace VersionManagerUI.Pages
 
         private void SelectReplay(Replay replay)
         {
+            if (replay == null)
+            {
+                new MessageWindow("Invalid file", "This is not a valid .wotreplay file.", MessageWindowButtons.OK).ShowDialog();
+                return;
+            }
             _selectedReplay = replay;
             frmReplayDetails.Navigate(new ReplayDetails(replay));
             btnPlay.IsEnabled = false;

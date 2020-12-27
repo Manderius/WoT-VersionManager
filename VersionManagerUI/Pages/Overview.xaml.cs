@@ -21,6 +21,7 @@ namespace VersionManagerUI.Pages
 
         private ManagedVersionsService _versionService;
         private GameDirectoryService _gameDirService;
+        private ManagedVersionCollection _versions;
 
         public Overview(ManagedVersionsService versionService, GameDirectoryService gameDirService)
         {
@@ -29,8 +30,8 @@ namespace VersionManagerUI.Pages
             _gameDirService = gameDirService;
             frmOverviewDetails.Navigate(new OverviewEmpty());
 
-            ManagedVersionCollection versions = _versionService.GetManagedVersions();
-            versions.CollectionChanged += ContentCollectionChanged;
+            _versions = _versionService.GetManagedVersions();
+            _versions.CollectionChanged += ContentCollectionChanged;
             ShowVersions();
         }
 
@@ -41,7 +42,7 @@ namespace VersionManagerUI.Pages
                 if ((sender as ManagedVersionCollection).Count == 0)
                 {
                     frmOverviewDetails.Navigate(new OverviewEmpty());
-                    return;
+                    //return;
                 }
             }
             ShowVersions();
@@ -49,7 +50,7 @@ namespace VersionManagerUI.Pages
 
         private void ShowVersions()
         {
-            lbGameVersions.ItemsSource = _versionService.GetManagedVersions().OrderByDescending(v => v.LocalVersion);
+            lbGameVersions.ItemsSource = _versions.OrderByDescending(v => v.LocalVersion);
             lbGameVersions.SelectedIndex = 0;
         }
 

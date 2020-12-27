@@ -20,10 +20,7 @@ namespace VersionManagerUI.Services
         public ManagedVersionsService(DataSerializer serializer)
         {
             Serializer = serializer;
-            _items = new ManagedVersionCollection()
-            {
-                new ManagedGameVersion( @"C:\Program Files (x86)\World_of_Tanks_EU", "0.9.4", @"E:\WoT\VersionData\094.xml")
-            };
+            _items = new ManagedVersionCollection();
         }
 
         public ManagedVersionCollection GetManagedVersions()

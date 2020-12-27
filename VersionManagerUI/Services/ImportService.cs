@@ -6,6 +6,8 @@ using VersionManager.GameVersion;
 using VersionManager.Utils;
 using VersionManagerUI.Data;
 using VersionManagerUI.Properties;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace VersionManagerUI.Services
 {
@@ -45,8 +47,17 @@ namespace VersionManagerUI.Services
 
         public void Import(string path, bool copyMods, IProgress<int> progress)
         {
-            if (CanImport(path) != ImportStatus.CAN_IMPORT)
+            ImportStatus status = CanImport(path);
+            if (status == ImportStatus.INVALID_PATH)
                 return;
+
+            if (status == ImportStatus.ALREADY_EXISTS)
+            {
+                // Check if user attempted to import from managed directory
+                bool isTargetDirectoryManaged = _mvs.GetManagedVersions().Select(v => Path.GetFullPath(v.Path)).Contains(Path.GetFullPath(path));
+                if (isTargetDirectoryManaged)
+                    return;
+            }
 
             int basePercent = 0; 
             Progress<int> partialProgress = new Progress<int>(percent =>
@@ -59,11 +70,25 @@ namespace VersionManagerUI.Services
             string xml = Path.Combine(Settings.Default.VersionDataDirectory, xmlFilename);
             string output = Path.Combine(Settings.Default.GameOutputDirectory, "World of Tanks " + gameVersion);
 
-            CreateVersionXML(path, xml, partialProgress);
-            basePercent = 33;
-            _gds.ExtractToContainer(xml, path, partialProgress);
-            basePercent = 66;
-            _gds.CreateGameDirectory(xml, output, partialProgress);
+            if (status == ImportStatus.CAN_IMPORT) {
+                // Import new version
+                CreateVersionXML(path, xml, partialProgress);
+                basePercent = 33;
+                _gds.ExtractToContainer(xml, path, partialProgress);
+                basePercent = 66;
+                _gds.CreateGameDirectory(xml, output, partialProgress);
+            }
+            else if (status == ImportStatus.ALREADY_EXISTS)
+            {
+                // Update version
+                RootDirectoryEntity newBuild = Helpers.CreateRootEntityFromDirectory(path, true, partialProgress);
+                basePercent = 33;
+                _gds.ExtractToContainer(newBuild, path, partialProgress);
+                basePercent = 66;
+                _gds.UpdateGameDirectory(newBuild, output, partialProgress);
+                new RootDirectoryEntityIO().Serialize(newBuild, xml);
+            }
+           
 
             if (copyMods)
             {
@@ -72,10 +97,13 @@ namespace VersionManagerUI.Services
             }
             progress.Report(100);
 
-            System.Windows.Application.Current.Dispatcher.BeginInvoke((Action)delegate ()
+            if (status == ImportStatus.CAN_IMPORT)
             {
-                _mvs.Add(xml, output);
-            });
+                System.Windows.Application.Current.Dispatcher.BeginInvoke((Action)delegate ()
+                {
+                    _mvs.Add(xml, output);
+                });
+            }
         }
 
         private void CreateVersionXML(string dir, string output, IProgress<int> progress)
