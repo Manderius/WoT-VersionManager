@@ -20,6 +20,7 @@ namespace VersionManagerUI.Pages
         private ImportService _importService;
         public PBar ProgressBarData = new PBar();
         private TaskbarItemInfo Taskbar { get; set; }
+        private bool _isImportInProgress;
 
         public Import(ImportService importService)
         {
@@ -28,6 +29,7 @@ namespace VersionManagerUI.Pages
             ProgressBar.DataContext = ProgressBarData;
             bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
             Taskbar = new TaskbarItemInfo();
+            _isImportInProgress = false;
         }
 
         private async void btnImport_Click(object sender, RoutedEventArgs e)
@@ -46,6 +48,7 @@ namespace VersionManagerUI.Pages
             tbGameDir.IsEnabled = false;
             btnBrowse.IsEnabled = false;
             chbImportMods.IsEnabled = false;
+            _isImportInProgress = true;
             btnImportText.Text = "Importing...";
             Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             Taskbar.ProgressValue = 0;
@@ -62,6 +65,7 @@ namespace VersionManagerUI.Pages
             chbImportMods.IsEnabled = true;
             btnImportText.Text = "Import";
             new MessageWindow("Finished", "Import successfully finished!\nYou can now play replays from this version through the Replays tab.\nAfter you make sure everything works, you can delete the original game directory.", MessageWindowButtons.OK).ShowDialog();
+            _isImportInProgress = false;
             OnPathChanged();
             Taskbar.ProgressState = TaskbarItemProgressState.None;
         }
@@ -77,11 +81,11 @@ namespace VersionManagerUI.Pages
             {
                 case ImportStatus.CAN_IMPORT:
                     btnImportText.Text = "Import";
-                    btnImport.IsEnabled = true;
+                    btnImport.IsEnabled = true && !_isImportInProgress;
                     break;
                 case ImportStatus.ALREADY_EXISTS:
                     btnImportText.Text = "Update";
-                    btnImport.IsEnabled = true;
+                    btnImport.IsEnabled = true && !_isImportInProgress;
                     break;
                 case ImportStatus.INVALID_PATH:
                     btnImportText.Text = "Import";
@@ -129,6 +133,8 @@ namespace VersionManagerUI.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).TaskbarItemInfo = Taskbar;
+            if (tbGameDir.Text.Length > 0)
+                OnPathChanged();
         }
     }
 
