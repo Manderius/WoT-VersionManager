@@ -29,6 +29,11 @@ namespace VersionManager.GameVersion
                 throw new FileNotFoundException();
             }
 
+            if (Path.GetExtension(path) != ".wotreplay")
+            {
+                return null;
+            }
+
             using (BinaryReader b = new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
             {
                 b.ReadInt32(); // Skips magic number

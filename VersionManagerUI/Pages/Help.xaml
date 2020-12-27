@@ -16,7 +16,7 @@
             <StackPanel Grid.Column="0">
                 <TextBlock TextWrapping="Wrap">
                     WoT Version Manager is a free tool designed to save space on your computer when you're using multiple
-                    different World of Tanks client versions. It can reduce WoT space usage by up to 50 %.
+                    different World of Tanks client versions. It can reduce WoT space usage by up to 70 %.
                 </TextBlock>
                 <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontWeight="Bold" FontSize="14">
                     How to use:
@@ -47,7 +47,7 @@
 
                     <TextBlock TextWrapping="Wrap" Grid.Row="2" Grid.Column="0">3.</TextBlock>
                     <TextBlock TextWrapping="Wrap" Grid.Row="2" Grid.Column="1">
-                        Start the import process and wait until it's completed. This process might take up to 20 minutes.
+                        Start the import process and wait until it's completed. This process might take up to 30 minutes.
                     </TextBlock>
 
                     <TextBlock TextWrapping="Wrap" Grid.Row="3" Grid.Column="0">4.</TextBlock>

@@ -64,5 +64,4 @@
 
         <Frame Name="frmMainContent" Grid.Column="1" Margin="15,0,15,15" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
-
 </Window>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Shell;
 using VersionManagerUI.MessageWindows;
 using VersionManagerUI.Services;
 using static VersionManagerUI.Services.ImportService;
@@ -18,6 +19,7 @@ namespace VersionManagerUI.Pages
     {
         private ImportService _importService;
         public PBar ProgressBarData = new PBar();
+        private TaskbarItemInfo Taskbar { get; set; }
 
         public Import(ImportService importService)
         {
@@ -25,20 +27,34 @@ namespace VersionManagerUI.Pages
             _importService = importService;
             ProgressBar.DataContext = ProgressBarData;
             bannerAlreadyImported.Visibility = bannerCanImport.Visibility = bannerInvalidDirectory.Visibility = Visibility.Hidden;
+            Taskbar = new TaskbarItemInfo();
         }
 
         private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
+            string dir = tbGameDir.Text;
+            ImportStatus result = _importService.CanImport(dir);
+            if (result == ImportStatus.ALREADY_EXISTS)
+            {
+                MessageWindow updateWindow = new MessageWindow("Update", "This version is already imported. Are you sure you want to overwrite it?\nUse this feature only if you want to save a newer build of the same version.", MessageWindowButtons.YesNo);
+                updateWindow.ShowDialog();
+                if (updateWindow.Result != MessageWindowResult.Yes)
+                    return;
+            }
+
             btnImport.IsEnabled = false;
             tbGameDir.IsEnabled = false;
             btnBrowse.IsEnabled = false;
             chbImportMods.IsEnabled = false;
             btnImportText.Text = "Importing...";
+            Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+            Taskbar.ProgressValue = 0;
             Progress<int> progress = new Progress<int>(percent =>
             {
                 ProgressBarData.Progress = percent;
+                Taskbar.ProgressValue = percent / 100.0;
             });
-            string dir = tbGameDir.Text;
+            
             bool importMods = chbImportMods.IsChecked.GetValueOrDefault(false);
             await Task.Run(() => _importService.Import(dir, importMods, progress));
             tbGameDir.IsEnabled = true;
@@ -47,6 +63,7 @@ namespace VersionManagerUI.Pages
             btnImportText.Text = "Import";
             new MessageWindow("Finished", "Import successfully finished!\nYou can now play replays from this version through the Replays tab.\nAfter you make sure everything works, you can delete the original game directory.", MessageWindowButtons.OK).ShowDialog();
             OnPathChanged();
+            Taskbar.ProgressState = TaskbarItemProgressState.None;
         }
 
         private void OnPathChanged()
@@ -55,7 +72,22 @@ namespace VersionManagerUI.Pages
             string path = tbGameDir.Text;
             ImportStatus result = _importService.CanImport(path);
             ShowBannerWithResult(result);
-            btnImport.IsEnabled = result == ImportStatus.CAN_IMPORT;
+            btnImport.IsEnabled = false;
+            switch (result)
+            {
+                case ImportStatus.CAN_IMPORT:
+                    btnImportText.Text = "Import";
+                    btnImport.IsEnabled = true;
+                    break;
+                case ImportStatus.ALREADY_EXISTS:
+                    btnImportText.Text = "Update";
+                    btnImport.IsEnabled = true;
+                    break;
+                case ImportStatus.INVALID_PATH:
+                    btnImportText.Text = "Import";
+                    btnImport.IsEnabled = false;
+                    break;
+            }
         }
 
         private void tbGameDir_TextChanged(object sender, TextChangedEventArgs e)
@@ -92,6 +124,11 @@ namespace VersionManagerUI.Pages
                     tbGameDir.Text = dialog.FileName;
                 }
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).TaskbarItemInfo = Taskbar;
         }
     }
 

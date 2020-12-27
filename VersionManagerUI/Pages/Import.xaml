@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:VersionManagerUI.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="700"
-      Title="Import">
+      Title="Import" Loaded="Page_Loaded">
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Import an existing WoT client</TextBlock>
         <Grid DockPanel.Dock="Bottom">
@@ -71,7 +71,7 @@
                     </TextBlock>
                     <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontSize="13">
                         It's also recommended to <Bold>import your default game client</Bold>. You can repeat it with every new update. This way you will always have
-                        all the WoT versions saved.
+                        all the WoT versions saved. Do not delete your default game client after importing.
                     </TextBlock>
                     <TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontSize="13">
                         Importing a client might take up to 30 minutes. Make sure you have enough space on your drive where Version Manager
