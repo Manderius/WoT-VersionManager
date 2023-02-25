@@ -28,17 +28,18 @@
                 
             </TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="15">
-                Version Manager will save all WoT files on the following drive:
+                Version Manager will save all WoT files in the following location:
             </TextBlock>
             <Grid Height="60" Margin="0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
@@ -46,7 +47,7 @@
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource Tutorial/Drive.png}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"></Image>
-                    <TextBlock x:Name="tbDriveName" Grid.Column="1" Grid.Row="0" FontSize="15" VerticalAlignment="Center">Drive name</TextBlock>
+                    <TextBlock x:Name="tbDriveName" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" FontSize="15" VerticalAlignment="Center">Drive name</TextBlock>
                     <ProgressBar x:Name="pbDriveCapacity" Grid.Column="1" Grid.Row="1" Foreground="#FF0689B0" Margin="0,1"></ProgressBar>
                     <TextBlock x:Name="tbDriveCapacity" Grid.Column="1" Grid.Row="2" FontSize="15" VerticalAlignment="Center">Capacity</TextBlock>
                 </Grid>
@@ -54,11 +55,18 @@
             
             <StackPanel x:Name="spEnoughSpace">
                 <TextBlock TextWrapping="Wrap" FontSize="15" FontWeight="DemiBold">
-                You will not be able to move stored versions later. Are you sure you want to store WoT versions on this drive?
+                You will not be able to move stored versions later. Are you sure you want to store WoT versions in this location?
                 </TextBlock>
                 <TextBlock TextWrapping="Wrap" FontSize="15">
-                If you click No, Version Manager will close and you can move it to another drive and launch this window again.
+                If you click No, Version Manager will close and you can move it to another location and launch this window again.
                 </TextBlock>
+            </StackPanel>
+            <StackPanel x:Name="spPathTooLong" Margin="0,20,0,0">
+                <Border BorderBrush="Red" BorderThickness="5,0,0,0">
+                    <TextBlock TextWrapping="Wrap" FontSize="15" FontWeight="DemiBold" Margin="10,0,0,0">
+                    The path is too long. This is known to cause problems due to Windows path length limits. Please close Version Manager and move it to a directory with total path length of under 50 characters, then try again.
+                    </TextBlock>
+                </Border>
             </StackPanel>
             <StackPanel x:Name="spNotEnoughSpace" Margin="0,20,0,0">
                 <Border BorderBrush="Red" BorderThickness="5,0,0,0">

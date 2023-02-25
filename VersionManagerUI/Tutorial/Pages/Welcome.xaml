@@ -21,7 +21,7 @@
         </Grid>
         <StackPanel Margin="10">
             <TextBlock FontFamily="Segoe UI Light" FontSize="24">World of Tanks Version Manager</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="15" Margin="0,0,0,10">Made by noobkiller3759</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="13" Margin="0,0,0,10" Foreground="#FF5F5F5F" >Made by noobkiller3759</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="15">
                 World of Tanks Version Manager is a free tool to archive your older WoT versions.
                 It can save up to 75 % of space used by World of Tanks clients.

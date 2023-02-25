@@ -10,7 +10,7 @@
 
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Show a replay</TextBlock>
+        <TextBlock DockPanel.Dock="Top" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,0,10">Replay details</TextBlock>
         <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -40,10 +40,10 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="0,20,0,0">
-                    Keep in mind that game files are compressed, therefore launching a client might take longer than usual. Wait until the game loads completely.
+                    Launching an imported game client might take longer than usual, in some cases up to several minutes. Wait until the game loads completely.
                 </TextBlock>
                 <StackPanel Margin="0,20,0,0" Name="versionPick" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-                    <TextBlock TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,5">
                         Game Version cannot be determined. This is often caused by old replays.<LineBreak/>If you know the
                         correct version and have it installed, please select it below:
                     </TextBlock>
