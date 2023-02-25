@@ -6,9 +6,9 @@ name: Build
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,22 +20,22 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.2
-        
+        uses: microsoft/setup-msbuild@v1.3
+
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
-        
+        uses: NuGet/setup-nuget@v1.1.1
+
       - name: Restore NuGet packages
         run: nuget restore WoT_VersionManager.sln
-        
+
       - name: Build Solution
         run: msbuild WoT_VersionManager.sln /p:Configuration=Release
-        
+
       - name: Upload generated files
-        uses: actions/upload-artifact@v2.1.4
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: wot-version-manager
           path: |
