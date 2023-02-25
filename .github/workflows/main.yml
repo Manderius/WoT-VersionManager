@@ -35,7 +35,7 @@ jobs:
         run: msbuild WoT_VersionManager.sln /p:Configuration=Release
 
       - name: Upload generated files
-        uses: actions/upload-artifact@v3.1
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: wot-version-manager
           path: |
