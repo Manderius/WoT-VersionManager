@@ -60,6 +60,7 @@
     <Compile Include="Persistence\DataContractXMLLoader.cs" />
     <Compile Include="Persistence\RootDirectoryEntityIO.cs" />
     <Compile Include="GameVersion\GameVersion.cs" />
+    <Compile Include="Replay\GameMap.cs" />
     <Compile Include="Replay\Replay.cs" />
     <Compile Include="Replay\ReplayParser.cs" />
     <Compile Include="Utils\DirectoryCache.cs" />

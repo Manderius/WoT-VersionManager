@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using VersionManager.Persistence;
-using VersionManager.GameVersion;
+using VersionManager.GameVersionData;
 using VersionManager.Utils;
 using VersionManagerUI.Data;
 using VersionManagerUI.Properties;

@@ -28,6 +28,23 @@
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" FontFamily="Segoe UI Light" Foreground="White" FontSize="16">This game version is not available!</TextBlock>
                 </Grid>
             </Grid>
+            <Grid VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox Name="chbFastReplayLoading" Margin="0,10,10,0" FontSize="13" Grid.Row="0" Grid.Column="0" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsChecked="true">
+                    Enable faster loading
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <TextBlock Grid.Row="1" Margin="22,0,0,0" Foreground="#FF8A8383" TextWrapping="Wrap">This option optimizes the game's loading process resulting in up to 3x faster load times. Disable this option if the game crashes while loading.</TextBlock>
+            </Grid>
             <Frame Name="frmReplayDetails" NavigationUIVisibility="Hidden" Margin="0,10,0,0"></Frame>
             <Grid>
                 <Grid.ColumnDefinitions>

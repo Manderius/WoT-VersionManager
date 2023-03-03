@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.Serialization;
 
-namespace VersionManager.GameVersion
+namespace VersionManager.GameVersionData
 {
     [DataContract(Namespace = "VersionManager.GameVersion")]
     public class GameVersion: IComparable

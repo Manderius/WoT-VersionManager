@@ -2,12 +2,11 @@
 using System.IO;
 using VersionManager.Filesystem;
 using VersionManager.Persistence;
-using VersionManager.GameVersion;
+using VersionManager.GameVersionData;
 using VersionManager.Utils;
 using VersionManagerUI.Data;
 using VersionManagerUI.Properties;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace VersionManagerUI.Services
 {

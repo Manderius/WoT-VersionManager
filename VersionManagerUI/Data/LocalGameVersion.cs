@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-using VersionManager.GameVersion;
+using VersionManager.GameVersionData;
 
 namespace VersionManagerUI.Data
 {
