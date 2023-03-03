@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using VersionManager.GameVersionData;
 
-namespace VersionManager.GameVersion
+namespace VersionManager.Replay
 {
     public class ReplayParser
     {
@@ -45,7 +46,7 @@ namespace VersionManager.GameVersion
 
                 dynamic json = JsonConvert.DeserializeObject(str);
 
-                string map = string.Format("{0} ({1})", json.mapDisplayName, json.mapName);
+                GameMap map = new GameMap((string) json.mapDisplayName, (string) json.mapName);
                 GameVersion version = GetReplayVersion(json);
 
                 string tank = json.playerVehicle;

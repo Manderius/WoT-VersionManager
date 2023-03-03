@@ -36,7 +36,7 @@
         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ReplayData.Tank}"></TextBlock>
 
         <TextBlock Grid.Row="4" Grid.Column="0">Map:</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReplayData.Map}"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReplayData.Map.FullName}"></TextBlock>
 
         <TextBlock Grid.Row="5" Grid.Column="0">Player:</TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding ReplayData.Player}"></TextBlock>

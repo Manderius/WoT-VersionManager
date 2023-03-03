@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Windows.Controls;
-using VersionManager.GameVersion;
+using VersionManager.Replay;
 
 namespace VersionManagerUI.Pages
 {

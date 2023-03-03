@@ -1,15 +1,15 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows;
-using VersionManager.GameVersion;
+using VersionManager.GameVersionData;
 using VersionManagerUI.Data;
 using VersionManagerUI.Services;
 using System;
 using System.Windows.Threading;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using VersionManagerUI.MessageWindows;
+using VersionManager.Replay;
 
 namespace VersionManagerUI.Pages
 {
@@ -23,6 +23,7 @@ namespace VersionManagerUI.Pages
         private LocalGameVersion _selectedVersion { get; set; }
         private ReplayService _replayService { get; set; }
         private DispatcherTimer _buttonTimer;
+
         public Replays(ManagedVersionsService localVersionsService, ReplayService replayService)
         {
             _localVersionsService = localVersionsService;
@@ -33,8 +34,9 @@ namespace VersionManagerUI.Pages
             UpdateVersions();
             versionPick.Visibility = Visibility.Hidden;
             warnNotAvailable.Visibility = Visibility.Hidden;
+            chbFastReplayLoading.DataContext = this;
             _buttonTimer = new DispatcherTimer();
-            _buttonTimer.Interval = new TimeSpan(0, 0, 5);
+            _buttonTimer.Interval = new TimeSpan(0, 0, 10);
             _buttonTimer.Tick += OnReplayLaunched;
         }
 
@@ -46,15 +48,17 @@ namespace VersionManagerUI.Pages
         private void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             UpdateVersions();
+            UpdateReplayPlayable();
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
             GameVersion version = _selectedReplay.Version == GameVersion.UNKNOWN ? _selectedVersion : _selectedReplay.Version;
+            bool fastLoadingEnabled = chbFastReplayLoading.IsChecked.GetValueOrDefault(false);
             btnPlay.IsEnabled = false;
             btnPlayText.Text = "Launching ...";
             _buttonTimer.Start();
-            _replayService.PlayReplay(_selectedReplay, version);
+            _replayService.PlayReplay(_selectedReplay, version, fastLoadingEnabled);
         }
 
         private void OnReplayLaunched(object sender, EventArgs e)
@@ -72,7 +76,15 @@ namespace VersionManagerUI.Pages
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    SelectReplay(ReplayParser.Parse(openFileDialog.FileName));
+                    try
+                    {
+                        SelectReplay(ReplayParser.Parse(openFileDialog.FileName));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageWindow error = new MessageWindow("Replay processing failed", "Could not process replay file. Make sure this file is a valid .wotreplay file and that it's not currently opened in any other application.", MessageWindowButtons.OK);
+                        error.ShowDialog();
+                    }
                 }
             }
         }
@@ -86,11 +98,16 @@ namespace VersionManagerUI.Pages
             }
             _selectedReplay = replay;
             frmReplayDetails.Navigate(new ReplayDetails(replay));
+            UpdateReplayPlayable();
+        }
+
+        private void UpdateReplayPlayable()
+        {
             btnPlay.IsEnabled = false;
             if (_selectedReplay.Version != GameVersion.UNKNOWN)
             {
                 versionPick.Visibility = Visibility.Hidden;
-                bool isLocalVersionAvailable = _localVersionsService.Contains(replay.Version);
+                bool isLocalVersionAvailable = _localVersionsService.Contains(_selectedReplay.Version);
                 btnPlay.IsEnabled = isLocalVersionAvailable;
                 warnNotAvailable.Visibility = isLocalVersionAvailable ? Visibility.Hidden : Visibility.Visible;
             }
