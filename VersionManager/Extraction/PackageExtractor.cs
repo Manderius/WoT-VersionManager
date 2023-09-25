@@ -30,7 +30,7 @@ namespace VersionManager.Extraction
                         string dir = entityToDir(ent);
                         if (!cache.CacheDirectory(dir))
                         {
-                            entry.ExtractToFile(Path.Combine(dir, ent.Name), false);
+                            entry.ExtractToFile(Path.Combine(dir, ent.Name), true);
                         }
                         progress?.Report(1);
                     }

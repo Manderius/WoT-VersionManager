@@ -103,6 +103,10 @@ namespace VersionManagerUI.Pages
 
         private void UpdateReplayPlayable()
         {
+            if (_selectedReplay == null)
+            {
+                return;
+            }
             btnPlay.IsEnabled = false;
             if (_selectedReplay.Version != GameVersion.UNKNOWN)
             {
